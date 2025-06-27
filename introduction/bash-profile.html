@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      The Bash Shell Startup Files
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;1.&nbsp;Welcome to GLFS
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="important.html" title=
+          "Important Information">Prev</a>
+          <p>
+            Important Information
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="multilib.html" title="Multilib">Next</a>
+          <p>
+            Multilib
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="bash-profile" name="bash-profile"></a>The Bash Shell Startup
+      Files
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        Bash, or the shell, can source a file at startup that applies for all
+        users, which can be very helpful for many different purposes. This
+        can involve setting many useful variables to adding new functionality
+        to the shell, usually for convenience. This section is therefore
+        recommended and setting up packages in this book will rely on this
+        section and the created files. There is little downside to following
+        this section unless you are not able to copy and paste the following
+        commands, in which case there will be a lot of typing involved. Doing
+        this in a chroot is recommended before booting back into your LFS
+        system.
+      </p>
+      <div class="admon note">
+        <img alt="[Note]" src="../images/note.png" />
+        <h3>
+          Note
+        </h3>
+        <p>
+          Most of the instructions below are used to create files located in
+          the <code class="filename">/etc</code> directory structure which
+          requires you to execute the commands as the <code class=
+          "systemitem">root</code> user. If you elect to create the files in
+          user's home directories instead, you should run the commands as an
+          unprivileged user.
+        </p>
+      </div>
+      <div class="admon note">
+        <img alt="[Note]" src="../images/note.png" />
+        <h3>
+          Note
+        </h3>
+        <p>
+          There are more startup files that can be made. The ones here
+          establish a basic setup while offering convenience. For more
+          startup files, see <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/postlfs/profile.html">
+          BLFS Bash Startup Files.</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          <a id="etc-profile-profile" name=
+          "etc-profile-profile"></a>/etc/profile
+        </h2>
+        <p>
+          Here is a base <code class="filename">/etc/profile</code>. This
+          file starts by setting up some helper functions and some basic
+          parameters. It specifies some <span class=
+          "command"><strong>bash</strong></span> history parameters and, for
+          security purposes, disables keeping a permanent history file for
+          the <code class="systemitem">root</code> user. It also sets a
+          default user prompt. It then calls small, single purpose scripts in
+          the <code class="filename">/etc/profile.d</code> directory to
+          provide most of the initialization.
+        </p>
+        <p>
+          For more information on the escape sequences you can use for your
+          prompt (i.e., the <code class="envar">PS1</code> environment
+          variable) see <span class="command"><strong>info
+          bash</strong></span> -- <span class="strong"><strong>Node: Printing
+          a Prompt</strong></span>.
+        </p>
+        <pre class="root"><kbd class=
+        "command">cat &gt; /etc/profile &lt;&lt; "EOF"
+<code class="literal"># Begin /etc/profile
+# Written for Beyond Linux From Scratch
+# by James Robertson &lt;jameswrobertson@earthlink.net&gt;
+# modifications by Dagmar d'Surreal &lt;rivyqntzne@pbzpnfg.arg&gt;
+
+# System wide environment variables and startup programs.
+
+# System wide aliases and functions should go in /etc/bashrc.  Personal
+# environment variables and startup programs should go into
+# ~/.bash_profile.  Personal aliases and functions should go into
+# ~/.bashrc.
+
+# Functions to help us manage paths.  Second argument is the name of the
+# path variable to be modified (default: PATH)
+pathremove () {
+        local IFS=':'
+        local NEWPATH
+        local DIR
+        local PATHVARIABLE=${2:-PATH}
+        for DIR in ${!PATHVARIABLE} ; do
+                if [ "$DIR" != "$1" ] ; then
+                  NEWPATH=${NEWPATH:+$NEWPATH:}$DIR
+                fi
+        done
+        export $PATHVARIABLE="$NEWPATH"
+}
+
+pathprepend () {
+        pathremove $1 $2
+        local PATHVARIABLE=${2:-PATH}
+        export $PATHVARIABLE="$1${!PATHVARIABLE:+:${!PATHVARIABLE}}"
+}
+
+pathappend () {
+        pathremove $1 $2
+        local PATHVARIABLE=${2:-PATH}
+        export $PATHVARIABLE="${!PATHVARIABLE:+${!PATHVARIABLE}:}$1"
+}
+
+export -f pathremove pathprepend pathappend
+
+# Set the initial path
+export PATH=/usr/bin
+
+# Attempt to provide backward compatibility with LFS earlier than 11
+if [ ! -L /bin ]; then
+        pathappend /bin
+fi
+
+if [ $EUID -eq 0 ] ; then
+        pathappend /usr/sbin
+        if [ ! -L /sbin ]; then
+                pathappend /sbin
+        fi
+        unset HISTFILE
+fi
+
+# Set up some environment variables.
+export HISTSIZE=1000
+export HISTIGNORE="&amp;:[bf]g:exit"
+
+# Set some defaults for graphical systems
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/share}
+export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg}
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/tmp/xdg-$USER}
+
+for script in /etc/profile.d/*.sh ; do
+        if [ -r $script ] ; then
+                . $script
+        fi
+done
+
+unset script
+
+# End /etc/profile</code>
+EOF</kbd></pre>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="etc-profile.d" name="etc-profile.d"></a>The /etc/profile.d
+            Directory
+          </h3>
+          <p>
+            Now create the <code class="filename">/etc/profile.d</code>
+            directory, where the individual initialization scripts are
+            placed:
+          </p>
+          <pre class="root"><kbd class=
+          "command">install --directory --mode=0755 --owner=root --group=root /etc/profile.d</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="extrapaths.sh" name=
+            "extrapaths.sh"></a>/etc/profile.d/extrapaths.sh
+          </h3>
+          <p>
+            This script adds some useful paths to the <code class=
+            "envar">PATH</code> and can be used to customize other PATH
+            related environment variables (e.g. LD_LIBRARY_PATH, etc) that
+            may be needed for all users.
+          </p>
+          <pre class="root"><kbd class=
+          "command">cat &gt; /etc/profile.d/extrapaths.sh &lt;&lt; "EOF"
+<code class="literal">if [ -d /usr/local/lib/pkgconfig ] ; then
+        pathappend /usr/local/lib/pkgconfig PKG_CONFIG_PATH
+fi
+if [ -d /usr/local/bin ]; then
+        pathprepend /usr/local/bin
+fi
+if [ -d /usr/local/sbin -a $EUID -eq 0 ]; then
+        pathprepend /usr/local/sbin
+fi
+
+if [ -d /usr/local/share ]; then
+        pathprepend /usr/local/share XDG_DATA_DIRS
+fi
+
+# Set some defaults before other applications add to these paths.
+pathappend /usr/share/info INFOPATH</code>
+EOF</kbd></pre>
+          <div class="admon note">
+            <img alt="[Note]" src="../images/note.png" />
+            <h3>
+              Note
+            </h3>
+            <p>
+              The <span class="command"><strong>man</strong></span> program
+              automatically deduces the search path for man pages by
+              examining the content of the <code class="envar">PATH</code>
+              variable, see <a class="ulink" href=
+              "https://man.archlinux.org/man/manpath.5">manpath(5)</a> for
+              details. Setting the <code class="envar">MANPATH</code>
+              variable may override the automatic deduction, so the BLFS
+              editors do not recommend setting it. If you must set it for any
+              reason, it's better to start its value with a colon
+              (<code class="literal">:</code>), for example <span class=
+              "command"><strong>MANPATH=:/opt/somepkg/share/man:/opt/otherpkg/share/man</strong></span>
+              so the paths listed in the <code class="envar">MANPATH</code>
+              variable will be appended to the automatically deduced value
+              instead of overriding it.
+            </p>
+          </div>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="readline.sh" name=
+            "readline.sh"></a>/etc/profile.d/readline.sh
+          </h3>
+          <p>
+            This script sets up the default <code class=
+            "filename">inputrc</code> configuration file. If the user does
+            not have individual settings, it uses the global file.
+          </p>
+          <pre class="root"><kbd class=
+          "command">cat &gt; /etc/profile.d/readline.sh &lt;&lt; "EOF"
+<code class="literal"># Set up the INPUTRC environment variable.
+if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ] ; then
+        INPUTRC=/etc/inputrc
+fi
+export INPUTRC</code>
+EOF</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="umask.sh" name="umask.sh"></a>/etc/profile.d/umask.sh
+          </h3>
+          <p>
+            Setting the <span class="command"><strong>umask</strong></span>
+            value is important for security. Here the default group write
+            permissions are turned off for system users and when the user
+            name and group name are not the same.
+          </p>
+          <pre class="root"><kbd class=
+          "command">cat &gt; /etc/profile.d/umask.sh &lt;&lt; "EOF"
+<code class="literal"># By default, the umask should be set.
+if [ "$(id -gn)" = "$(id -un)" -a $EUID -gt 99 ] ; then
+  umask 002
+else
+  umask 022
+fi</code>
+EOF</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="i18n.sh" name="i18n.sh"></a>/etc/profile.d/i18n.sh
+          </h3>
+          <p>
+            This script sets an environment variable necessary for native
+            language support. A full discussion on determining this variable
+            can be found on the <a class="ulink" href=
+            "https://www.linuxfromscratch.org/~thomas/multilib/chapter09/locale.html">
+            Configuring the System Locale</a> page.
+          </p>
+          <pre class="root"><kbd class=
+          "command">cat &gt; /etc/profile.d/i18n.sh &lt;&lt; "EOF"
+<code class="literal"># Set up i18n variables
+for i in $(locale); do
+  unset ${i%=*}
+done
+
+if [[ "$TERM" = linux ]]; then
+  export LANG=C.UTF-8
+else
+  source /etc/locale.conf
+
+  for i in $(locale); do
+    key=${i%=*}
+    if [[ -v $key ]]; then
+      export $key
+    fi
+  done
+fi</code>
+EOF</kbd></pre>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="important.html" title=
+          "Important Information">Prev</a>
+          <p>
+            Important Information
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="multilib.html" title="Multilib">Next</a>
+          <p>
+            Multilib
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

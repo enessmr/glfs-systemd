@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      GStreamer Suite 1.26.2
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;17.&nbsp;Gst
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="ffmpeg.html" title="FFmpeg-7.1.1">Prev</a>
+          <p>
+            FFmpeg-7.1.1
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="winechpt.html" title="Wine">Next</a>
+          <p>
+            Wine
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="gst.html" title=
+          "Chapter&nbsp;17.&nbsp;Gst">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="gstreamer-suite" name="gstreamer-suite"></a>GStreamer Suite
+      1.26.2
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to the GStreamer Suite
+        </h2>
+        <p>
+          <span class="application">GStreamer</span> is a streaming media
+          framework that enables applications to share a common set of
+          plugins for tasks such as video encoding and decoding, audio
+          encoding and decoding, audio and video filters, audio
+          visualisation, web streaming and anything else that streams in
+          real-time or otherwise. This page provides most of the set of
+          packages for ease of installation as they mostly have the same
+          instructions.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <h3>
+          GStreamer Suite Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="ffmpeg.html" title=
+          "FFmpeg-7.1.1">FFmpeg-7.1.1</a> (for libav support), <a class=
+          "xref" href="../shareddeps/glib2.html" title=
+          "GLib-2.84.3">GLib-2.84.3</a> (GObject Introspection required for
+          GNOME), and <a class="xref" href="../introduction/mesonfiles.html"
+          title="Meson Toolchain Files">Meson Toolchain Files</a> (for lib32)
+        </p>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="../shareddeps/alsa-lib.html" title=
+          "alsa-lib-1.2.14">alsa-lib-1.2.14</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/cdparanoia.html">
+          CDParanoia-III</a> (for building the CDDA plugin), <a class="ulink"
+          href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/cairo.html">Cairo</a>,
+          <a class="xref" href="../shareddeps/flac.html" title=
+          "FLAC-1.5.0">FLAC-1.5.0</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/gdk-pixbuf.html">
+          gdk-pixbuf</a>, <a class="xref" href="../shareddeps/glib2.html"
+          title="GLib-2.84.3">GLib-2.84.3</a> (with GObject Introspection),
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/iso-codes.html">
+          ISO Codes</a>, <a class="xref" href="lame.html" title=
+          "LAME-3.100">LAME-3.100</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/liba52.html">
+          liba53</a> (needed to play DVD's), <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/libdvdread.html">
+          libdvdread</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/libdvdnav.html">
+          libdvdnav</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/libgudev.html">
+          libgudev</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/libjpeg.html">
+          libjpeg-turbo</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/libsoup.html">
+          libsoup-2</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/libsoup3.html">
+          libsoup-3</a>, <a class="xref" href="../shareddeps/libva.html"
+          title="libva-2.22.0">libva-2.22.0</a>, <a class="xref" href=
+          "../shareddeps/libogg.html" title="libogg-1.3.5">libogg-1.3.5</a>,
+          <a class="xref" href="../shareddeps/libpng.html" title=
+          "libpng-1.6.48">libpng-1.6.48</a>, <a class="xref" href=
+          "../shareddeps/libvorbis.html" title=
+          "libvorbis-1.3.7">libvorbis-1.3.7</a>, <a class="xref" href=
+          "libvpx.html" title="libvpx-1.15.2">libvpx-1.15.2</a>, <a class=
+          "ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/mpg123.html">
+          mpg123</a>, <a class="xref" href="nasm.html" title=
+          "NASM-2.16.03">NASM-2.16.03</a>, OpenGL (<a class="xref" href=
+          "../shareddeps/libglvnd.html" title=
+          "libglvnd-1.7.0">libglvnd-1.7.0</a> or <a class="xref" href=
+          "../shareddeps/mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>),
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/pango.html">Pango</a>,
+          <a class="xref" href="../shareddeps/pulseaudio.html" title=
+          "PulseAudio-17.0">PulseAudio-17.0</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/soundtouch.html">
+          SoundTouch</a> <a class="xref" href=
+          "../shareddeps/wayland-protocols.html" title=
+          "Wayland-Protocols-1.45">Wayland-Protocols-1.45</a>, <a class=
+          "xref" href="x264.html" title="x264-20240812">x264-20240812</a>,
+          <a class="xref" href="../shareddeps/x7lib.html" title=
+          "Xorg Libraries">Xorg Libraries</a>, and <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/yasm.html">
+          yasm</a>
+        </p>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/aalib.html">
+          AAlib</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/graphene.html">
+          graphene</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/gtk3.html">GTK-3</a>
+          (for examples), <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/gsl.html">
+          gsl</a> (used by one test if installed), <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/libcdio.html">
+          libcdio</a> (for CD-ROM drive access), <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/libdv.html">
+          libdv</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/libmpeg2.html">
+          libmpeg2</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/libnsl.html">
+          libnsl</a>, <a class="xref" href="../shareddeps/libunwind.html"
+          title="libunwind-1.8.1">libunwind-1.8.1</a>, <a class="xref" href=
+          "../shareddeps/opus.html" title="Opus-1.5.2">Opus-1.5.2</a>,
+          <a class="ulink" href=
+          "https://linuxfromscratch.org/blfs/view/12.1/x/qt5.html">Qt-5</a>,
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/qt6.html">Qt-6</a>,
+          <a class="xref" href="../shareddeps/rustc.html" title=
+          "Rustc-1.87.0">rustc-1.87.0</a> (for IEEE 1588:2008 PTP clock
+          support), <a class="xref" href="sdl2.html" title=
+          "SDL2-2.32.8">SDL2-2.32.8</a>, <a class="xref" href=
+          "../shareddeps/speex.html" title="Speex-1.2.1">Speex-1.2.1</a>,
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/taglib.html">
+          taglib</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/valgrind.html">
+          Valgrind</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/v4l-utils.html">
+          v4l-utils</a>, <a class="xref" href="../shareddeps/wayland.html"
+          title="Wayland-1.23.1">Wayland-1.23.1</a>, <a class="ulink" href=
+          "https://www.alsa-project.org/files/pub/oss-lib">alsa-oss</a>,
+          <a class="ulink" href=
+          "https://github.com/scop/bash-completion/">bash-completion</a>,
+          <a class="ulink" href=
+          "https://pypi.org/project/hotdoc/">hotdoc</a>, <a class="ulink"
+          href="https://jackaudio.org/">JACK</a>, <a class="ulink" href=
+          "https://sourceforge.net/projects/libavc1394/">libavc1394</a>,
+          <a class="ulink" href=
+          "https://github.com/cacalabs/libcaca">libcaca</a>, <a class="ulink"
+          href="https://sourceware.org/elfutils/">libdw</a>, <a class="ulink"
+          href=
+          "https://sourceforge.net/projects/libraw1394/">libiec61883</a>,
+          <a class="ulink" href=
+          "https://sourceforge.net/projects/libraw1394/">libraw1394</a>,
+          <a class="ulink" href="https://www.icecast.org">libshout</a>,
+          <a class="ulink" href=
+          "https://packages.debian.org/source/sid/libsidplay">libsidplay</a>,
+          <a class="ulink" href="http://www.theora.org">libtheora</a>,
+          <a class="ulink" href="http://libvisual.org/">libvisual</a>,
+          <a class="ulink" href=
+          "https://gstreamer.freedesktop.org/src/orc/">Orc</a>, <a class=
+          "ulink" href="https://wiki.xiph.org/Tremor">Tremor</a>, <a class=
+          "ulink" href="https://www.twolame.org/">TwoLame</a>, and <a class=
+          "ulink" href="https://wavpack.com/">WavPack</a>
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            The optional list is not complete. See <a class="ulink" href=
+            "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/gst10-plugins-bad.html">
+            BLFS' gst-plugins-bad</a> for dependencies that are missing from
+            the list.
+          </p>
+        </div>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Downloading the GStreamer Suite
+        </h2>
+        <p>
+          First create a list of files that will be downloaded:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; gstreamer-suite-1.26.2-list &lt;&lt; EOF
+<code class="literal">gstreamer/gstreamer-1.26.2.tar.xz
+gst-plugins-base/gst-plugins-base-1.26.2.tar.xz
+gst-plugins-good/gst-plugins-good-1.26.2.tar.xz
+gst-plugins-bad/gst-plugins-bad-1.26.2.tar.xz
+gst-plugins-ugly/gst-plugins-ugly-1.26.2.tar.xz
+gst-libav/gst-libav-1.26.2.tar.xz</code>
+EOF</kbd></pre>
+        <p>
+          To download the needed files using <a class="xref" href=
+          "../shareddeps/wget.html" title="Wget-1.25.0">Wget-1.25.0</a>, use
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mkdir gstreamer-suite &amp;&amp;
+cd    gstreamer-suite &amp;&amp;
+grep -v '^#' ../gstreamer-suite-1.26.2-list | wget -i- -c \
+    -B https://gstreamer.freedesktop.org/src/</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of the GStreamer Suite
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            When installing multiple packages in a script, the installation
+            needs to be done as the root user. There are three general
+            options that can be used to do this:
+          </p>
+          <div class="orderedlist">
+            <ol>
+              <li class="listitem">
+                <p>
+                  Run the entire script as the root user (not recommended).
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  Use the <span class="command"><strong>sudo</strong></span>
+                  command from the sudo package.
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  Use <span class="command"><strong>su -c "command
+                  arguments"</strong></span> (quotes required) which will ask
+                  for the root password for every iteration of the loop.
+                </p>
+              </li>
+            </ol>
+          </div>
+          <p>
+            One way to handle this situation is to create a short
+            <span class="command"><strong>bash</strong></span> function that
+            automatically selects the appropriate method. Once the command is
+            set in the environment, it does not need to be set again.
+          </p>
+          <pre class="userinput"><kbd class="command">as_root()
+{
+  if   [ $EUID = 0 ];        then $*
+  elif [ -x /usr/bin/sudo ]; then sudo $*
+  else                            su -c \\"$*\\"
+  fi
+}
+
+export -f as_root</kbd></pre>
+        </div>
+        <p>
+          First do a test to see if the suite is installed, and if it is,
+          remove the previous installation <a href="#ftn.id17158" class=
+          "footnote" id="id17158" name="id17158"><sup class=
+          "footnote">[14]</sup></a>:
+        </p>
+        <pre class="userinput"><kbd class="command">pkgconf gstreamer-1.0
+if test x"$?" = x"0"; then
+  as_root rm -rvf /usr/bin/gst-* /usr/{lib,libexec}/gstreamer-1.0
+fi</kbd></pre>
+        <p>
+          Now start a subshell that will exit on error:
+        </p>
+        <pre class="userinput"><kbd class="command">bash -e</kbd></pre>
+        <p>
+          Install all of the packages by running the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">for package in $(grep -v '^#' ../gstreamer-suite-1.26.2-list)
+do
+  package=$(basename "$package")
+  packagedir=${package%.tar.?z*}
+  echo "Building $packagedir"
+  tar -xf $package
+  pushd $packagedir
+
+  case $packagedir in
+    gstreamer-[0-9]* )
+      extraflags="-D gst_debug=false"
+    ;;
+    gst-plugins-base-[0-9]* )
+      extraflags="--wrap-mode=nodownload"
+    ;;
+    gst-plugins-bad-[0-9]* )
+      extraflags="-D gpl=enabled"
+    ;;
+    gst-plugins-ugly-[0-9]* )
+      extraflags="-D gpl=enabled"
+    ;;
+    * )
+      extraflags=
+    ;;
+  esac
+
+  mkdir build
+  cd    build
+    meson setup --prefix=/usr       \
+                --buildtype=release \
+                $(echo $extraflags) \
+                .. &amp;&amp;
+    ninja
+    as_root ninja install
+  popd
+  rm -rf $packagedir
+done</kbd></pre>
+        <p>
+          Finally, exit the shell that was started earlier:
+        </p>
+        <pre class="userinput"><kbd class="command">exit</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of the GStreamer Suite
+        </h2>
+        <p>
+          First do a test to see if the suite is installed, and if it is,
+          remove the previous installation:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">i686-pc-linux-gnu-pkg-config gstreamer-1.0
+if test x"$?" = x"0"; then
+  as_root rm -rvf /usr/lib32/gstreamer-1.0
+fi</kbd></pre>
+        <p>
+          Now start a subshell that will exit on error:
+        </p>
+        <pre class="userinput"><kbd class="command">bash -e</kbd></pre>
+        <p>
+          Install all of the packages by running the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">for package in $(grep -v '^#' ../gstreamer-suite-1.26.2-list)
+do
+  package=$(basename "$package")
+  packagedir=${package%.tar.?z*}
+  echo "Building lib32-$packagedir"
+  tar -xf $package
+  pushd $packagedir
+
+  case $packagedir in
+    gstreamer-[0-9]* )
+      extraflags="-D gst_debug=false"
+    ;;
+    gst-plugins-base-[0-9]* )
+      extraflags="--wrap-mode=nodownload -D qt5=disabled"
+    ;;
+     gst-plugins-good-[0-9]* )
+      extraflags="$([ -f /usr/lib32/libmp3lame.so ] || echo "-D lame=disabled")"
+      extraflags+=" -D qt5=disabled -D qt6=disabled"
+    ;;
+    gst-plugins-bad-[0-9]* )
+      extraflags="-D gpl=enabled"
+    ;;
+    gst-plugins-ugly-[0-9]* )
+      extraflags="-D gpl=enabled"
+    ;;
+    * )
+      extraflags=
+    ;;
+  esac
+
+  mkdir build
+  cd    build
+    meson setup --prefix=/usr       \
+                --libdir=/usr/lib32 \
+                --cross-file=lib32  \
+                --buildtype=release \
+                $(echo $extraflags) \
+                .. &amp;&amp;
+    ninja
+    DESTDIR=$PWD/DESTDIR ninja install
+    as_root cp -vR DESTDIR/usr/lib32/* /usr/lib32
+    rm -rf DESTDIR
+  popd
+  rm -rf $packagedir
+  as_root /sbin/ldconfig
+done</kbd></pre>
+        <p>
+          Finally, exit the shell that was started earlier:
+        </p>
+        <pre class="userinput"><kbd class="command">exit</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--buildtype=release</code></em>:
+          Specify a buildtype suitable for stable releases of the package, as
+          the default may produce unoptimized binaries.
+        </p>
+        <p>
+          <em class="parameter"><code>-D gpl=enabled</code></em>: Without
+          this switch, plugins with dependencies on (A)GPL licensed libraries
+          are not built.
+        </p>
+        <p>
+          <em class="parameter"><code>-D qt{5,6}=disabled</code></em>: On a
+          multilib system, while Qt-5 or Qt-6 may be installed, it is far
+          less likely for them to be installed for lib32. <span class=
+          "command"><strong>meson</strong></span> falsely detects them being
+          installed if 64-bit installations are detected, which leads to
+          linker errors. If you have installed lib32-Qt-{5,6}, remove these
+          parameters.
+        </p>
+        <p>
+          <span class="command"><strong>$([ -f /usr/lib32/libmp3lame.so ]
+          ...</strong></span>: This command searches for a library from one
+          of the recommended dependencies, and if it can't find the library,
+          the command invokes <em class="parameter"><code>-D
+          lame=disabled</code></em> to disable LAME support for the 32-bit
+          build as <span class="command"><strong>meson</strong></span> can't
+          detect if it is the right architecture or not.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">gst-device-monitor-1.0,
+              gst-discoverer-1.0, gst-inspect-1.0, gst-launch-1.0,
+              gst-play-1.0, gst-stats-1.0, gst-tester-1.0,
+              gst-transcoder-1.0, gst-typefind-1.0, and playout</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libgstadaptivedemux-1.0,
+              libgstallocators-1.0, libgstanalytics-1.0, libgstapp-1.0,
+              libgstaudio-1.0, libgstbadaudio-1.0, libgstbase-1.0,
+              libgstbasecamerabinsrc-1.0, libgstcheck-1.0,
+              libgstcodecparsers-1.0, libgstcodecs-1.0, libgstcontroller-1.0,
+              libgstcuda-1.0, libgstdxva-1.0, libgstfft-1.0, libgstgl-1.0,
+              libgstinsertbin-1.0, libgstisoff-1.0, libgstmpegts-1.0,
+              libgstmse-1.0, libgstnet-1.0, libgstpbutils-1.0,
+              libgstphotography-1.0, libgstplay-1.0, libgstplayer-1.0,
+              libgstreamer-1.0, libgstriff-1.0, libgstrtp-1.0,
+              libgstrtsp-1.0, libgstsctp-1.0, libgstsdp-1.0, libgsttag-1.0,
+              libgsttranscoder-1.0, libgsturidownloader-1.0, libgstva-1.0,
+              libgstvideo-1.0, libgstwayland-1.0, libgstwebrtc-1.0, and
+              several plugins under /usr/lib{,32}/gstreamer-1.0</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class=
+              "segbody">/usr/include/gstreamer-1.0/gst/{allocators,app,audio,fft,gl,pbutils},
+              /usr/include/gstreamer-1.0/gst/{audio,basecamerabinsrc,cuda},
+              /usr/include/gstreamer-1.0/gst/{codecparsers,insertbin,interfaces},
+              /usr/include/gstreamer-1.0/gst/{isoff,mpegts,play,player,sctp},
+              /usr/include/gstreamer-1.0/gst/{riff,rtp,rtsp,sdp,tag,video},
+              /usr/include/gstreamer-1.0/gst/{transcoder,uridownloader,va},
+              /usr/include/gstreamer-1.0/gst/{wayland,webrtc},
+              /usr/share/gst-plugins-base, /usr/share/gstreamer-1.0/presets,
+              and /usr/{include,lib{,32},libexec,share}/gstreamer-1.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-device-monitor-1.0" name=
+                    "gst-device-monitor-1.0"></a><span class=
+                    "term"><span class=
+                    "command"><strong>gst-device-monitor-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a command line tool that can be used to test
+                    GStreamer's device monitoring functionality
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-discoverer-1.0" name=
+                    "gst-discoverer-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-discoverer-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a tool that can be used to print basic metadata and
+                    stream information about a media file
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-inspect-1.0" name=
+                    "gst-inspect-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-inspect-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a tool that prints out information on available
+                    <span class="application">GStreamer</span> plugins,
+                    information about a particular plugin, or information
+                    about a particular element
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-launch-1.0" name=
+                    "gst-launch-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-launch-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a tool that builds and runs basic <span class=
+                    "application">GStreamer</span> pipelines
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-play-1.0" name="gst-play-1.0"></a><span class=
+                    "term"><span class=
+                    "command"><strong>gst-play-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a command line tool that can be used to test basic
+                    playback using the playbin element
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-stats-1.0" name=
+                    "gst-stats-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-stats-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a tool used to gather statistics about <span class=
+                    "application">GStreamer</span> operations
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-tester-1.0" name=
+                    "gst-tester-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-tester-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    runs a test plan in TAP compatible format while
+                    integrating with the meson test harness
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-transcoder-1.0" name=
+                    "gst-transcoder-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-transcoder-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to transcode a stream into a different format
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="gst-typefind-1.0" name=
+                    "gst-typefind-1.0"></a><span class="term"><span class=
+                    "command"><strong>gst-typefind-1.0</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    uses the <span class="application">GStreamer</span> type
+                    finding system to determine the relevant <span class=
+                    "application">GStreamer</span> plugin to parse or decode
+                    files, and the corresponding MIME type
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="playout" name="playout"></a><span class=
+                    "term"><span class=
+                    "command"><strong>playout</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is an example application used to sequentially play a
+                    list of audio-video files
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libgstbase-1.0" name=
+                    "libgstbase-1.0"></a><span class="term"><code class=
+                    "filename">libgstbase-1.0</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides some base classes to be extended by elements and
+                    utility classes that are most useful for plugin
+                    developers
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libgstcheck-1.0" name=
+                    "libgstcheck-1.0"></a><span class="term"><code class=
+                    "filename">libgstcheck-1.0</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides functionality for writing unit tests that use
+                    the check framework
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libgstcontroller-1.0" name=
+                    "libgstcontroller-1.0"></a><span class=
+                    "term"><code class="filename">libgstcontroller-1.0</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides functionality to animate element properties over
+                    time
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libgstnet-1.0" name=
+                    "libgstnet-1.0"></a><span class="term"><code class=
+                    "filename">libgstnet-1.0</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides network elements and objects
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libgstreamer-1.0" name=
+                    "libgstreamer-1.0"></a><span class="term"><code class=
+                    "filename">libgstreamer-1.0</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides all of the core <span class=
+                    "application">GStreamer</span> services, including
+                    initialization, plugin management and types, as well as
+                    the object hierarchy that defines elements and bins,
+                    along with some more specialized elements
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="footnotes">
+        <br />
+        <hr width="100" align="left" />
+        <div id="ftn.id17158" class="footnote">
+          <p>
+            <a href="#id17158" class="para"><sup class="para">[14]</sup></a>
+            Removal of previous installation is required or else processes
+            may hang or not function properly due to mixed versions being
+            installed.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="ffmpeg.html" title="FFmpeg-7.1.1">Prev</a>
+          <p>
+            FFmpeg-7.1.1
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="winechpt.html" title="Wine">Next</a>
+          <p>
+            Wine
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="gst.html" title=
+          "Chapter&nbsp;17.&nbsp;Gst">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

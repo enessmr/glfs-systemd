@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Basic Xorg-7 Software Introduction
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;6.&nbsp;Basic X11 Software
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="basicx.html" title=
+          "Basic X11 Software">Prev</a>
+          <p>
+            Basic X11 Software
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="util-macros.html" title=
+          "util-macros-1.20.2">Next</a>
+          <p>
+            util-macros-1.20.2
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="basic-xorg-7" name="basic-xorg-7"></a>Basic Xorg-7 Software
+      Introduction
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        <span class="application">Xorg</span> is a freely redistributable,
+        open-source implementation of the <span class="application">X</span>
+        Window System. This system provides a client/server interface between
+        display hardware (the mouse, keyboard, and video displays) and the
+        desktop environment, while also providing both the windowing
+        infrastructure and a standardized application interface (API).
+      </p>
+      <p>
+        This section however doesn't install <a class="xref" href=
+        "xorg-server.html" title=
+        "Xorg-Server-21.1.16">Xorg-Server-21.1.16</a>, but instead installs
+        basic software that a lot of other software depend on, including the
+        <span class="application">Xorg</span> server, compositors, window
+        managers or desktop environments, and <a class="xref" href=
+        "xwayland.html" title="Xwayland-24.1.6">Xwayland-24.1.6</a> — a
+        necessary part of Wayland if you want to use <span class=
+        "application">Xorg</span>-only software like <a class="xref" href=
+        "../steam/steam.html" title="Steam-1.0.0.83">Steam-1.0.0.83</a>.
+        <a class="xref" href="../wine/wine.html" title=
+        "Wine-10.9">Wine-10.9</a> has an experimental <span class=
+        "application">Wayland</span> mode but it is still a good idea to
+        install <a class="xref" href="xwayland.html" title=
+        "Xwayland-24.1.6">Xwayland-24.1.6</a> for now.
+      </p>
+      <h3>
+        Xorg Download and Installation Instructions
+      </h3>
+      <p>
+        Xorg-7.0 introduced a completely auto-tooled, modular build system.
+        With the new modular build system, it is no longer possible to
+        download the entire package in a single file. In fact, there will be
+        well over 100 packages that need to be fetched from the download
+        location. To assist with such a large task, installing <a class=
+        "xref" href="wget.html" title="Wget-1.25.0">Wget-1.25.0</a> is
+        strongly recommended for downloading the needed files. A complete
+        <span class="application">wget</span> file list is provided for each
+        page that includes multiple packages.
+      </p>
+      <p>
+        Given the number of packages available, deciding which packages you
+        need to install for your particular setup may seem a bit overwhelming
+        at first. Take a look at <a class="ulink" href=
+        "https://wiki.x.org/wiki/ModuleDescriptions">this page</a> and
+        <a class="ulink" href=
+        "https://lists.x.org/archives/xorg-modular/2005-November/000801.html">
+        this thread</a> to get an idea of what you will need. If you are
+        unsure, you should install all packages at the cost of extra disk
+        space.
+      </p>
+      <div class="admon note">
+        <img alt="[Note]" src="../images/note.png" />
+        <h3>
+          Note
+        </h3>
+        <p>
+          Even if you intend to download only the necessary packages, you
+          should download the wget file lists. The list of files are ordered
+          by dependency, and the package versions listed in the files are
+          known to work well with each other. Further, the wget file lists
+          contain comments for specific packages that are deprecated or are
+          not recommended to install. Newer packages are likely intended for
+          the next release of <span class="application">Xorg</span> and have
+          already proved to be incompatible with current versions of software
+          installed in GLFS. The installed size of <span class=
+          "application">Xorg</span> can be reduced considerably by installing
+          only the packages that you will need and use, however, the GLFS
+          book cannot account for all dependencies and build options for the
+          individual <span class="application">Xorg</span> packages. The
+          instructions assume that all packages have been built.
+        </p>
+      </div>
+      <p>
+        Additionally, because of the large number of repetitive commands, you
+        are encouraged to partially automate the build. Instructions have
+        been given that utilize the <a class="ulink" href=
+        "https://www.linuxfromscratch.org/blfs/view/systemd/postlfs/sudo.html">
+        sudo</a> package. It is recommended that you use the <em class=
+        "parameter"><code>:NOPASSWD</code></em> configuration option for the
+        user that will be building the xorg packages. There are other
+        accommodations in the off chance you didn't install it. You can use
+        the <span class="command"><strong>su</strong></span> utility,
+        invoking <em class="parameter"><code>-c</code></em> . This requires
+        that you enter your password each time a package needs to get
+        installed. The last accommodation is allow you to build and install
+        each package as the <code class="systemitem">root</code> user. This
+        is not recommended but is an option if you don't want to install
+        <span class="application">sudo</span> and don't want to type a
+        password again and again.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          <a id="xorg-env" name="xorg-env"></a>Setting up the Xorg Build
+          Environment
+        </h2>
+        <p>
+          Set the <code class="envar">XORG_PREFIX</code> variable for
+          compatibility with BLFS with the following command:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">export XORG_PREFIX="/usr"</kbd></pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            The <code class="envar">XORG_PREFIX</code> variable will not be
+            used in this book, but it is a necessary variable to set if you
+            intend to follow certain BLFS instructions. If you aren't just
+            copy and pasting BLFS instructions, you may do without the
+            variable but be sure to replace the variable in the instructions
+            with <code class="filename">/usr</code>.
+          </p>
+        </div>
+        <p>
+          Throughout these instructions, you will use the following
+          <span class="command"><strong>configure</strong></span> switches
+          for all of the packages. Create the <code class=
+          "envar">XORG_CONFIG</code> variable to use for this parameter
+          substitution:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">export XORG_CONFIG="--prefix=/usr --sysconfdir=/etc \
+    --localstatedir=/var --disable-static"</kbd></pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            The instructions below depend on the files created in <a class=
+            "xref" href="../introduction/bash-profile.html" title=
+            "The Bash Shell Startup Files">The Bash Shell Startup Files</a>.
+          </p>
+        </div>
+        <p>
+          Create an <code class="filename">/etc/profile.d/xorg.sh</code>
+          configuration file containing these variables as the <code class=
+          "systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">cat &gt; /etc/profile.d/xorg.sh &lt;&lt; EOF
+<code class="literal">XORG_PREFIX="/usr"
+XORG_CONFIG="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static"
+export XORG_PREFIX XORG_CONFIG</code>
+EOF
+chmod 644 /etc/profile.d/xorg.sh</kbd></pre>
+        <p>
+          If you've installed <span class="application">sudo</span>, ensure
+          that <code class="envar">XORG_CONFIG</code> is available in the
+          <span class="application">sudo</span> environment. As the
+          <code class="systemitem">root</code> user, run the following
+          command:
+        </p>
+        <pre class="root"><kbd class=
+        "command">cat &gt; /etc/sudoers.d/xorg &lt;&lt; EOF
+<code class="literal">Defaults env_keep += XORG_CONFIG</code>
+EOF</kbd></pre>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="basicx.html" title=
+          "Basic X11 Software">Prev</a>
+          <p>
+            Basic X11 Software
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="util-macros.html" title=
+          "util-macros-1.20.2">Next</a>
+          <p>
+            util-macros-1.20.2
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

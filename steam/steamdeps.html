@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Steam Dependencies
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;11.&nbsp;Steam Preliminaries
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="whatissteam.html" title=
+          "What is Steam?">Prev</a>
+          <p>
+            What is Steam?
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="steamdepsinst.html" title=
+          "Installing Steam Dependencies">Next</a>
+          <p>
+            Installing Steam Dependencies
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="steampre.html" title=
+          "Chapter&nbsp;11.&nbsp;Steam Preliminaries">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="steamdeps" name="steamdeps"></a>Steam Dependencies
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        Steam is a collection of both 32-bit and 64-bit software. Think of
+        the 32-bit tools as a base that always need to be ran, while the
+        64-bit tools and libraries are for 64-bit specific tasks. You will
+        need the ability to run 32-bit software, regardless if you are on a
+        64-bit platform or not. You must also follow the lib32 instructions
+        of each dependency listed unless the section doesn't have those
+        instructions or it is stated to not be needed.
+      </p>
+      <p>
+        Furthermore, these dependencies are all for runtime. All the tools
+        for the initial installation were built in LFS.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Required
+        </h2>
+        <p>
+          <a class="xref" href="../shareddeps/alsa-plugins.html" title=
+          "alsa-plugins-1.2.12">alsa-plugins-1.2.12</a>, <a class="xref"
+          href="../shareddeps/curl.html" title="cURL-8.14.1">cURL-8.14.1</a>,
+          <a class="xref" href="../shareddeps/dbus.html" title=
+          "dbus-1.16.2">dbus-1.16.2</a>, Display server (<a class="xref"
+          href="../shareddeps/xorg-server.html" title=
+          "Xorg-Server-21.1.16">Xorg-Server-21.1.16</a> or <a class="xref"
+          href="../shareddeps/wayland.html" title=
+          "Wayland-1.23.1">Wayland-1.23.1</a> w/ <a class="xref" href=
+          "../shareddeps/xwayland.html" title=
+          "Xwayland-24.1.6">Xwayland-24.1.6</a>), <a class="xref" href=
+          "../shareddeps/make-ca.html" title=
+          "make-ca-1.16.1">make-ca-1.16.1</a> (with the symlink added), and
+          OpenGL (<a class="xref" href="../shareddeps/libglvnd.html" title=
+          "libglvnd-1.7.0">libglvnd-1.7.0</a> or <a class="xref" href=
+          "../shareddeps/mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>)
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Recommended (Ordered By Importantance)
+        </h2>
+        <p>
+          <a class="xref" href="../shareddeps/libvk.html" title=
+          "Vulkan-Loader-1.4.313">Vulkan-Loader-1.4.313</a> (required for
+          most games), <a class="xref" href="../shareddeps/pulseaudio.html"
+          title="PulseAudio-17.0">PulseAudio-17.0</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/xdg-desktop-portal.html">
+          xdg-desktop-portal</a> (and a backend service for your graphical
+          environment), <a class="xref" href="xdg-user-dirs.html" title=
+          "Xdg-user-dirs-0.18">Xdg-user-dirs-0.18</a>, <a class="ulink" href=
+          "https://archlinux.org/packages/extra/x86_64/zenity/">Zenity</a>,
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/lsof.html">
+          lsof</a>, and <a class="xref" href="libgpg-error.html" title=
+          "libgpg-error-1.55">libgpg-error-1.55</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Optional
+        </h2>
+        <p>
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/lsb-tools.html">
+          LSB-Tools</a> (for Steam surveys)
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="whatissteam.html" title=
+          "What is Steam?">Prev</a>
+          <p>
+            What is Steam?
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="steamdepsinst.html" title=
+          "Installing Steam Dependencies">Next</a>
+          <p>
+            Installing Steam Dependencies
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="steampre.html" title=
+          "Chapter&nbsp;11.&nbsp;Steam Preliminaries">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

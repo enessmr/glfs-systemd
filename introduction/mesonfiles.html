@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Meson Toolchain Files
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;2.&nbsp;Multilib
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="pkgconf.html" title=
+          "Pkgconf Personalties">Prev</a>
+          <p>
+            Pkgconf Personalties
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="../shareddeps/shareddeps.html" title=
+          "Shared Dependencies">Next</a>
+          <p>
+            Shared Dependencies
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="multilib.html" title=
+          "Chapter&nbsp;2.&nbsp;Multilib">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="mesonfiles" name="mesonfiles"></a>Meson Toolchain Files
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Meson Toolchain Files
+        </h2>
+        <p>
+          Most applications that rely on the <span class=
+          "application">Meson</span> build system have decent support for
+          cross compilation, ie. compiling 32-bit binaries on a 64-bit
+          system. It can be as easy as setting the <code class=
+          "envar">CC</code>, <code class="envar">CXX</code>, and <code class=
+          "envar">PKG_CONFIG_PATH</code> variables before using the
+          <strong class="userinput"><code>meson setup ..</code></strong>
+          command to compile 32-bit binaries on a 64-bit system. However,
+          some projects are more complicated for many different reasons,
+          leading to the necessity of <span class="application">Meson</span>
+          toolchain files. They specify compilers, options that should be
+          invoked, the <span class="application">pkg-conf</span> binary (or
+          rather symlink that uses a certain personality file) to use,
+          <span class="command"><strong>llvm-config</strong></span> to use,
+          etc. This is required for many Meson projects, especially if you
+          have followed BLFS before this book. Therefore, this section should
+          be considered a requirement.
+        </p>
+        <p>
+          There are two <span class="application">Meson</span> files: the
+          cross toolchain file and the native toolchain file. There are
+          different situations for using either.
+        </p>
+        <h3>
+          Meson Toolchain File Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="pkgconf.html" title=
+          "Pkgconf Personalties">Pkgconf Personalties</a> (runtime)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Creating the Cross Toolchain File
+        </h2>
+        <p>
+          Create the cross toolchain file by running the following commands
+          as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">mkdir -pv /usr/share/meson/cross &amp;&amp;
+
+cat &gt; /usr/share/meson/cross/lib32 &lt;&lt; "EOF"
+<code class="literal">[binaries]
+c = ['gcc', '-m32']
+cpp = ['g++', '-m32']
+rust = ['rustc', '--target', 'i686-unknown-linux-gnu']
+pkg-config = 'i686-pc-linux-gnu-pkg-config'
+ar = '/usr/bin/ar'
+strip = '/usr/bin/strip'
+cups-config = 'cups-config'
+llvm-config = 'llvm-config'
+exe_wrapper = ''
+
+[properties]
+sizeof_void* = 4
+sizeof_long = 4
+
+[host_machine]
+system = 'linux'
+subsystem = 'linux'
+kernel = 'linux'
+cpu_family = 'x86'
+cpu = 'i686'
+endian = 'little'</code>
+EOF</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Creating the Native Toolchain File
+        </h2>
+        <p>
+          Create the native toolchain file by running the following commands
+          as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">mkdir -pv /usr/share/meson/native &amp;&amp;
+
+cat &gt; /usr/share/meson/native/x86 &lt;&lt; "EOF"
+<code class="literal">[binaries]
+c = ['gcc', '-m32']
+cpp = ['g++', '-m32']
+rust = ['rustc', '--target', 'i686-unknown-linux-gnu']
+pkg-config = 'i686-pc-linux-gnu-pkg-config'
+ar = '/usr/bin/ar'
+strip = '/usr/bin/strip'
+cups-config = 'cups-config'
+llvm-config = 'llvm-config'
+exe_wrapper = ''
+
+[properties]
+sizeof_void* = 4
+sizeof_long = 4
+
+[host_machine]
+system = 'linux'
+subsystem = 'linux'
+kernel = 'linux'
+cpu_family = 'x86'
+cpu = 'i686'
+endian = 'little'</code>
+EOF</kbd></pre>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          How to Use the File
+        </h2>
+        <p>
+          Instead of setting environment variables before invoking
+          <strong class="userinput"><code>meson setup ..</code></strong>, you
+          can simply do:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">meson setup .. --cross-file=lib32 &lt;other-options&gt;</kbd></pre>
+        <p>
+          Or...
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">meson setup .. --native-file=x86 &lt;other-options&gt;</kbd></pre>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="pkgconf.html" title=
+          "Pkgconf Personalties">Prev</a>
+          <p>
+            Pkgconf Personalties
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="../shareddeps/shareddeps.html" title=
+          "Shared Dependencies">Next</a>
+          <p>
+            Shared Dependencies
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="multilib.html" title=
+          "Chapter&nbsp;2.&nbsp;Multilib">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

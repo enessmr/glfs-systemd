@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Linux-PAM-1.7.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;4.&nbsp;Security
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="security.html" title="Security">Prev</a>
+          <p>
+            Security
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="shadow.html" title="Shadow-4.17.4">Next</a>
+          <p>
+            Shadow-4.17.4
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="security.html" title=
+          "Chapter&nbsp;4.&nbsp;Security">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="linux-pam" name="linux-pam"></a>Linux-PAM-1.7.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Linux PAM
+        </h2>
+        <p>
+          The <span class="application">Linux PAM</span> package contains
+          Pluggable Authentication Modules used by the local system
+          administrator to control how application programs authenticate
+          users.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://github.com/linux-pam/linux-pam/releases/download/v1.7.0/Linux-PAM-1.7.0.tar.xz">
+                https://github.com/linux-pam/linux-pam/releases/download/v1.7.0/Linux-PAM-1.7.0.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Additional Downloads
+        </h3>
+        <div class="itemizedlist">
+          <p class="title">
+            <strong>Optional Documentation</strong>
+          </p>
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://anduin.linuxfromscratch.org/BLFS/Linux-PAM/Linux-PAM-1.7.0-docs.tar.xz">
+                https://anduin.linuxfromscratch.org/BLFS/Linux-PAM/Linux-PAM-1.7.0-docs.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="kernel" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          <a id="linux-pam-kernel" name="linux-pam-kernel"></a>Kernel
+          Configuration
+        </h2>
+        <p>
+          For the PAM module <code class="filename">pam_loginuid.so</code>
+          (referred by the PAM configuration file <code class=
+          "filename">system-session</code> if <span class="phrase"><a class=
+          "xref" href="systemd.html" title="Systemd-257.6">Systemd-257.6</a>
+          is rebuilt with PAM support</span> later) to work, a kernel
+          configuration parameter need to be set or the module will just do
+          nothing:
+        </p>
+        <pre class="screen"><span class="blue">G</span>eneral setup ---&gt;
+  [*] <span class=
+"blue">A</span>uditing support                                                   [AUDIT]</pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Linux PAM
+        </h2>
+        <p>
+          Compile and link <span class="application">Linux PAM</span> by
+          running the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..        \
+  --prefix=/usr       \
+  --buildtype=release \
+  -D docs=disabled &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          To test the results, a suitable <code class=
+          "filename">/etc/pam.d/other</code> configuration file must exist.
+        </p>
+        <div class="admon caution">
+          <img alt="[Caution]" src="../images/caution.png" />
+          <h3>
+            Reinstallation or Upgrade of Linux PAM
+          </h3>
+          <p>
+            If you have a system with Linux PAM installed and working, be
+            careful when modifying the files in <code class=
+            "filename">/etc/pam.d</code>, since your system may become
+            totally unusable. If you want to run the tests, you do not need
+            to create another <code class="filename">/etc/pam.d/other</code>
+            file. The existing file can be used for the tests.
+          </p>
+          <p>
+            You should also be aware that <span class="command"><strong>ninja
+            install</strong></span> overwrites the configuration files in
+            <code class="filename">/etc/security</code> as well as
+            <code class="filename">/etc/environment</code>. If you have
+            modified those files, be sure to back them up.
+          </p>
+        </div>
+        <p>
+          For a first-time installation, create a configuration file by
+          issuing the following commands as the <code class=
+          "systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">install -v -m755 -d /etc/pam.d &amp;&amp;
+
+cat &gt; /etc/pam.d/other &lt;&lt; "EOF"
+<code class="literal">auth     required       pam_deny.so
+account  required       pam_deny.so
+password required       pam_deny.so
+session  required       pam_deny.so</code>
+EOF</kbd></pre>
+        <p>
+          Now run the tests by issuing <span class="command"><strong>ninja
+          test</strong></span>. Be sure the tests produced no errors before
+          continuing the installation.
+        </p>
+        <p>
+          For a first-time installation, remove the configuration file
+          created earlier by issuing the following command as the
+          <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">rm -fv /etc/pam.d/other</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">ninja install &amp;&amp;
+chmod -v 4755 /usr/sbin/unix_chkpwd</kbd></pre>
+        <p>
+          If you downloaded the optional documentation, run the following
+          command as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">tar -C / -xvf ../../Linux-PAM-1.7.0-docs.tar.xz</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of Linux PAM
+        </h2>
+        <p>
+          Install lib32-<span class="application">Linux-PAM</span> by running
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">rm -rf * &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"           \
+PKG_CONFIG_PATH="/usr/lib32/pkgconfig" \
+meson setup ..                         \
+  --prefix=/usr                        \
+  --libdir=/usr/lib32                  \
+  --buildtype=release                  \
+  -D docs=disabled &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">DESTDIR=$PWD/DESTDIR ninja install    &amp;&amp;
+cp -vR DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>-D docs=disabled</code></em>: This
+          options disables building documentation that requires Docbook XML
+          and XSLT packages.
+        </p>
+      </div>
+      <div class="configuration" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Configuring Linux-PAM
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="pam-config" name="pam-config"></a>Configuration Files
+          </h3>
+          <p>
+            <code class="filename">/etc/security/*</code> and <code class=
+            "filename">/etc/pam.d/*</code>
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            Configuration Information
+          </h3>
+          <p>
+            Configuration information is placed in <code class=
+            "filename">/etc/pam.d/</code>. Here is a sample file:
+          </p>
+          <pre class="screen"><code class="literal"># Begin /etc/pam.d/other
+
+auth            required        pam_unix.so     nullok
+account         required        pam_unix.so
+session         required        pam_unix.so
+password        required        pam_unix.so     nullok
+
+# End /etc/pam.d/other</code></pre>
+          <p>
+            Now create some generic configuration files. As the <code class=
+            "systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">install -vdm755 /etc/pam.d &amp;&amp;
+cat &gt; /etc/pam.d/system-account &lt;&lt; "EOF" &amp;&amp;
+<code class="literal"># Begin /etc/pam.d/system-account
+
+account   required    pam_unix.so
+
+# End /etc/pam.d/system-account</code>
+EOF
+
+cat &gt; /etc/pam.d/system-auth &lt;&lt; "EOF" &amp;&amp;
+<code class="literal"># Begin /etc/pam.d/system-auth
+
+auth      required    pam_unix.so
+
+# End /etc/pam.d/system-auth</code>
+EOF
+
+cat &gt; /etc/pam.d/system-session &lt;&lt; "EOF" &amp;&amp;
+<code class="literal"># Begin /etc/pam.d/system-session
+
+session   required    pam_unix.so
+
+# End /etc/pam.d/system-session</code>
+EOF
+
+cat &gt; /etc/pam.d/system-password &lt;&lt; "EOF"
+<code class="literal"># Begin /etc/pam.d/system-password
+
+# use yescrypt hash for encryption, use shadow, and try to use any
+# previously defined authentication token (chosen password) set by any
+# prior module.
+password  required    pam_unix.so       yescrypt shadow try_first_pass
+
+# End /etc/pam.d/system-password</code>
+EOF
+</kbd></pre>
+          <p>
+            Next, add a restrictive <code class=
+            "filename">/etc/pam.d/other</code> configuration file. With this
+            file, programs that are PAM aware will not run unless a
+            configuration file specifically for that application exists.
+          </p>
+          <pre class="root"><kbd class=
+          "command">cat &gt; /etc/pam.d/other &lt;&lt; "EOF"
+<code class="literal"># Begin /etc/pam.d/other
+
+auth        required        pam_warn.so
+auth        required        pam_deny.so
+account     required        pam_warn.so
+account     required        pam_deny.so
+password    required        pam_warn.so
+password    required        pam_deny.so
+session     required        pam_warn.so
+session     required        pam_deny.so
+
+# End /etc/pam.d/other</code>
+EOF</kbd></pre>
+          <p>
+            The <span class="application">PAM</span> man page (<span class=
+            "command"><strong>man pam</strong></span>) provides a good
+            starting point to learn about the several fields, and allowable
+            entries. The Linux-PAM System Administrators' Guide at
+            <code class=
+            "filename">/usr/share/doc/Linux-PAM-1.7.0/Linux-PAM_SAG.txt</code>
+            is recommended for additional information.
+          </p>
+          <div class="admon important">
+            <img alt="[Important]" src="../images/important.png" />
+            <h3>
+              Important
+            </h3>
+            <p>
+              You should now reinstall the <a class="xref" href="shadow.html"
+              title="Shadow-4.17.4">Shadow-4.17.4</a> <span class=
+              "phrase">and <a class="xref" href="systemd.html" title=
+              "Systemd-257.6">Systemd-257.6</a> packages.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Program:</strong>
+              <span class="segbody">faillock, mkhomedir_helper,
+              pam_namespace_helper, pam_timestamp_check, pwhistory_helper,
+              unix_chkpwd and unix_update</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libpam, libpamc, and libpam_misc</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/etc/security, /usr/lib/security,
+              /usr/include/security and /usr/share/doc/Linux-PAM-1.7.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="faillock" name="faillock"></a><span class=
+                    "term"><span class=
+                    "command"><strong>faillock</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    displays and modifies the authentication failure record
+                    files
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="mkhomedir_helper" name=
+                    "mkhomedir_helper"></a><span class="term"><span class=
+                    "command"><strong>mkhomedir_helper</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a helper binary that creates home directories
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pam_namespace_helper" name=
+                    "pam_namespace_helper"></a><span class=
+                    "term"><span class="command"><strong>pam_namespace_helper</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a helper program used to configure a private namespace
+                    for a user session
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pwhistory_helper" name=
+                    "pwhistory_helper"></a><span class="term"><span class=
+                    "command"><strong>pwhistory_helper</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a helper program that transfers password hashes from
+                    passwd or shadow to opasswd
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pam_timestamp_check" name=
+                    "pam_timestamp_check"></a><span class="term"><span class=
+                    "command"><strong>pam_timestamp_check</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to check if the default timestamp is valid
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="unix_chkpwd" name="unix_chkpwd"></a><span class=
+                    "term"><span class=
+                    "command"><strong>unix_chkpwd</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a helper binary that verifies the password of the
+                    current user
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="unix_update" name="unix_update"></a><span class=
+                    "term"><span class=
+                    "command"><strong>unix_update</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a helper binary that updates the password of a given
+                    user
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libpam" name="libpam"></a><span class=
+                    "term"><code class="filename">libpam</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides the interfaces between applications and the PAM
+                    modules
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="security.html" title="Security">Prev</a>
+          <p>
+            Security
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="shadow.html" title="Shadow-4.17.4">Next</a>
+          <p>
+            Shadow-4.17.4
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="security.html" title=
+          "Chapter&nbsp;4.&nbsp;Security">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Gaming Linux® From Scratch (Systemd Edition)
+    </title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <meta name="description" content=
+    "This book introduces and guides the reader through additions to the system like Steam, Wine, and their dependencies after the LFS or Multilib-LFS book on x86_64 systems." />
+    <link rel="stylesheet" href="stylesheets/lfs-print.css" type="text/css"
+    media="print" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="book">
+      <div class="titlepage">
+        <img src="images/glfs-logo.png" alt="GLFS Logo" width="150" height=
+        "130" />
+      </div>
+    </div>
+    <div class="book">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h1 class="title">
+              <a id="id1337" name="id1337"></a> Gaming Linux<sup>®</sup> From
+              Scratch <span class="phrase">(Systemd</span> Edition)
+            </h1>
+          </div>
+          <div>
+            <h2 class="subtitle">
+              Version #75161
+            </h2>
+          </div>
+          <div>
+            <h2 class="subtitle">
+              Published June 15th, 2025
+            </h2>
+          </div>
+          <div>
+            <div class="authorgroup">
+              <h3 class="corpauthor">
+                The GLFS Development Team
+              </h3>
+            </div>
+          </div>
+          <div>
+            <p class="copyright">
+              <a href="legalnotice.html">Copyright</a> © 2024-2025 The GLFS
+              Development Team
+            </p>
+          </div>
+          <div>
+            <div class="abstract">
+              <p class="title">
+                <strong>Abstract</strong>
+              </p>
+              <p>
+                This book introduces and guides the reader through additions
+                to the system like <span class="application">Steam</span>,
+                <span class="application">Wine</span>, and their dependencies
+                after the LFS or Multilib-LFS book on x86_64 systems.
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="dedication">
+        <h2>
+          Dedication
+        </h2>
+        <p>
+          This book is dedicated to the LFS community
+        </p>
+      </div>
+      <div class="toc">
+        <h3>
+          Table of Contents
+        </h3>
+        <ul>
+          <li class="preface">
+            <h4>
+              <a href="preface/preface.html">Preface</a>
+            </h4>
+            <ul>
+              <li class="sect1">
+                <a href="preface/foreword.html">Foreword</a>
+              </li>
+              <li class="sect1">
+                <a href="preface/whoread.html">Who Would Want to Read this
+                Book</a>
+              </li>
+              <li class="sect1">
+                <a href="preface/organization.html">Organization</a>
+              </li>
+            </ul>
+          </li>
+          <li class="part">
+            <h3>
+              <a href="introduction/introduction.html">I. Introduction</a>
+            </h3>
+            <ul>
+              <li class="chapter">
+                <h4>
+                  <a href="introduction/welcome.html">1. Welcome to GLFS</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="introduction/which.html">Which Sections of the
+                    Book Do I Want?</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/conventions.html">Conventions Used
+                    in this Book</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/packages.html">Getting the Source
+                    Packages</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/rationale.html">Rationale for
+                    Packages</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/sa.html">Security Advisories</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/changelog.html">Change Log</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/askhelp.html">Asking for Help</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/artwork.html">Artwork</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/credits.html">Credits</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/contactinfo.html">Contact
+                    Information</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/important.html">Important
+                    Information</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/bash-profile.html">The Bash Shell
+                    Startup Files</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="introduction/multilib.html">2. Multilib</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="introduction/whatisml.html">What is
+                    Multilib?</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/needml.html">Do I Need
+                    Multilib?</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/achievingml.html">Achieving
+                    Multilib</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/pkgconf.html">Pkgconf
+                    Personalties</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="introduction/mesonfiles.html">Meson Toolchain
+                    Files</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="part">
+            <h3>
+              <a href="shareddeps/shareddeps.html">II. Shared
+              Dependencies</a>
+            </h3>
+            <ul>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/net.html">3. Networking</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/netconnect.html">Connecting to the
+                    Internet</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libtasn1.html">libtasn1-4.20.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/nspr.html">NSPR-4.36</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/sqlite.html">SQLite-3.50.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/python3.html">Python-3.13.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/nss.html">NSS-3.112</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/p11-kit.html">p11-kit-0.25.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/make-ca.html">make-ca-1.16.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/libunistring.html">libunistring-1.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libidn2.html">libidn2-2.3.8</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libpsl.html">libpsl-0.21.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/curl.html">cURL-8.14.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/wget.html">Wget-1.25.0</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/security.html">4. Security</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/linux-pam.html">Linux-PAM-1.7.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/shadow.html">Shadow-4.17.4</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/systemd.html">Systemd-257.6</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/duktape.html">duktape-2.7.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/pcre2.html">PCRE2-10.45</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/glib2.html">GLib-2.84.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/icu.html">ICU-77.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libxml2.html">libxml2-2.14.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/shared-mime-info.html">shared-mime-info-2.4</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/desktop-file-utils.html">desktop-file-utils-0.28</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/polkit.html">Polkit-126</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/audio.html">5. Audio</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/alsa.html">ALSA</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/alsa-lib.html">alsa-lib-1.2.14</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/alsa-plugins.html">alsa-plugins-1.2.12</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/alsa-utils.html">alsa-utils-1.2.14</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libogg.html">libogg-1.3.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libvorbis.html">libvorbis-1.3.7</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/flac.html">FLAC-1.5.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/opus.html">Opus-1.5.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/speex.html">Speex-1.2.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libsndfile.html">libsndfile-1.2.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/pulseaudio.html">PulseAudio-17.0</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/basicx.html">6. Basic X11 Software</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/basic-xorg-7.html">Basic Xorg-7
+                    Software Introduction</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/util-macros.html">util-macros-1.20.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/xorgproto.html">xorgproto-2024.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libXau.html">libXau-1.0.12</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libXdmcp.html">libXdmcp-1.1.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/xcb-proto.html">xcb-proto-1.17.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libxcb.html">libxcb-1.17.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/which.html">Which-2.23 and
+                    Alternatives</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libpng.html">libpng-1.6.48</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/freetype2-pass1.html">FreeType-2.13.3
+                    - Pass 1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/harfbuzz.html">HarfBuzz-11.2.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/freetype2-pass2.html">FreeType-2.13.3
+                    - Pass 2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/fontconfig.html">Fontconfig-2.16.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/x7lib.html">Xorg Libraries</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libxcvt.html">libxcvt-0.1.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/cmake.html">CMake-4.0.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/dbus.html">dbus-1.16.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libunwind.html">libunwind-1.8.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/nettle.html">Nettle-3.10.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/gnutls.html">GnuTLS-3.8.9</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/pixman.html">Pixman-0.46.2</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/wl.html">7. Wayland</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/wayland.html">Wayland-1.23.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/wayland-protocols.html">Wayland-Protocols-1.45</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/drivers.html">8. Graphics Drivers</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/whatdriver.html">What Drivers to
+                    Install</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/gpuconfig.html">GPU Kernel Options
+                    and Firmware</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/pciutils.html">pciutils-3.13.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/hwdata.html">hwdata-0.396</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/aboutgl.html">About OpenGL</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libglvnd.html">libglvnd-1.7.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/vkheaders.html">Vulkan-Headers-1.4.313</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libvk.html">Vulkan-Loader-1.4.313</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libdrm.html">Libdrm-2.4.125</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libvdpau.html">libvdpau-1.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/mako.html">Mako-1.3.10</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/cython.html">Cython-3.1.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libyaml.html">libyaml-0.2.5</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/pyyaml.html">PyYAML-6.0.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/gbm.html">GBM from Mesa-25.1.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/nvidia-egl.html">NVIDIA EGL
+                    Libraries</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/nvidia.html">NVIDIA-575.57.08</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/spirv-headers.html">SPIRV-Headers-1.4.313.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/spirv-tools.html">SPIRV-Tools-1.4.313.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/glslang.html">Glslang-15.3.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/llvm.html">LLVM-20.1.6</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/rustc.html">Rustc-1.87.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/cbindgen.html">Cbindgen-0.29.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/rust-bindgen.html">rust-bindgen-0.72.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/spirv-llvm-translator.html">SPIRV-LLVM-Translator-20.1.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libclc.html">libclc-20.1.6</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libva.html">libva-2.22.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/ply.html">ply-3.11</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/mesa.html">Mesa-25.1.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/libvdpau-va-gl.html">libvdpau-va-gl-0.4.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/amdgpu-pro.html">AMDGPU PRO</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/x.html">9. X11</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/xcb-utils.html">XCB Utils</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/xbitmaps.html">xbitmaps-1.1.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/x7app.html">Xorg Applications</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/xcursor-themes.html">xcursor-themes-1.0.7</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/x7font.html">Xorg Fonts</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/xkeyboard-config.html">XKeyboard-Config-2.45</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/libepoxy.html">libepoxy-1.5.10</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "shareddeps/xorg-server.html">Xorg-Server-21.1.16</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/xwayland.html">Xwayland-24.1.6</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/mtdev.html">mtdev-1.1.7</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/x7driver.html">Xorg Input Drivers</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="shareddeps/xinit.html">xinit-1.4.4</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="shareddeps/checkpoint.html">10. Checkpoint</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="shareddeps/whatnow.html">What Now?</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="part">
+            <h3>
+              <a href="steam/steamsec.html">III. Steam</a>
+            </h3>
+            <ul>
+              <li class="chapter">
+                <h4>
+                  <a href="steam/steampre.html">11. Steam Preliminaries</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="steam/whatissteam.html">What is Steam?</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="steam/steamdeps.html">Steam Dependencies</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="steam/steamdepsinst.html">12. Installing Steam
+                  Dependencies</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="steam/xdg-user-dirs.html">Xdg-user-dirs-0.18</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="steam/libgpg-error.html">libgpg-error-1.55</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="steam/steamchpt.html">13. Steam</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="steam/steam.html">Steam-1.0.0.83</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="part">
+            <h3>
+              <a href="wine/winesec.html">IV. Wine</a>
+            </h3>
+            <ul>
+              <li class="chapter">
+                <h4>
+                  <a href="wine/winepre.html">14. Wine Preliminaries</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="wine/whatiswine.html">What is Wine?</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/winedeps.html">Wine Dependencies</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="wine/mingw.html">15. The MinGW-w64 Toolchain</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="wine/whatis-mingw-w64.html">What is the
+                    MinGW-w64 Toolchain?</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "wine/mingw-w64-headers.html">MinGW-w64-headers-12.0.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "wine/mingw-w64-binutils.html">MinGW-w64-Binutils-2.44</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/mingw-w64-gcc-static.html">Static
+                    MinGW-w64-GCC-15.1.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/mingw-w64.html">MinGW-w64-12.0.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href=
+                    "wine/mingw-w64-gcc.html">MinGW-w64-GCC-15.1.0</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="wine/misc.html">16. Miscellaneous</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="wine/libxkbcommon.html">libxkbcommon-1.10.0</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/sdl2.html">SDL2-2.32.8</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="wine/gst.html">17. Gst</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="wine/nasm.html">NASM-2.16.03</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/libaom.html">libaom-3.12.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/fdk-aac.html">fdk-aac-2.0.3</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/lame.html">LAME-3.100</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/libvpx.html">libvpx-1.15.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/x264.html">x264-20240812</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/x265.html">x265-4.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/ffmpeg.html">FFmpeg-7.1.1</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/gstreamer-suite.html">GStreamer Suite
+                    1.26.2</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="chapter">
+                <h4>
+                  <a href="wine/winechpt.html">18. Wine</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="wine/wine.html">Wine-10.9</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/dxvk.html">DXVK-2.6.2</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="wine/vkd3d-proton.html">VKD3D-Proton-2.14.1</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="part">
+            <h3>
+              <a href="qol/qol.html">V. Quality of Life</a>
+            </h3>
+            <ul>
+              <li class="chapter">
+                <h4>
+                  <a href="qol/qolintro.html">19. Quality of Life</a>
+                </h4>
+                <ul>
+                  <li class="sect1">
+                    <a href="qol/gamepad.html">Gamepad Support</a>
+                  </li>
+                  <li class="sect1">
+                    <a href="qol/binary.html">Binary Support</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="appendix">
+            <h3>
+              <a href="appendices/creat-comm.html">A. Creative Commons
+              License</a>
+            </h3>
+          </li>
+          <li class="appendix">
+            <h3>
+              <a href="mit.html">B. The MIT License</a>
+            </h3>
+          </li>
+          <li class="glossary">
+            <h3>
+              <a href="appendices/glossary.html">Glossary</a>
+            </h3>
+          </li>
+          <li class="index">
+            <h3>
+              <a href="longindex.html">Index</a>
+            </h3>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="next">
+          <a accesskey="n" href="preface/preface.html" title=
+          "Preface">Next</a>
+          <p>
+            Preface
+          </p>
+        </li>
+        <li class="up">.
+        </li>
+        <li class="home">.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

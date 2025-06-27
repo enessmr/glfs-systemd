@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Achieving Multilib
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;2.&nbsp;Multilib
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="needml.html" title=
+          "Do I Need Multilib?">Prev</a>
+          <p>
+            Do I Need Multilib?
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="pkgconf.html" title=
+          "Pkgconf Personalties">Next</a>
+          <p>
+            Pkgconf Personalties
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="multilib.html" title=
+          "Chapter&nbsp;2.&nbsp;Multilib">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="achievingml" name="achievingml"></a>Achieving Multilib
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        On many distros, getting multilib support is very straight forward.
+        There exists a guide that can act as a replacement for LFS: compiling
+        and configuring a system that can boot, run, and compile software;
+        and also have that same ability with 32-bit. It acts to form the
+        basis that will allow you to follow any of the instructions laid out
+        in the Steam and Wine chapters.
+      </p>
+      <p>
+        Such a guide is maintained by Thomas Trepl at <a class="ulink" href=
+        "https://www.linuxfromscratch.org/~thomas/multilib-systemd-m32">https://www.linuxfromscratch.org/~thomas/multilib-systemd-m32</a>.
+        This only covers installing 32-bit support along with 64-bit. If you
+        want x32-bit support, which is not needed for this book, follow
+        <a class="ulink" href=
+        "https://www.linuxfromscratch.org/~thomas/multilib-systemd">https://www.linuxfromscratch.org/~thomas/multilib-systemd</a>.
+      </p>
+      <p>
+        You can render MLFS if you wish.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Rendering MLFS
+        </h2>
+        <p>
+          First, install <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/git.html">
+          Git</a>, then clone the LFS repo and switch to the <code class=
+          "computeroutput">multilib</code> branch:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">git clone https://git.linuxfromscratch.org/lfs.git mlfs &amp;&amp;
+cd mlfs &amp;&amp;
+git checkout multilib</kbd></pre>
+        <p>
+          Now inspect the <code class="filename">INSTALL</code> file to check
+          for the needed dependencies in order to render the book. Once you
+          have ensured you have installed everything, render the book:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">make -j1 REV=systemd ARCH=ml_32</kbd></pre>
+        <p>
+          This will render the book in <code class=
+          "filename">~/public_html/lfs-systemd</code>. You can change how
+          much multilib support you wish to render the book with by changing
+          the <code class="envar">ARCH</code> variable's value. The above
+          command will render 64-bit and 32-bit support but leaves out
+          x32-bit support, which is not needed for this book. If you want to
+          get that support too, change <code class=
+          "computeroutput">ARCH=ml_32</code> to <code class=
+          "computeroutput">ARCH=ml_all</code>. You can then point to the HTML
+          using a browser like <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/xsoft/firefox.html">
+          Firefox</a> or <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/lynx.html">
+          Lynx</a>.
+        </p>
+        <p>
+          For <span class="application">Firefox</span>, type in the search
+          bar: <code class="computeroutput">file:///home/<em class=
+          "replaceable"><code>&lt;username&gt;</code></em>/public_html/lfs-systemd/index.html</code>,
+          and replace <em class=
+          "replaceable"><code>&lt;username&gt;</code></em> with the name of
+          the username you rendered the book with.
+        </p>
+        <p>
+          For <span class="application">Lynx</span>, run the following:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">lynx ~/public_html/lfs-systemd/index.html</kbd></pre>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          More Info
+        </h2>
+        <p>
+          The same principles of compiling for 32-bit in that book will also
+          apply to this book as well. If you haven't already, read <a class=
+          "xref" href="important.html" title=
+          "Important Information">Important Information</a> to check what
+          basic principles still apply in this book when targeting 32-bit.
+        </p>
+        <p>
+          Furthermore, read <a class="xref" href=
+          "important.html#which-instructions" title=
+          "Which Instructions to Follow">Which Instructions to Follow</a> to
+          find out which instructions to follow.
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="needml.html" title=
+          "Do I Need Multilib?">Prev</a>
+          <p>
+            Do I Need Multilib?
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="pkgconf.html" title=
+          "Pkgconf Personalties">Next</a>
+          <p>
+            Pkgconf Personalties
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="multilib.html" title=
+          "Chapter&nbsp;2.&nbsp;Multilib">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      libglvnd-1.7.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="aboutgl.html" title="About OpenGL">Prev</a>
+          <p>
+            About OpenGL
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="vkheaders.html" title=
+          "Vulkan-Headers-1.4.313">Next</a>
+          <p>
+            Vulkan-Headers-1.4.313
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="libglvnd" name="libglvnd"></a>libglvnd-1.7.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to libglvnd
+        </h2>
+        <p>
+          The <span class="application">libglvnd</span> package provides
+          OpenGL implementations that dispatch API calls to a given driver
+          vendor. Some of the libraries are simply wrappers to the main
+          dispatcher.
+        </p>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            Read <a class="xref" href="aboutgl.html" title=
+            "About OpenGL">About OpenGL</a> to decide if you want to install
+            OpenGL implementations from this provider.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz">
+                https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          libglvnd Dependencies
+        </h3>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="x7lib.html" title="Xorg Libraries">Xorg
+          Libraries</a> (for <code class="filename">libGL</code> and
+          <code class="filename">libGLX</code>)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of libglvnd
+        </h2>
+        <p>
+          Install libglvnd by running the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup --prefix=/usr       \
+            --buildtype=release \
+            -D gles1=false      \
+            -D hgl=false        \
+            .. &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          Now as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">ninja install</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of libglvnd
+        </h2>
+        <p>
+          Install lib32-libglvnd by running the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">rm -rf * &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"         \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+meson setup --prefix=/usr            \
+            --libdir=/usr/lib32      \
+            --buildtype=release      \
+            -D gles1=false           \
+            -D hgl=false             \
+            .. &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          Now as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">DESTDIR=$PWD/DESTDIR ninja install    &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--buildtype=release</code></em>:
+          Specify a buildtype suitable for stable releases of the package, as
+          the default may produce unoptimized binaries.
+        </p>
+        <p>
+          <em class="parameter"><code>-D gles1=false</code></em>: This
+          disables an obsolete version of OpenGL ES.
+        </p>
+        <p>
+          <em class="parameter"><code>-D hgl=false</code></em>: This disables
+          targetting Haiku by default as this guide is for Linux, not Haiku.
+        </p>
+        <p>
+          <code class="option">-D gles2=false</code>: If you don't need
+          OpenGL ES, use this option. Be sure to read <a class="xref" href=
+          "aboutgl.html#aboutgles" title="About GLES (OpenGL ES)">the section
+          called “About GLES (OpenGL ES)”</a>.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libEGL, libGL, libGLESv2, libGLX,
+              libGLdispatch, and libOpenGL</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class=
+              "segbody">/usr/include/{EGL,GLES{2,3},glvnd,KHR}</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glvnd-libEGL" name="glvnd-libEGL"></a><span class=
+                    "term"><code class="filename">libEGL</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains EGL window-system API functions
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glvnd-libGL" name="glvnd-libGL"></a><span class=
+                    "term"><code class="filename">libGL</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="quote">“<span class=
+                    "quote">legacy</span>”</span> OpenGL library; wrapper
+                    library calling <code class=
+                    "filename">libGLdispatch</code> and <code class=
+                    "filename">libGLX</code>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glvnd-libGLESv2" name=
+                    "glvnd-libGLESv2"></a><span class="term"><code class=
+                    "filename">libGLESv2</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    exposes OpenGL ES 2.x and 3.x entrypoints; wrapper
+                    library calling <code class=
+                    "filename">libGLdispatch</code>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glvnd-libGLX" name="glvnd-libGLX"></a><span class=
+                    "term"><code class="filename">libGLX</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    dispatches GLX extensions to the right vendor
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glvnd-libGLdispatch" name=
+                    "glvnd-libGLdispatch"></a><span class="term"><code class=
+                    "filename">libGLdispatch</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    dispatches OpenGL and TLS to the right vendor
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glvnd-libOpenGL" name=
+                    "glvnd-libOpenGL"></a><span class="term"><code class=
+                    "filename">libOpenGL</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="quote">“<span class=
+                    "quote">new</span>”</span> OpenGL library and exposes
+                    OpenGL entrypoints; wrapper library calling <code class=
+                    "filename">libGLdispatch</code>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="aboutgl.html" title="About OpenGL">Prev</a>
+          <p>
+            About OpenGL
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="vkheaders.html" title=
+          "Vulkan-Headers-1.4.313">Next</a>
+          <p>
+            Vulkan-Headers-1.4.313
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

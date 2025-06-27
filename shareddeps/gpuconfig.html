@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      GPU Kernel Options and Firmware
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="whatdriver.html" title=
+          "What Drivers to Install">Prev</a>
+          <p>
+            What Drivers to Install
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="pciutils.html" title=
+          "pciutils-3.13.0">Next</a>
+          <p>
+            pciutils-3.13.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="gpuconfig" name="gpuconfig"></a>GPU Kernel Options and Firmware
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        The Linux kernel has multiple drivers for all sorts of hardware,
+        including GPUs, and most open source drivers are in the kernel. This
+        includes AMD, i915, and Nouveau. There are other drivers as well that
+        can be useful for certain users. Firmware is also necessary for many
+        drivers.
+      </p>
+      <div class="kernel" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          <a id="gpu-kernel" name="gpu-kernel"></a>Kernel Configuration
+        </h2>
+        <p>
+          The kernel options below enable GPU and virtual GPU drivers. Enable
+          the ones you need and recompile the kernel if necessary.
+        </p>
+        <pre class="screen"><span class="blue">D</span>evice Drivers ---&gt;
+  <span class="blue">G</span>raphics support ---&gt;
+    &lt;*/M&gt; <span class=
+"blue">D</span>irect Rendering Manager (XFree86 4.1.0 and higher DRI support) ---&gt;
+                                                                      ...  [DRM]
+      
+      # For r300 or r600:
+      &lt; /*/M&gt; <span class=
+"blue">A</span>TI Radeon                                            [DRM_RADEON]
+      
+      # For radeonsi:
+      &lt; /*/M&gt; <span class=
+"blue">A</span>MD GPU                                               [DRM_AMDGPU]
+      [*]       <span class=
+"blue">E</span>nable amdgpu support for SI parts               [DRM_AMDGPU_SI]
+      [*]       <span class=
+"blue">E</span>nable amdgpu support for CIK parts             [DRM_AMDGPU_CIK]
+        <span class="blue">D</span>isplay Engine Configuration ---&gt;
+        [*]   <span class=
+"blue">A</span>MD DC - Enable new display engine                    [DRM_AMD_DC]
+      
+      # For nouveau:
+      &lt; /*/M&gt; N<span class=
+"blue">o</span>uveau (NVIDIA) cards                               [DRM_NOUVEAU]
+      [*]       <span class=
+"blue">U</span>se GSP firmware for Turing/Ampere (needs firmware installed)
+                                                  ...  [DRM_NOUVEAU_GSP_DEFAULT]
+      
+      # For i915, crocus, or iris:
+      &lt; /*/M&gt; <span class=
+"blue">I</span>ntel 8xx/9xx/G3x/G4x/HD Graphics                       [DRM_I915]
+      
+      # For iris:
+      &lt; /*/M&gt; <span class=
+"blue">I</span>ntel Xe Graphics                                         [DRM_XE]
+      [*]       <span class=
+"blue">E</span>nable display support                          [DRM_XE_DISPLAY]
+      (*)       <span class=
+"blue">F</span>orce probe xe for selected Intel hardware IDs
+                                                       ...  [DRM_XE_FORCE_PROBE]
+      
+      # For LLVMPipe or Softpipe:
+      &lt; /*&gt;   <span class=
+"blue">V</span>irtual GEM provider                                    [DRM_VGEM]
+      
+      # For svga:
+      &lt; /*/M&gt; <span class=
+"blue">D</span>RM driver for VMware Virtual GPU                     [DRM_VMWGFX]</pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            There are comments for the options above, corresponding with
+            Mesa's Gallium3D dri driver names.
+          </p>
+          <p>
+            For the GPUs supported by the Iris Gallium3D driver, with
+            <code class="option">CONFIG_DRM_I915</code> enabled and
+            <code class="option">CONFIG_DRM_XE_FORCE_PROBE</code> set to the
+            string <code class="literal">*</code>, the i915 driver will be
+            used if it supports the GPU, and the Xe driver will be used if it
+            supports the GPU but the i915 driver does not. If you are sure
+            your GPU is supported by the i915 driver, you can disable the Xe
+            driver to save some build time. If your GPU is supported by both
+            drivers and you want to use the Xe driver, you can disable the
+            i915 driver, or make the i915 driver deny your GPU via the
+            <code class="option">CONFIG_DRM_I915_FORCE_PROBE</code> option,
+            for example setting it to <code class="literal">!7d55</code>
+            would make i915 deny the Meteor Lake integrated GPU (of which the
+            PCI ID is <code class="literal">8086:7d55</code>), leaving it for
+            the Xe driver.
+          </p>
+          <p>
+            Selecting <code class="option">CONFIG_DRM_RADEON</code>,
+            <code class="option">CONFIG_DRM_AMDGPU</code>, <code class=
+            "option">CONFIG_DRM_NOUVEAU</code>, <code class=
+            "option">CONFIG_DRM_I915</code>, or <code class=
+            "option">CONFIG_DRM_XE</code> as <span class=
+            "quote">“<span class="quote"><code class=
+            "literal">y</code></span>”</span> is not recommended. If it is,
+            any required firmware must be built as a part of the kernel image
+            or the initramfs for the driver to function correctly.
+          </p>
+          <p>
+            The sub-entries under <code class=
+            "option">CONFIG_DRM_AMDGPU</code> are used to ensure the AMDGPU
+            kernel driver supports all GPUs using the <code class=
+            "literal">radeonsi</code> driver. They are not needed if you
+            won't need <code class="option">CONFIG_DRM_AMDGPU</code> itself.
+            They may be unneeded for some GPU models.
+          </p>
+          <p>
+            For <code class="literal">LLVMPipe</code> or <code class=
+            "literal">LLVMPipe</code>, <code class=
+            "option">CONFIG_DRM_VGEM</code> is required or Xorg clients will
+            probably fail with a cryptic message <code class=
+            "computeroutput">Error: couldn't get an RGB, Double-buffered
+            visual</code>. While this can be compiled as a module, it is more
+            convenient to just build it into the kernel, otherwise the module
+            will not be loaded automatically.
+          </p>
+        </div>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Firmware
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            ATI Firmware
+          </h3>
+          <p>
+            ATI Radeon GPUs require firmware to be able to use KMS (kernel
+            modesetting - the preferred option) as well as for Xorg. The
+            firmware is in <a class="ulink" href=
+            "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git">
+            linux-firmware</a>.
+          </p>
+          <p>
+            In order to save space, it is recommended to use <a class="xref"
+            href="pciutils.html" title="pciutils-3.13.0">pciutils-3.13.0</a>
+            and it's packaged binary <span class=
+            "command"><strong>lspci</strong></span> to identify what the VGA
+            controller is. After you find out that, check the RadeonFeature
+            page of the Xorg wiki for <a class="ulink" href=
+            "https://wiki.x.org/wiki/RadeonFeature/#index5h2">Decoder ring
+            for engineering vs marketing names</a> to identify the family
+            (you may need to know this for the Xorg driver — Southern Islands
+            and Sea Islands use the radeonsi driver) and the specific model.
+          </p>
+          <p>
+            Now that you know which controller you are using, consult the
+            <a class="ulink" href=
+            "https://wiki.gentoo.org/wiki/Radeon#Firmware">Radeon
+            Firmware</a> page of the Gentoo wiki which has a table listing
+            the required firmware blobs for the various chipsets. Note that
+            Southern Islands and Sea Islands chips use different firmware for
+            kernel 3.17 and later compared to earlier kernels. Identify and
+            download the required blobs then install them:
+          </p>
+          <pre class="root"><kbd class=
+          "command">mkdir -pv /usr/lib/firmware/radeon &amp;&amp;
+cp -v &lt;YOUR_BLOBS&gt; /usr/lib/firmware/radeon</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            RadeonSI Firmware
+          </h3>
+          <p>
+            AMDGPU devices require firmware in order to be used in general.
+            Install <a class="xref" href="pciutils.html" title=
+            "pciutils-3.13.0">pciutils-3.13.0</a> to check the model name of
+            your card, and look for 'VGA compatible controller:'. If you have
+            an APU (Accelerated Processing Unit, i.e. CPU and video on the
+            same chip) that will probably tell you the name. If you have a
+            separate amdgpu video card you will need to search to determine
+            which name it uses (e.g. a card described as Advanced Micro
+            Devices, Inc. [AMD/ATI] Baffin [Radeon RX 550 640SP / RX
+            560/560X] need Polaris11 firmware. There is a table of "Family,
+            Chipset name, Product name and Firmware" at the end of the Kernel
+            sections in <a class="ulink" href=
+            "https://wiki.gentoo.org/wiki/AMDGPU#Known_firmware_blobs">AMDGPU</a>
+            page of the Gentoo wiki.
+          </p>
+          <p>
+            Once you have identified the firmware name, install all the
+            relevant files for it. For example, the Baffin card mentioned
+            above has 21 different polaris11* files, APUs such as renoir and
+            picasso have at least 12 files and might gain more in future
+            updates (e.g. the raven APU now has a 13th file, raven_ta.bin).
+          </p>
+          <pre class="root"><kbd class=
+          "command">mkdir -pv /usr/lib/firmware/amdgpu &amp;&amp;
+cp -v &lt;YOUR_BLOBS&gt; /usr/lib/firmware/amdgpu</kbd></pre>
+          <p>
+            If disk space is not a problem, you could install all the current
+            amdgpu firmware files and not worry about exactly which chipset
+            is installed.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            i915 Firmware
+          </h3>
+          <p>
+            Intel integrated GPUs from Skylake onwards can use firmware for
+            GuC (the Graphics microcontroller), and also for the HuC
+            (HEVC/H265 microcontroller which offloads to the GPU) and the DMC
+            (Display Microcontroller) to provide additional low-power states.
+            The GuC and HuC have had a chequered history in the kernel and
+            updated firmware may be disabled by default, depending on your
+            kernel version. Further details may be found at <a class="ulink"
+            href=
+            "https://01.org/linuxgraphics/downloads/firmware/">https://01.org/linuxgraphics/downloads/firmware/</a>
+            and <a class="ulink" href=
+            "https://wiki.archlinux.org/index.php/intel_graphics">https://wiki.archlinux.org/index.php/intel_graphics</a>.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            NVIDIA Firmware
+          </h3>
+          <p>
+            Some NVIDIA GPUs from Kepler onwards, including RTX and GTX 9xx
+            series onwards, require firmware signed by NVIDIA to work. NVIDIA
+            has now released firmware up to Blackwell (50xx) to <a class=
+            "ulink" href=
+            "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git">
+            linux-firmware</a>. Read <a class="ulink" href=
+            "https://nouveau.freedesktop.org/CodeNames.html">the CodeNames
+            page of the Nouveau wiki</a> to figure out the code name of your
+            NVIDIA GPU (for example, the code name of the GeForce RTX 5080 is
+            GB203). The directory for the firmware files you need is named as
+            the result converting the code name to lowercase (<code class=
+            "filename">gb203</code> for the example). The directory (or some
+            of its contents) may be actually a symlink to another directory
+            (or some files in another directory).
+          </p>
+          <p>
+            The <code class="filename">WHENCE</code> file in the <code class=
+            "filename">linux-firmware</code> directory documents all the
+            firmware files and potential symlinks. Once you found what you
+            need, look it up in <code class="filename">WHENCE</code> and make
+            the necessary symlinks. If you cannot find your GPU listed in
+            <code class="filename">WHENCE</code>, it means your GPU either
+            doesn't need firmware or the firmware has not been released yet.
+            If you don't want to bother and would rather install all the
+            firmware and symlinks, follow the instructions below in order to
+            install the newer firmware properly automatically:
+          </p>
+          <pre class="root"><kbd class=
+          "command">git clone https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git  &amp;&amp;
+cd linux-firmware                                                                      &amp;&amp;
+mkdir -pv /usr/lib/firmware/nvidia                                                     &amp;&amp;
+mkdir -pv DESTDIR/usr/lib/firmware                                                     &amp;&amp;
+sed -i 's@^destdir=$@destdir=DESTDIR/usr/lib/firmware@' copy-firmware.sh               &amp;&amp;
+sh copy-firmware.sh                                                                    &amp;&amp;
+cp -vr DESTDIR/usr/lib/firmware/nvidia/* /usr/lib/firmware/nvidia                      &amp;&amp;
+rm -rf DESTDIR</kbd></pre>
+          <p>
+            For NVIDIA GPUs from Tesla to Kepler, the Nouveau driver requires
+            some extra firmware to support video decoding acceleration. These
+            firmware files are not released by NVIDIA but they can be
+            extracted from the NVIDIA runfile:
+          </p>
+          <pre class="root"><kbd class=
+          "command">wget https://anduin.linuxfromscratch.org/BLFS/nvidia-firmware/extract_firmware.py        &amp;&amp;
+wget https://us.download.nvidia.com/XFree86/Linux-x86/340.32/NVIDIA-Linux-x86-340.32.run &amp;&amp;
+sh NVIDIA-Linux-x86-340.32.run --extract-only                                            &amp;&amp;
+python3 extract_firmware.py                                                              &amp;&amp;
+mkdir -p /usr/lib/firmware/nouveau                                                       &amp;&amp;
+cp -d nv* vuc-* /usr/lib/firmware/nouveau/</kbd></pre>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="whatdriver.html" title=
+          "What Drivers to Install">Prev</a>
+          <p>
+            What Drivers to Install
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="pciutils.html" title=
+          "pciutils-3.13.0">Next</a>
+          <p>
+            pciutils-3.13.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

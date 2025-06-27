@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Static MinGW-w64-GCC-15.1.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64-binutils.html" title=
+          "MinGW-w64-Binutils-2.44">Prev</a>
+          <p>
+            MinGW-w64-Binutils-2.44
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64.html" title=
+          "MinGW-w64-12.0.0">Next</a>
+          <p>
+            MinGW-w64-12.0.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="mingw-w64-gcc-static" name="mingw-w64-gcc-static"></a>Static
+      MinGW-w64-GCC-15.1.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Static MinGW-w64-GCC
+        </h2>
+        <p>
+          <span class="application">MinGW-w64-GCC</span> provides
+          <span class="application">GCC</span> compilers for MinGW-w64,
+          allowing users and applications to compile code targetting Windows.
+          This will be done in steps to avoid the need for already present
+          binaries. This is the static build, which will have limited support
+          but will be able to compile software better for the MinGW-w64
+          targets.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://ftp.gnu.org/gnu/gcc/gcc-15.1.0/gcc-15.1.0.tar.xz">https://ftp.gnu.org/gnu/gcc/gcc-15.1.0/gcc-15.1.0.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Static MinGW-w64-GCC Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="mingw-w64-binutils.html" title=
+          "MinGW-w64-Binutils-2.44">MinGW-w64-Binutils-2.44</a> and <a class=
+          "xref" href="mingw-w64-headers.html" title=
+          "MinGW-w64-headers-12.0.0">MinGW-w64-headers-12.0.0</a>
+        </p>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/gdb.html">
+          GDB</a> and <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/valgrind.html">
+          Valgrind</a> (for tests)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Static MinGW-w64-GCC
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            x86_64 Installation of Static MinGW-w64-GCC
+          </h3>
+          <p>
+            Install x86_64 Static <span class=
+            "application">MinGW-w64-GCC</span> by running the following
+            commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-x86_64-mingw-w64-static &amp;&amp;
+cd    build-x86_64-mingw-w64-static &amp;&amp;
+
+../configure --prefix=/usr               \
+             --target=x86_64-w64-mingw32 \
+             --disable-shared            \
+             --disable-multilib          \
+             --disable-threads           \
+             --enable-languages=c,c++ &amp;&amp;
+
+make all-gcc</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">make install-gcc &amp;&amp; cd ..</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            i686 Installation of Static MinGW-w64-GCC
+          </h3>
+          <p>
+            Install i686 Static <span class=
+            "application">MinGW-w64-GCC</span> by running the following
+            commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-i686-mingw-w64-static &amp;&amp;
+cd    build-i686-mingw-w64-static &amp;&amp;
+
+../configure --prefix=/usr             \
+             --target=i686-w64-mingw32 \
+             --disable-shared          \
+             --disable-multilib        \
+             --disable-threads         \
+             --enable-languages=c,c++ &amp;&amp;
+
+make all-gcc</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install-gcc</kbd></pre>
+        </div>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>../configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <span class="command"><strong>mkdir build; cd
+          build</strong></span>: The <span class="application">GCC</span>
+          documentation recommends building the package in a dedicated build
+          directory.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-shared</code></em>: This
+          option disables building shared libraries. They will be built
+          later.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-multilib</code></em>: This
+          option ensures that files are created for the specific architecture
+          of your computer.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-threads</code></em>: This
+          option disables thread support due to building errors in GCC. This
+          support will be built in later.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-languages=c,c++</code></em>:
+          This command builds support for C and C++. Refer to <a class=
+          "ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/gcc.html">
+          https://www.linuxfromscratch.org/blfs/view/systemd/general/gcc.html</a>
+          to find what other languages are supported.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <p>
+          There are no binaries specific to this package besides the format
+          the compilers are targetting. For in-depth descriptions, read
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/gcc.html#contents-gcc">
+          https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/gcc.html#contents-gcc</a>
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64-binutils.html" title=
+          "MinGW-w64-Binutils-2.44">Prev</a>
+          <p>
+            MinGW-w64-Binutils-2.44
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64.html" title=
+          "MinGW-w64-12.0.0">Next</a>
+          <p>
+            MinGW-w64-12.0.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

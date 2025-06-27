@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      libclc-20.1.6
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="spirv-llvm-translator.html" title=
+          "SPIRV-LLVM-Translator-20.1.2">Prev</a>
+          <p>
+            SPIRV-LLVM-Translator-20.1.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libva.html" title="libva-2.22.0">Next</a>
+          <p>
+            libva-2.22.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="libclc" name="libclc"></a>libclc-20.1.6
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to libclc
+        </h2>
+        <p>
+          The <span class="application">libclc</span> package contains
+          library requirements of the OpenCL C programming language (provides
+          header files but no libraries itself).
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.6/libclc-20.1.6.src.tar.xz">
+                https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.6/libclc-20.1.6.src.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          libclc Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="llvm.html" title=
+          "LLVM-20.1.6">LLVM-20.1.6</a> (with Clang) and <a class="xref"
+          href="spirv-llvm-translator.html" title=
+          "SPIRV-LLVM-Translator-20.1.2">SPIRV-LLVM-Translator-20.1.2</a>
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of libclc
+        </h2>
+        <p>
+          Install <span class="application">libclc</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr \
+      -D CMAKE_BUILD_TYPE=Release  \
+      -G Ninja .. &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          To test the results, issue: <span class="command"><strong>ninja
+          test</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">ninja install</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            For a full list of options and values, make sure you are in a
+            build directory, then run <span class="command"><strong>cmake
+            -LAH ..</strong></span>.
+          </p>
+        </div>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Library:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/{include,share}/clc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="spirv-llvm-translator.html" title=
+          "SPIRV-LLVM-Translator-20.1.2">Prev</a>
+          <p>
+            SPIRV-LLVM-Translator-20.1.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libva.html" title="libva-2.22.0">Next</a>
+          <p>
+            libva-2.22.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

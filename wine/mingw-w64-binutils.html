@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      MinGW-w64-Binutils-2.44
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64-headers.html" title=
+          "MinGW-w64-headers-12.0.0">Prev</a>
+          <p>
+            MinGW-w64-headers-12.0.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64-gcc-static.html" title=
+          "Static MinGW-w64-GCC-15.1.0">Next</a>
+          <p>
+            Static MinGW-w64-GCC-15.1.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="mingw-w64-binutils" name=
+      "mingw-w64-binutils"></a>MinGW-w64-Binutils-2.44
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to MinGW-w64-Binutils
+        </h2>
+        <p>
+          MinGW-w64-Binutils is a collection of software that can change the
+          state of Windows binaries or make them executable. These Binutils
+          are specific to MinGW-w64, and using regular Binutils will not work
+          for the proceeding packages.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://sourceware.org/pub/binutils/releases/binutils-2.44.tar.xz">
+                https://sourceware.org/pub/binutils/releases/binutils-2.44.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of MinGW-w64-Binutils
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            x86_64 MinGW-w64-Binutils
+          </h3>
+          <p>
+            Install x86_64 <span class=
+            "application">MinGW-w64-Binutils</span> by running the following
+            commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-x86_64 &amp;&amp;
+cd    build-x86_64 &amp;&amp;
+
+../configure --prefix=/usr                                \
+             --target=x86_64-w64-mingw32                  \
+             --infodir=/usr/share/info/x86_64-w64-mingw32 \
+             --disable-nls                                \
+             --disable-werror &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">make   DESTDIR=$PWD/DESTDIR install          &amp;&amp;
+rm -v  DESTDIR/usr/lib/bfd-plugins/libdep.so &amp;&amp;
+cp -Rv DESTDIR/usr/* /usr                    &amp;&amp;
+rm -rf DESTDIR                               &amp;&amp;
+cd ..</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            i686 MinGW-w64-Binutils
+          </h3>
+          <p>
+            Install i686 <span class="application">MinGW-w64-Binutils</span>
+            by running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-i686 &amp;&amp;
+cd    build-i686 &amp;&amp;
+
+../configure --prefix=/usr                              \
+             --target=i686-w64-mingw32                  \
+             --infodir=/usr/share/info/i686-w64-mingw32 \
+             --disable-nls                              \
+             --disable-werror &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">make   DESTDIR=$PWD/DESTDIR install          &amp;&amp;
+rm -v  DESTDIR/usr/lib/bfd-plugins/libdep.so &amp;&amp;
+cp -Rv DESTDIR/usr/* /usr                    &amp;&amp;
+rm -rf DESTDIR</kbd></pre>
+        </div>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>../configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--disable-nls</code></em>: This option
+          disables NLS support, disabling output diagnostics in languages
+          other than American English. Omit <em class=
+          "parameter"><code>--disable-nls</code></em> and invoke <code class=
+          "option">--enable-nls</code> to enable NLS support.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-werror</code></em>: This
+          option makes it so warnings won't be considered errors.
+        </p>
+        <p>
+          <em class="parameter"><code>--target=*</code></em>: This option
+          builds files for the architecture passed to it.
+        </p>
+        <p>
+          <span class="command"><strong>rm -v
+          DESTDIR/usr/lib/bfd-plugins/libdep.so</strong></span>: This command
+          removes an libary that conflicts with the original library provided
+          by the original compilation of <a class="ulink" href=
+          "https://www.linuxfromscratch.org/~thomas/multilib-systemd-m32/chapter08/binutils.html">
+          Binutils</a>.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">{i686,x86_64}-w64-mingw32-addr2line,
+              {i686,x86_64}-w64-mingw32-c++filt,
+              {i686,x86_64}-w64-mingw32-dllwrap,
+              {i686,x86_64}-w64-mingw32-elfedit,
+              {i686,x86_64}-w64-mingw32-gprof,
+              {i686,x86_64}-w64-mingw32-size,
+              {i686,x86_64}-w64-mingw32-strings,
+              {i686,x86_64}-w64-mingw32-windmc,
+              {i686,x86_64}-w64-mingw32-windres, ar, as, dlltool, ld, ld.bfd,
+              nm, objcopy, ranlib, readelf, and strip (<span class=
+              "application">MinGW-w64</span> specific binaries besides
+              formatting include: {i686,x86_64}-w64-mingw32-dllwrap,
+              {i686,x86_64}-w64-mingw32-windmc,
+              {i686,x86_64}-w64-mingw32-windres, and dlltool)</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/{i686,x86_64}-w64-mingw32/bin,
+              /usr/{i686,x86_64}-w64-mingw32/lib/ldscripts, and
+              /usr/share/info/{i686,x86_64}-w64-mingw32</span>
+            </div>
+          </div>
+        </div>
+        <p>
+          Only binutils specific to <span class=
+          "application">MinGW-w64</span> will be explained. For the rest, see
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/~thomas/multilib-systemd-m32/chapter08/binutils.html">
+          Binutils</a>.
+        </p>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="dllwrap" name="dllwrap"></a><span class=
+                    "term"><span class=
+                    "command"><strong>{i686,x86_64}-w64-mingw32-dllwrap</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    ancient tool for generating PE style DLLs
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="windmc" name="windmc"></a><span class=
+                    "term"><span class=
+                    "command"><strong>{i686,x86_64}-w64-mingw32-windmc</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    generates Windows message resources
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="windres" name="windres"></a><span class=
+                    "term"><span class=
+                    "command"><strong>{i686,x86_64}-w64-mingw32-windres</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    manipulates Windows resources
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="dlltool" name="dlltool"></a><span class=
+                    "term"><span class=
+                    "command"><strong>dlltool</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    creates files needed to build and use DLLs
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64-headers.html" title=
+          "MinGW-w64-headers-12.0.0">Prev</a>
+          <p>
+            MinGW-w64-headers-12.0.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64-gcc-static.html" title=
+          "Static MinGW-w64-GCC-15.1.0">Next</a>
+          <p>
+            Static MinGW-w64-GCC-15.1.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

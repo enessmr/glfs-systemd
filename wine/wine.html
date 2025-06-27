@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Wine-10.9
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;18.&nbsp;Wine
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="winechpt.html" title="Wine">Prev</a>
+          <p>
+            Wine
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="dxvk.html" title="DXVK-2.6.2">Next</a>
+          <p>
+            DXVK-2.6.2
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winechpt.html" title=
+          "Chapter&nbsp;18.&nbsp;Wine">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="wine" name="wine"></a>Wine-10.9
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Wine
+        </h2>
+        <p>
+          Wine is a compatibility layer for running Windows programs on Unix.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://dl.winehq.org/wine/source/10.x/wine-10.9.tar.xz">https://dl.winehq.org/wine/source/10.x/wine-10.9.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Wine Dependencies
+        </h3>
+        <p>
+          <a class="xref" href="winedeps.html" title="Wine Dependencies">Wine
+          Dependencies</a>
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Wine
+        </h2>
+        <p>
+          Wine has three build types. Scroll down to the build type you want.
+          Visit <a class="xref" href="winedeps.html" title=
+          "Wine Dependencies">Wine Dependencies</a> for more information
+          about each build type.
+        </p>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            WoW64
+          </h3>
+          <p>
+            Install WoW64 <span class="application">Wine</span> by running
+            the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-win64 &amp;&amp;
+cd    build-win64 &amp;&amp;
+
+../configure --prefix=/usr   \
+             --disable-tests \
+             --enable-win64 &amp;&amp;
+
+make              &amp;&amp;
+
+cd ..             &amp;&amp;
+mkdir build-win32 &amp;&amp;
+cd    build-win32 &amp;&amp;
+
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+../configure --prefix=/usr           \
+             --disable-tests         \
+             --with-wine64=../build-win64 &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install      &amp;&amp;
+cd ../build-win64 &amp;&amp;
+make install</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            64-bit Only
+          </h3>
+          <p>
+            Install 64-bit only <span class="application">Wine</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+../configure --prefix=/usr   \
+             --disable-tests \
+             --enable-win64 &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            32-bit Only
+          </h3>
+          <p>
+            Install 32-bit only <span class="application">Wine</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+../configure --prefix=/usr --disable-tests &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install</kbd></pre>
+        </div>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>../configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--disable-tests</code></em>: This
+          parameter disables building tests.
+        </p>
+        <p>
+          <em class=
+          "parameter"><code>--with-wine64=../build-win64</code></em>: This
+          option allows Wine during the compilation stage to use files built
+          in the wine64 stage to enable support for both 32-bit and 64-bit.
+        </p>
+      </div>
+      <div class="configuration" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Configuring Wine
+        </h2>
+        <p>
+          This installation should be good enough for most people but there
+          may be a few things that you wish to change or do in relation to
+          this package. The <a class="ulink" href=
+          "https://wiki.archlinux.org/title/Wine">Arch Wiki page</a> for Wine
+          covers most of the things you may wish to do. In relation to gaming
+          and Vulkan, you may wish to install <a class="xref" href=
+          "dxvk.html" title="DXVK-2.6.2">DXVK-2.6.2</a> which converts
+          Direct3D 8-11 calls to Vulkan, unlike WineD3D which converts
+          Direct3D calls to OpenGL in a poor manner and is much slower.
+        </p>
+        <p>
+          As for Direct3D 12, you may also wish to install <a class="xref"
+          href="vkd3d-proton.html" title=
+          "VKD3D-Proton-2.14.1">VKD3D-Proton-2.14.1</a> which replaces
+          <span class="application">VKD3D</span> provided by <span class=
+          "application">Wine</span>. <span class="application">VKD3D</span>
+          is less aggressive with optimizations and is geared for general
+          use, whereas <span class="application">VKD3D-Proton</span> has
+          aggressive optimizations and is geared towards gaming. Despite the
+          name, it can be used with <span class="application">Wine</span> and
+          works quite well.
+        </p>
+        <p>
+          The choice of what to install is up to you.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">function_grep.pl, msidb (link to wine),
+              msiexec (link to wine), notepad (link to wine), regedit (link
+              to wine), regsvr32 (link to wine), widl, wine, wineboot (link
+              to wine), winebuild, winecfg (link to wine), wineconsole (link
+              to wine), winecpp (link to winegcc), winedbg (link to wine),
+              winedump, winefile (link to wine), wineg++ (link to winegcc),
+              winegcc, winemaker, winemine (link to wine), winepath (link to
+              wine), wineserver, wmc, and wrc</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">Various dynamic and static
+              libraries</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/wine/windows,
+              /usr/lib/wine/x86_64-windows, /usr/lib32/wine/i686-unix, and
+              /usr/share/wine</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="function_grep.pl" name=
+                    "function_grep.pl"></a><span class="term"><span class=
+                    "command"><strong>function_grep.pl</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a Perl script that does the same job as <span class=
+                    "command"><strong>grep</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="msidb" name="msidb"></a><span class=
+                    "term"><span class=
+                    "command"><strong>msidb</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    handles MSI databases; symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="msiexec" name="msiexec"></a><span class=
+                    "term"><span class=
+                    "command"><strong>msiexec</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> MSI
+                    installer; symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="notepad" name="notepad"></a><span class=
+                    "term"><span class=
+                    "command"><strong>notepad</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> text editor;
+                    symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="regedit" name="regedit"></a><span class=
+                    "term"><span class=
+                    "command"><strong>regedit</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> registry
+                    editor; symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="regsvr32" name="regsvr32"></a><span class=
+                    "term"><span class=
+                    "command"><strong>regsvr32</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> DLL
+                    Registration Server; symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="widl" name="widl"></a><span class=
+                    "term"><span class=
+                    "command"><strong>widl</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> Interface
+                    Definition Language (IDL) compiler
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="wine-bin" name="wine-bin"></a><span class=
+                    "term"><span class=
+                    "command"><strong>wine</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    runs Windows programs on Unix
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="wineboot" name="wineboot"></a><span class=
+                    "term"><span class=
+                    "command"><strong>wineboot</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    performs <span class="application">Wine</span>
+                    initialization, startup, and shutdown tasks; symlink to
+                    <span class="command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winebuild" name="winebuild"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winebuild</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> DLL builder
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winecfg" name="winecfg"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winecfg</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span>
+                    Configuration Editor; symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="wineconsole" name="wineconsole"></a><span class=
+                    "term"><span class=
+                    "command"><strong>wineconsole</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> console;
+                    symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winecompilers" name=
+                    "winecompilers"></a><span class="term"><span class=
+                    "command"><strong>wine{cpp,g++,gcc}</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> C and C++
+                    <span class="application">MinGW-w64</span> Compatible
+                    Compiler
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winedbg" name="winedbg"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winedbg</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> debugger;
+                    symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winedump" name="winedump"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winedump</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a <span class="application">Wine</span> DLL tool
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winefile" name="winefile"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winefile</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a <span class="application">Wine</span> File Manager;
+                    symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winemaker" name="winemaker"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winemaker</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    generates a build infrastructure for compiling Windows
+                    programs on Unix
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winemine" name="winemine"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winemine</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> <span class=
+                    "application">Minesweeper</span> game; it is also just an
+                    example and not meant to be an accurate implementation of
+                    <span class="application">Minesweeper;</span> symlink to
+                    <span class="command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="winepath" name="winepath"></a><span class=
+                    "term"><span class=
+                    "command"><strong>winepath</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a tool to convert Unix paths to/from Win32 paths;
+                    symlink to <span class=
+                    "command"><strong>wine</strong></span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="wineserver" name="wineserver"></a><span class=
+                    "term"><span class=
+                    "command"><strong>wineserver</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> server
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="wmc" name="wmc"></a><span class=
+                    "term"><span class="command"><strong>wmc</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> Message
+                    Compiler
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="wrc" name="wrc"></a><span class=
+                    "term"><span class="command"><strong>wrc</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Wine</span> Resource
+                    Compiler
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="winechpt.html" title="Wine">Prev</a>
+          <p>
+            Wine
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="dxvk.html" title="DXVK-2.6.2">Next</a>
+          <p>
+            DXVK-2.6.2
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winechpt.html" title=
+          "Chapter&nbsp;18.&nbsp;Wine">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

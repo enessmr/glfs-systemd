@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      libvpx-1.15.2
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;17.&nbsp;Gst
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="lame.html" title="LAME-3.100">Prev</a>
+          <p>
+            LAME-3.100
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="x264.html" title="x264-20240812">Next</a>
+          <p>
+            x264-20240812
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="gst.html" title=
+          "Chapter&nbsp;17.&nbsp;Gst">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="libvpx" name="libvpx"></a>libvpx-1.15.2
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to libvpx
+        </h2>
+        <p>
+          This package, from the WebM project, provides the reference
+          implementations of the VP8 Codec (used in most current HTML5 video)
+          and of the next-generation VP9 Codec.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            An Internet connection is needed for some tests of this package.
+            The system certificate store may need to be set up with <a class=
+            "xref" href="../shareddeps/make-ca.html" title=
+            "make-ca-1.16.1">make-ca-1.16.1</a> before testing this package.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://github.com/webmproject/libvpx/archive/v1.15.2/libvpx-1.15.2.tar.gz">
+                https://github.com/webmproject/libvpx/archive/v1.15.2/libvpx-1.15.2.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          libvpx Dependencies
+        </h3>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="nasm.html" title=
+          "NASM-2.16.03">NASM-2.16.03</a> and <a class="xref" href=
+          "../shareddeps/which.html" title=
+          "Which-2.23 and Alternatives">Which-2.23</a> (so <span class=
+          "command"><strong>configure</strong></span> can find nasm)
+        </p>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <a class="xref" href="../shareddeps/curl.html" title=
+          "cURL-8.14.1">cURL-8.14.1</a> (to download test files)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of libvpx
+        </h2>
+        <p>
+          If upgrading from a previous version of libvpx, update the
+          timestamps of all the files to prevent the build system from
+          retaining the files from the old installation:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">find -type f | xargs touch</kbd></pre>
+        <p>
+          Install <span class="application">libvpx</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">sed -i 's/cp -p/cp/' build/make/Makefile &amp;&amp;
+
+mkdir libvpx-build            &amp;&amp;
+cd    libvpx-build            &amp;&amp;
+
+../configure --prefix=/usr    \
+             --enable-shared  \
+             --disable-static &amp;&amp;
+make</kbd></pre>
+        <p>
+          To test the results, issue: <span class=
+          "command"><strong>LD_LIBRARY_PATH=. make test</strong></span>. The
+          test suite downloads many files as part of its test process. A few
+          parts of it will use all available cores.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">make install</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32-Installation of libvpx
+        </h2>
+        <p>
+          Install lib32-<span class="application">libvpx</span> by running
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">rm -rf * &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"          \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig  \
+../configure --prefix=/usr            \
+             --libdir=/usr/lib32      \
+             --target=x86-linux-gcc   \
+             --enable-shared          \
+             --disable-static &amp;&amp;
+
+make</kbd></pre>
+        <p>
+          To test the results, issue: <span class=
+          "command"><strong>LD_LIBRARY_PATH=. make test</strong></span>. The
+          test suite downloads many files as part of its test process. A few
+          parts of it will use all available cores.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">make DESTDIR=$PWD/DESTDIR install     &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>../configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <span class="command"><strong>sed ...</strong></span> : This
+          command corrects the ownership and permissions of installed files.
+        </p>
+        <p>
+          <span class="command"><strong>mkdir libvpx-build &amp;&amp; cd
+          libvpx-build</strong></span>: The <span class=
+          "application">libvpx</span> developers recommend building in a
+          dedicated build directory.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-static</code></em>: This
+          switch prevents installation of static versions of the libraries.
+        </p>
+        <p>
+          <code class="option">--disable-vp8</code>: This switch prevents
+          building support for the VP8 codec.
+        </p>
+        <p>
+          <code class="option">--disable-vp9</code>: This switch prevents
+          building support for the VP9 codec.
+        </p>
+        <p>
+          <code class="option">--target=generic-gnu</code>: This switch
+          disables optimizations specific to x86 and x86-64, allowing to
+          build this package without <span class=
+          "command"><strong>nasm</strong></span> and <span class=
+          "command"><strong>yasm</strong></span> installed.
+        </p>
+        <p>
+          <span class="command"><strong>LD_LIBRARY_PATH=.</strong></span>:
+          This is needed for the test suite to use the library that was just
+          built.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">vpxdec and vpxenc</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libvpx</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/vpx</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="vpxdec" name="vpxdec"></a><span class=
+                    "term"><span class=
+                    "command"><strong>vpxdec</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the WebM Project VP8 and VP9 decoder
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="vpxenc" name="vpxenc"></a><span class=
+                    "term"><span class=
+                    "command"><strong>vpxenc</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the WebM project VP8 and VP9 encoder
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libvpx-lib" name="libvpx-lib"></a><span class=
+                    "term"><code class="filename">libvpx</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides functions to use the VP8 and VP9 video codecs
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="lame.html" title="LAME-3.100">Prev</a>
+          <p>
+            LAME-3.100
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="x264.html" title="x264-20240812">Next</a>
+          <p>
+            x264-20240812
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="gst.html" title=
+          "Chapter&nbsp;17.&nbsp;Gst">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

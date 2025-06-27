@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Which-2.23 and Alternatives
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;6.&nbsp;Basic X11 Software
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="libxcb.html" title="libxcb-1.17.0">Prev</a>
+          <p>
+            libxcb-1.17.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libpng.html" title="libpng-1.6.48">Next</a>
+          <p>
+            libpng-1.6.48
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="which" name="which"></a>Which-2.23 and Alternatives
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        The presence or absence of the <span class=
+        "command"><strong>which</strong></span> program in the main LFS book
+        is probably one of the most contentious issues on the mailing lists.
+        It has resulted in at least one flame war in the past. To hopefully
+        put an end to this once and for all, presented here are two options
+        for equipping your system with <span class=
+        "command"><strong>which</strong></span>. The question of which
+        <span class="quote">“<span class="quote"><span class=
+        "command"><strong>which</strong></span></span>”</span> is for you to
+        decide.
+      </p>
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to GNU Which
+        </h2>
+        <p>
+          The first option is to install the actual GNU <span class=
+          "application">which</span> package.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://ftp.gnu.org/gnu/which/which-2.23.tar.gz">https://ftp.gnu.org/gnu/which/which-2.23.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Which
+        </h2>
+        <p>
+          Install <span class="application">which</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">./configure --prefix=/usr &amp;&amp;
+make</kbd></pre>
+        <p>
+          This package does not come with a test suite.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">make install</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>./configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Program:</strong>
+              <span class="segbody">which</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">None</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="which-prog" name="which-prog"></a><span class=
+                    "term"><span class=
+                    "command"><strong>which</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    shows the full path of (shell) commands installed in your
+                    <code class="envar">PATH</code>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          The 'which' Script
+        </h2>
+        <p>
+          The second option (for those who don't want to install the package)
+          is to create a simple script (execute as the <code class=
+          "systemitem">root</code> user):
+        </p>
+        <pre class="root"><kbd class=
+        "command">cat &gt; /usr/bin/which &lt;&lt; "EOF" &amp;&amp;
+<code class="literal">#!/bin/bash
+type -pa "$@" | head -n 1 ; exit ${PIPESTATUS[0]}</code>
+EOF
+
+chmod -v 755 /usr/bin/which &amp;&amp;
+chown -v root:root /usr/bin/which</kbd></pre>
+        <p>
+          This should work OK and is probably the easiest solution for most
+          cases, but is not the most comprehensive implementation.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Some build systems <a href="#ftn.id7590" class="footnote" id=
+            "id7590" name="id7590"><sup class="footnote">[1]</sup></a> expect
+            <span class="command"><strong>which</strong></span> to support
+            options which can alter the string of the file path of a given
+            program. This installation can therefore trip up those build
+            systems. If in doubt, install the GNU version instead of the
+            script.
+          </p>
+        </div>
+      </div>
+      <div class="footnotes">
+        <br />
+        <hr width="100" align="left" />
+        <div id="ftn.id7590" class="footnote">
+          <p>
+            <a href="#id7590" class="para"><sup class="para">[1]</sup></a> A
+            notable example is <a class="ulink" href=
+            "https://glfs-book.github.io/slfs/svr4/pkgsuite.html">pkgsuite</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="libxcb.html" title="libxcb-1.17.0">Prev</a>
+          <p>
+            libxcb-1.17.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libpng.html" title="libpng-1.6.48">Next</a>
+          <p>
+            libpng-1.6.48
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

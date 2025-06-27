@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Xorg Fonts
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;9.&nbsp;X11
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="xcursor-themes.html" title=
+          "xcursor-themes-1.0.7">Prev</a>
+          <p>
+            xcursor-themes-1.0.7
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="xkeyboard-config.html" title=
+          "XKeyboard-Config-2.45">Next</a>
+          <p>
+            XKeyboard-Config-2.45
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="x.html" title=
+          "Chapter&nbsp;9.&nbsp;X11">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="xorg7-font" name="xorg7-font"></a>Xorg Fonts
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Xorg Fonts
+        </h2>
+        <p>
+          The <span class="application">Xorg</span> font packages provide
+          some scalable fonts and supporting packages for <span class=
+          "application">Xorg</span> applications. Many people will want to
+          install other TTF or OTF fonts in addition to, or instead of,
+          these. Some are listed at <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/x/TTF-and-OTF-fonts.html">
+          TTF-and-OTF-fonts</a>.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://www.x.org/pub/individual/font/">https://www.x.org/pub/individual/font/</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Xorg Fonts Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="xcursor-themes.html" title=
+          "xcursor-themes-1.0.7">xcursor-themes-1.0.7</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Downloading Xorg Fonts
+        </h2>
+        <p>
+          First, create a list of files to be downloaded. This file will also
+          be used to verify the integrity of the downloads when complete:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; font-7-list &lt;&lt; "EOF"
+<code class="literal">font-util-1.4.1.tar.xz
+encodings-1.1.0.tar.xz
+font-alias-1.0.5.tar.xz
+font-adobe-utopia-type1-1.0.5.tar.xz
+font-bh-ttf-1.0.4.tar.xz
+font-bh-type1-1.0.4.tar.xz
+font-ibm-type1-1.0.4.tar.xz
+font-misc-ethiopic-1.0.5.tar.xz
+font-xfree86-type1-1.0.5.tar.xz</code>
+EOF</kbd></pre>
+        <p>
+          To download the needed files using <a class="xref" href="wget.html"
+          title="Wget-1.25.0">Wget-1.25.0</a>, use the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir font &amp;&amp;
+cd font &amp;&amp;
+grep -v '^#' ../font-7-list | wget -i- -c \
+    -B https://www.x.org/pub/individual/font/</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Xorg Fonts
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            When installing multiple packages in a script, the installation
+            needs to be done as the root user. There are three general
+            options that can be used to do this:
+          </p>
+          <div class="orderedlist">
+            <ol>
+              <li class="listitem">
+                <p>
+                  Run the entire script as the root user (not recommended).
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  Use the <span class="command"><strong>sudo</strong></span>
+                  command from the sudo package.
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  Use <span class="command"><strong>su -c "command
+                  arguments"</strong></span> (quotes required) which will ask
+                  for the root password for every iteration of the loop.
+                </p>
+              </li>
+            </ol>
+          </div>
+          <p>
+            One way to handle this situation is to create a short
+            <span class="command"><strong>bash</strong></span> function that
+            automatically selects the appropriate method. Once the command is
+            set in the environment, it does not need to be set again.
+          </p>
+          <pre class="userinput"><kbd class="command">as_root()
+{
+  if   [ $EUID = 0 ];        then $*
+  elif [ -x /usr/bin/sudo ]; then sudo $*
+  else                            su -c \\"$*\\"
+  fi
+}
+
+export -f as_root</kbd></pre>
+        </div>
+        <p>
+          First, start a subshell that will exit on error:
+        </p>
+        <pre class="userinput"><kbd class="command">bash -e</kbd></pre>
+        <p>
+          Install all of the packages by running the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">for package in $(grep -v '^#' ../font-7-list)
+do
+  packagedir=${package%.tar.?z*}
+  tar -xf $package
+  pushd $packagedir
+    ./configure $XORG_CONFIG
+    make
+    as_root make install
+  popd
+  as_root rm -rf $packagedir
+done</kbd></pre>
+        <p>
+          Finally, exit the shell that was started earlier:
+        </p>
+        <pre class="userinput"><kbd class="command">exit</kbd></pre>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">bdftruncate and ucs2any</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/share/fonts</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="bdftruncate-x7" name=
+                    "bdftruncate-x7"></a><span class="term"><span class=
+                    "command"><strong>bdftruncate</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    generates a truncated BDF font from an ISO 10646-1
+                    encoded BDF font
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="ucs2any-x7" name="ucs2any-x7"></a><span class=
+                    "term"><span class=
+                    "command"><strong>ucs2any</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    generates BDF fonts in any encoding from an ISO 10646-1
+                    encoded BDF font
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="xcursor-themes.html" title=
+          "xcursor-themes-1.0.7">Prev</a>
+          <p>
+            xcursor-themes-1.0.7
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="xkeyboard-config.html" title=
+          "XKeyboard-Config-2.45">Next</a>
+          <p>
+            XKeyboard-Config-2.45
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="x.html" title=
+          "Chapter&nbsp;9.&nbsp;X11">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

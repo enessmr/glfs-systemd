@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Connecting to the Internet
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;3.&nbsp;Networking
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="net.html" title="Networking">Prev</a>
+          <p>
+            Networking
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libtasn1.html" title=
+          "libtasn1-4.20.0">Next</a>
+          <p>
+            libtasn1-4.20.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="net.html" title=
+          "Chapter&nbsp;3.&nbsp;Networking">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="netconnect" name="netconnect"></a>Connecting to the Internet
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        The LFS book covers setting up networking by connecting to a LAN with
+        a static IP address. There are other methods used to obtain an IP
+        address and connect to a LAN and other networks (such as the
+        internet). The most popular method is DHCP.
+      </p>
+      <p>
+        DHCP stands for Dynamic Host Configuration Protocol. It is a protocol
+        used by many sites to automatically provide information such as IP
+        addresses, subnet masks and routing information to computers. If your
+        network uses DHCP, you will need a DHCP client in order to connect to
+        it.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          How to Connect to the Internet
+        </h2>
+        <p>
+          In order to use DHCP, you will need a DHCP client, <a class="ulink"
+          href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/dhcpcd.html">
+          dhcpcd</a>. You may also be wanting to connect to the internet
+          wirelessly. In order to do that, you should first configure the
+          kernel to support that, the instructions for that being at
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/wireless-kernel.html">
+          https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/wireless-kernel.html</a>.
+          After that, you will need a tool to connect to the internet,
+          suitable ones being <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/iw.html">
+          iw</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/wireless_tools.html">
+          Wireless Tools</a>, and <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/wpa_supplicant.html">
+          wpa_supplicant</a>. You will only need one of those, whichever one
+          is up to you.
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="net.html" title="Networking">Prev</a>
+          <p>
+            Networking
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libtasn1.html" title=
+          "libtasn1-4.20.0">Next</a>
+          <p>
+            libtasn1-4.20.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="net.html" title=
+          "Chapter&nbsp;3.&nbsp;Networking">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

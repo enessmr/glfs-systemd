@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      libpng-1.6.48
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;6.&nbsp;Basic X11 Software
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="which.html" title=
+          "Which-2.23 and Alternatives">Prev</a>
+          <p>
+            Which-2.23 and Alternatives
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="freetype2-pass1.html" title=
+          "FreeType-2.13.3 - Pass 1">Next</a>
+          <p>
+            FreeType-2.13.3 - Pass 1
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="libpng" name="libpng"></a>libpng-1.6.48
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to libpng
+        </h2>
+        <p>
+          The <span class="application">libpng</span> package contains
+          libraries used by other programs for reading and writing PNG files.
+          The PNG format was designed as a replacement for GIF and, to a
+          lesser extent, TIFF, with many improvements and extensions and lack
+          of patent problems.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://downloads.sourceforge.net/libpng/libpng-1.6.48.tar.xz">
+                https://downloads.sourceforge.net/libpng/libpng-1.6.48.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Additional Downloads
+        </h3>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Recommended patch to include animated png functionality in
+                <span class="application">libpng</span> (required to use the
+                system <span class="application">libpng</span> in
+                <span class="application">Firefox</span>, <span class=
+                "application">Seamonkey</span>, and <span class=
+                "application">Thunderbird</span>): <a class="ulink" href=
+                "https://downloads.sourceforge.net/sourceforge/libpng-apng/libpng-1.6.47-apng.patch.gz">
+                https://downloads.sourceforge.net/sourceforge/libpng-apng/libpng-1.6.47-apng.patch.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of libpng
+        </h2>
+        <p>
+          If you want to patch libpng to support apng files, apply it here:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">gzip -cd ../libpng-1.6.47-apng.patch.gz | patch -p1</kbd></pre>
+        <p>
+          Install <span class="application">libpng</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">./configure --prefix=/usr --disable-static &amp;&amp;
+make</kbd></pre>
+        <p>
+          To test the results, issue: <span class="command"><strong>make
+          check</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">make install &amp;&amp;
+mkdir -v /usr/share/doc/libpng-1.6.48 &amp;&amp;
+cp -v README libpng-manual.txt /usr/share/doc/libpng-1.6.48</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of libpng
+        </h2>
+        <p>
+          Install lib32-<span class="application">libpng</span> by running
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">make distclean &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"         \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+./configure --prefix=/usr            \
+            --libdir=/usr/lib32      \
+            --host=i686-pc-linux-gnu \
+            --disable-static &amp;&amp;
+
+make</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">make DESTDIR=$PWD/DESTDIR install     &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>./configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--disable-static</code></em>: This
+          switch prevents installation of static versions of the libraries.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">libpng-config (symlink), libpng16-config,
+              pngfix, and png-fix-itxt</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libpng</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/libpng16 and
+              /usr/share/doc/libpng-1.6.48</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pngfix" name="pngfix"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pngfix</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    tests, optimizes and optionally fixes the zlib header in
+                    PNG files. Optionally, when fixing, strips ancillary
+                    chunks from the file
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="png-fix-itxt" name="png-fix-itxt"></a><span class=
+                    "term"><span class=
+                    "command"><strong>png-fix-itxt</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    fixes PNG files that have an incorrect length field in
+                    the iTXt chunks
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libpng-config" name=
+                    "libpng-config"></a><span class="term"><span class=
+                    "command"><strong>libpng-config</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a shell script that provides configuration information
+                    for applications wanting to use <span class=
+                    "application">libpng</span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libpng-lin" name="libpng-lin"></a><span class=
+                    "term"><code class="filename">libpng</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contain routines used to create and manipulate PNG format
+                    graphics files
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="which.html" title=
+          "Which-2.23 and Alternatives">Prev</a>
+          <p>
+            Which-2.23 and Alternatives
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="freetype2-pass1.html" title=
+          "FreeType-2.13.3 - Pass 1">Next</a>
+          <p>
+            FreeType-2.13.3 - Pass 1
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

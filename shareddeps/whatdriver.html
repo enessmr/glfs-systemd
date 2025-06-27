@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      What Drivers to Install
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="drivers.html" title=
+          "Graphics Drivers">Prev</a>
+          <p>
+            Graphics Drivers
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="gpuconfig.html" title=
+          "GPU Kernel Options and Firmware">Next</a>
+          <p>
+            GPU Kernel Options and Firmware
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="whatdriver" name="whatdriver"></a>What Drivers to Install
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        On Linux, there are multiple drivers that one can install. Choosing
+        the one you need can be difficult if you do not know what drivers are
+        for what vendor and the perks and downsides of each option. This
+        section explains all of that to better help you decide what you want
+        or need.
+      </p>
+      <div class="admon note">
+        <img alt="[Note]" src="../images/note.png" />
+        <h3>
+          Note
+        </h3>
+        <p>
+          Gallium3D is a technology that <a class="xref" href="mesa.html"
+          title="Mesa-25.1.2">Mesa-25.1.2</a> relies on for OpenGL. In other
+          words, Gallium3D drivers are just OpenGL drivers. Each Gallium3D
+          driver is meant for different systems except <code class=
+          "computeroutput">zink</code> which just feeds OpenGL instructions
+          to the main Vulkan driver you install for your system.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          AMD
+        </h2>
+        <p>
+          There are 3 AMD GPU drivers: AMDGPU (Radeon Southern Islands and
+          later), ATI (r300 and r600), and AMDGPU PRO (proprietary AMDGPU
+          driver).
+        </p>
+        <p>
+          <span class="emphasis"><em>AMDGPU</em></span> (<a class="xref"
+          href="mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>): This driver
+          is for AMD GPUs that are Southern Island Cards or later. It is open
+          source and is the most standard AMD GPU driver. This driver is in
+          the Linux kernel. There is one Gallium3D driver, <code class=
+          "computeroutput">radeonsi</code>, and one Vulkan driver,
+          <code class="computeroutput">amd</code>.
+        </p>
+        <p>
+          <span class="emphasis"><em>ATI</em></span> (<a class="xref" href=
+          "mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>): This driver is
+          for the ATI AMD GPUs which precede GCN GPUs. It is open source and
+          targets older GPUs. The driver is in the Linux kernel. There are
+          two Gallium3D drivers: <code class="computeroutput">r300</code> and
+          <code class="computeroutput">r600</code>. For Vulkan, there is one
+          driver, <code class="computeroutput">amd</code>.
+        </p>
+        <p>
+          <span class="emphasis"><em>AMDGPU PRO</em></span> (<a class="xref"
+          href="amdgpu-pro.html" title="AMDGPU PRO">AMDGPU PRO</a>): This
+          driver is proprietary. Most users don't install this driver as the
+          open source drivers are already well off. However, it is needed for
+          hardware acceleration encoding, useful for those who wish to record
+          and edit videos. Performance in games varies between the open
+          source and proprietary drivers so the ending factor is if you
+          record and edit videos or not. You will need the firmware and open
+          source kernel driver for this driver.
+        </p>
+        <p>
+          Summary: If you are a regular user with a modern AMD GPU, use
+          <span class="emphasis"><em>AMDGPU</em></span>. If you have an older
+          card, go with <span class="emphasis"><em>ATI</em></span>. Use
+          <span class="emphasis"><em>AMDGPU PRO</em></span> if you want an
+          improvement with hardware acceleration encoding.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Intel
+        </h2>
+        <p>
+          Intel provides open source drivers, but for sake of simplicity, all
+          the relevant open source drivers will be classified as one -
+          <span class="emphasis"><em>i915</em></span>. There is another
+          driver called <span class="emphasis"><em>uvesafb</em></span>.
+        </p>
+        <p>
+          <span class="emphasis"><em>i915</em></span> (<a class="xref" href=
+          "mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>): This driver, or
+          rather collection of drivers, is for most Intel integrated and
+          discrete GPUs. It is a single option in the Linux kernel but has
+          various Gallium3D and Vulkan drivers. There is a good list on the
+          <a class="xref" href="mesa.html" title=
+          "Mesa-25.1.2">Mesa-25.1.2</a> page under <span class=
+          "quote">“<span class="quote">Command Explanations</span>”</span>
+          that will explain what Gallium3D and Vulkan driver you will need.
+        </p>
+        <p>
+          <span class="emphasis"><em>uvesafb</em></span> (not in this book):
+          This driver is for the Intel GMA 3600 series, a family of
+          integrated video adapters based on the PowerVR SGX 545 graphics
+          core. This driver was in the kernel since 3.5 but no longer since
+          4.15. This driver is not included in the book because of its lack
+          of use by most people, but has a good Arch Linux wiki page at
+          <a class="ulink" href=
+          "https://wiki.archlinux.org/title/Intel_GMA_3600">https://wiki.archlinux.org/title/Intel_GMA_3600</a>.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          NVIDIA
+        </h2>
+        <p>
+          The situation revolving around NVIDIA is more unfortunate than the
+          two vendors listed above and more complicated. NVIDIA does not
+          support open source drivers besides their own open source kernel
+          modules. Therefore performance with the open source driver,
+          <span class="emphasis"><em>Nouveau</em></span>, is slightly worse
+          than NVIDIA's proprietary driver. Installing the proprietary driver
+          can also be easier.
+        </p>
+        <p>
+          <span class="emphasis"><em>Nouveau</em></span> (<a class="xref"
+          href="mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>): This driver
+          is open source but has generally worse performance than
+          <span class="emphasis"><em>NVIDIA</em></span>. The driver is in the
+          Linux kernel. It has one Gallium3D driver, <code class=
+          "computeroutput">nouveau</code>, and one Vulkan driver,
+          <code class="computeroutput">nouveau</code> <a href="#ftn.id9489"
+          class="footnote" id="id9489" name="id9489"><sup class=
+          "footnote">[2]</sup></a>. The Gallium3D driver is known for its
+          lackluster performance. The Vulkan driver is much more performant.
+          For this reason, if you want to use <span class=
+          "emphasis"><em>Nouveau</em></span>, it is highly recommended to
+          install the Vulkan driver as well the <code class=
+          "computeroutput">zink</code> Gallium3D driver so that OpenGL
+          instructions can be fed into the Vulkan driver.
+        </p>
+        <p>
+          <span class="emphasis"><em>NVIDIA</em></span> (<a class="xref"
+          href="nvidia.html" title="NVIDIA-575.57.08">NVIDIA-575.57.08</a>):
+          This is the proprietary driver and the performance of this driver
+          is better than the open source alternative. It allows the use of
+          NVIDIA's CUDA project which is useful for hardware acceleration,
+          improving performance of games and workstation applications. This
+          driver has a lot of issues to this day but still provides better
+          performance, thus its installation is provided in this book.
+          Firmware isn't needed as it is provided by this driver.
+        </p>
+        <p>
+          Summary: If you want good performance and care about workstation
+          use cases, install <span class="emphasis"><em>NVIDIA</em></span>.
+          If you don't want to use the proprietary NVIDIA driver, use
+          <span class="emphasis"><em>Nouveau</em></span>. Installing
+          <code class="computeroutput">zink</code> is a good idea, too.
+        </p>
+      </div>
+      <div class="footnotes">
+        <br />
+        <hr width="100" align="left" />
+        <div id="ftn.id9489" class="footnote">
+          <p>
+            <a href="#id9489" class="para"><sup class="para">[2]</sup></a>
+            The <code class="computeroutput">nouveau</code> Vulkan driver is
+            also known as NVK, although the argument for NVK in <em class=
+            "parameter"><code>-D vulkan-drivers=</code></em> is just
+            <code class="computeroutput">nouveau</code> and does not have an
+            alias.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="drivers.html" title=
+          "Graphics Drivers">Prev</a>
+          <p>
+            Graphics Drivers
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="gpuconfig.html" title=
+          "GPU Kernel Options and Firmware">Next</a>
+          <p>
+            GPU Kernel Options and Firmware
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

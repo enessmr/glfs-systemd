@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Getting the Source Packages
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;1.&nbsp;Welcome to GLFS
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="conventions.html" title=
+          "Conventions Used in this Book">Prev</a>
+          <p>
+            Conventions Used in this Book
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="rationale.html" title=
+          "Rationale for Packages">Next</a>
+          <p>
+            Rationale for Packages
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="packages" name="packages"></a>Getting the Source Packages
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        Within the GLFS instructions, each package has two references for
+        finding the source files for the package—an HTTP link and an FTP link
+        (some packages may only list one of these links). Every effort has
+        been made to ensure that these links are accurate. However, the World
+        Wide Web is in continuous flux. Packages are sometimes moved or
+        updated and the exact URL specified is not always available.
+      </p>
+      <p>
+        The BLFS Team noticed this problem with BLFS, so they, with the
+        assistance of Oregon State University Open Source Lab, have made an
+        HTTP/FTP site available through world wide mirrors. See <a class=
+        "ulink" href=
+        "https://www.linuxfromscratch.org/blfs/download.html#sources">https://www.linuxfromscratch.org/blfs/download.html#sources</a>
+        for a list. These sites have all the sources of the exact versions of
+        the packages used in BLFS. If you can't find the BLFS or GLFS package
+        you need at the listed addresses, get it from these sites.
+      </p>
+      <p>
+        We would like to ask a favor, however. Although this is a public
+        resource for you to use, please do not abuse it. They have already
+        had one unthinking individual download over 3 GB of data, including
+        multiple copies of the same files that are placed at different
+        locations (via symlinks) to make finding the right package easier.
+        This person clearly did not know what files he needed and downloaded
+        everything. The best place to download files is the site or sites set
+        up by the source code developer. Please try there first.
+      </p>
+      <p>
+        As for GLFS, some packages listed here are not on BLFS or their site.
+        In such a case, we do not have a solution at the moment besides going
+        to the developer(s) and/or their website.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Obtaining the Source Packages in Bulk
+        </h2>
+        <p>
+          Obtaining all the source packages all at once is not recommended as
+          you will probably pull in packages you won't want. However, it is
+          certainly a convenient option if you have the disk space to spare
+          and may be necessary if the LFS system cannot download any source
+          code, but another system can, such as the host you built the LFS
+          target from.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This process depends on <a class="xref" href=
+            "../shareddeps/wget.html" title="Wget-1.25.0">Wget-1.25.0</a>. It
+            also depends on a working internet connection. If you just got
+            done with LFS and are not yet booted into the new system yet,
+            then it is recommended to navigate to <code class=
+            "filename">$LFS/sources</code> then follow the below instructions
+            on the host system outside of a chroot.
+          </p>
+        </div>
+        <p>
+          First navigate to the directory you want the downloaded source code
+          and patches to be, then download <a class="ulink" href=
+          "../wget-list">wget-list</a>. After that, download the packages and
+          patches by doing the following:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">wget -N --input-file=wget-list --continue</kbd></pre>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="conventions.html" title=
+          "Conventions Used in this Book">Prev</a>
+          <p>
+            Conventions Used in this Book
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="rationale.html" title=
+          "Rationale for Packages">Next</a>
+          <p>
+            Rationale for Packages
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

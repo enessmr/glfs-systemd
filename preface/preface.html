@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Preface
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <ul>
+        <li class="next">
+          <a accesskey="n" href="foreword.html" title="Foreword">Next</a>
+          <p>
+            Foreword
+          </p>
+        </li>
+        <li class="up">.
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="preface">
+      <a id="preface" name="preface"></a>Preface
+    </h1>
+    <div class="preface" lang="en" xml:lang="en">
+      <p>
+        Sometime after my first install of LFS, I had a question that others
+        had: how do I install <span class="application">Steam</span> on this
+        system? I kept that thought in the back of my head as I went for
+        Beyond LFS, a book that covered a good number of packages I needed.
+        However, the issue of <span class="application">Steam</span> was not
+        cleared up yet. So I just tried to install the <span class=
+        "application">Steam</span> tarball. Because I did not have 32-bit
+        libraries, this ended in failure.
+      </p>
+      <p>
+        Beyond LFS doesn't cover the installation of Steam, so I had to look
+        elsewhere. I learned shortly after my attempt that I needed a
+        multilib toolchain. I sent an <a class="ulink" href=
+        "https://lists.linuxfromscratch.org/sympa/arc/blfs-support/2023-03/msg00049.html">
+        email</a> to the blfs-support mailing list in search of potential
+        multilib support. Douglas Reno saw my email and suggested to give
+        Thomas' Multilib branch a read. I rebuilt my LFS system with multilib
+        support in mind.
+      </p>
+      <p>
+        Rahul Chandra in the same thread mentioned his scripts for his
+        distro, Tucana. These scripts gave me a basic idea of how to do lib32
+        installations for BLFS packages which were necessary for <span class=
+        "application">Steam.</span>. While this wasn't exactly difficult, it
+        was a big timesink as I had to manually type in all the lib32
+        compilation options to successfully build 32-bit libraries. Even
+        after having built all the 32-bit libraries required, a few more
+        fixes and files were necessary. After about a week, I managed to get
+        <span class="application">Steam</span> working. I realized that this
+        was a lot of work, and many users who'd want to do the same thing
+        would get stuck and not know what to do. In the worst case, they'd
+        give up before even reaching their goal. I had made a pretty
+        lackluster <a class="ulink" href=
+        "https://www.youtube.com/watch?v=yQ8ueeRZ5q0">YouTube video</a>
+        explaining some troubleshooting information in an attempt to make
+        things a bit easier. Shortly after the video, I realized it wasn't
+        really good enough. Knowledge and methods are one thing, but hours
+        spent is another. I put my ambitions for an easier guide on my
+        backlog and did other things.
+      </p>
+      <p>
+        Sometime afterwards, I decided to do a <a class="ulink" href=
+        "https://www.youtube.com/playlist?list=PL_vcsK5qbWSv-70zpfFcol_D9yovtf6N6">
+        stream series</a> that included that installation of <span class=
+        "application">Wine</span>, not just <span class=
+        "application">Steam</span>. My general idea was to compile all the
+        stream footage (roughly 40 GB worth) into a single video master
+        guide. When some time passed, I came to the conclusion that for a
+        installation guide for two complex packages on an LFS system, a video
+        is not a great format. I decided to then write up some basic
+        <a class="ulink" href="../archive/swlfs.html">HTML</a>. Rahul Chandra
+        came across my <a class="ulink" href=
+        "https://www.youtube.com/channel/UCqYrmltSQNdtsbpsbhZI3wg/community?lb=UgkxDlke0llHGWxC7HpzVyv24K8XcsWFF8Dn">
+        YouTube post</a> and reached out to me. He suggested that I should
+        reuse the LFS/BLFS codebase to make my own book. That led to this
+        book's creation and editing.
+      </p>
+      <p>
+        Hopefully this book does its job. Have fun, and good luck!
+      </p>
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <div class="literallayout">
+            <p>
+              Zeckma<br />
+              zeckma.tech&nbsp;&lt;at&gt;&nbsp;gmail.com
+            </p>
+          </div>
+        </blockquote>
+      </div>
+      <div class="toc">
+        <h3>
+          Table of Contents
+        </h3>
+        <ul>
+          <li class="sect1">
+            <a href="foreword.html">Foreword</a>
+          </li>
+          <li class="sect1">
+            <a href="whoread.html">Who Would Want to Read this Book</a>
+          </li>
+          <li class="sect1">
+            <a href="organization.html">Organization</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="next">
+          <a accesskey="n" href="foreword.html" title="Foreword">Next</a>
+          <p>
+            Foreword
+          </p>
+        </li>
+        <li class="up">.
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      About OpenGL
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="hwdata.html" title="hwdata-0.396">Prev</a>
+          <p>
+            hwdata-0.396
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libglvnd.html" title=
+          "libglvnd-1.7.0">Next</a>
+          <p>
+            libglvnd-1.7.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="aboutgl" name="aboutgl"></a>About OpenGL
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          What is OpenGL?
+        </h2>
+        <p>
+          OpenGL is a graphics API that was developed by Silicon Graphics,
+          Inc. which started off as IRIS GL. It was developed to be
+          cross-platform as getting graphics to work had previously been
+          different on each set of hardware. Due to pressure from other
+          competitors, SGI open sourced IRIS GL and called it OpenGL.
+          Nowadays, OpenGL is now managed by Khronos Group who also manages
+          Vulkan. However, they define the standards of the APIs, but don't
+          make drivers for the APIs, nor implement the calls.
+        </p>
+        <p>
+          So, <span class="application">Mesa</span> came in and implemented
+          drivers and functions for OpenGL. They also implement GLX and EGL
+          which provide interfaces to window systems like <span class=
+          "application">Xorg</span>. However, their method doesn't dispatch
+          the calls in a vendor-neutral way. For the most part, this approach
+          is fine and doesn't lead to any issues. <span class=
+          "application">NVIDIA</span> has decided that this was a bad enough
+          approach to warrant making another implementation of OpenGL called
+          <span class="application">libglvnd</span>. It only provides the
+          implementations for OpenGL, OpenGL ES, GLX, and EGL. This had led
+          to legacy OpenGL vs new OpenGL on Linux.
+        </p>
+        <p>
+          There is <code class="filename">libGL</code> which is now
+          considered legacy OpenGL and is provided by both <a class="xref"
+          href="mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a> and <a class=
+          "xref" href="libglvnd.html" title=
+          "libglvnd-1.7.0">libglvnd-1.7.0</a>. Meanwhile, there is
+          <code class="filename">libOpenGL</code> which is considered the new
+          OpenGL and is only provided by <a class="xref" href="libglvnd.html"
+          title="libglvnd-1.7.0">libglvnd-1.7.0</a>. Apps and libraries that
+          link against the legacy OpenGL will work with both providers, but
+          linking against the new OpenGL, which only has dispatching
+          functions, will result in those binaries being broken on systems
+          with only <a class="xref" href="mesa.html" title=
+          "Mesa-25.1.2">Mesa-25.1.2</a> installed.
+        </p>
+        <p>
+          This is only a problem for binary only packages and some
+          <span class="application">CMake</span> build systems. For this book
+          and in BLFS, you shouldn't run into any of those issues unless you
+          wish to use <a class="xref" href="nvidia.html" title=
+          "NVIDIA-575.57.08">NVIDIA-575.57.08</a>, which specifically
+          requires <a class="xref" href="libglvnd.html" title=
+          "libglvnd-1.7.0">libglvnd-1.7.0</a>. SLFS aims to work around
+          issues that arise from packages having stubborn build systems, like
+          in the case of <a class="ulink" href=
+          "https://glfs-book.github.io/slfs/general/obs-studio.html">OBS-Studio</a>.
+          For binary-only packages, it is generally hit or miss whether the
+          developers link against new or legacy OpenGL. A gaming example is
+          with ports and recompilations: the binary for <a class="ulink"
+          href="https://www.shipofharkinian.com/">Ship of Harkinian</a>, a PC
+          port of the Nintendo 64 game, Legend of Zelda: Ocarina of Time,
+          links against new OpenGL and will be broken with only <span class=
+          "application">Mesa</span> installed; furthermore, trying to get
+          around the issue by building from source also leads to many issues.
+          However, the binary of the PC port made from statically recompiling
+          the Nintendo 64 game, Legend of Zelda: Majora's Mask, called
+          <a class="ulink" href=
+          "https://github.com/Zelda64Recomp/Zelda64Recomp">Zelda 64:
+          Recompiled</a>, links against legacy OpenGL and works with both
+          OpenGL providers.
+        </p>
+        <p>
+          If you only want legacy OpenGL, you can just install <a class=
+          "xref" href="mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>. If you
+          want new OpenGL, support for some binary-only packages, <a class=
+          "xref" href="nvidia.html" title=
+          "NVIDIA-575.57.08">NVIDIA-575.57.08</a>, and get past some
+          <span class="application">CMake</span> build systems, install
+          <a class="xref" href="libglvnd.html" title=
+          "libglvnd-1.7.0">libglvnd-1.7.0</a>. If you want a driver from
+          <a class="xref" href="mesa.html" title=
+          "Mesa-25.1.2">Mesa-25.1.2</a>, you can build that after
+          <span class="application">libglvnd</span>. <span class=
+          "application">Mesa</span> will auto-detect <span class=
+          "application">libglvnd</span> and will skip building its OpenGL
+          implementations.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Switching from <span class="application">Mesa</span> OpenGL to
+            <span class="application">libglvnd</span> OpenGL is sort of
+            trivial. However, switching from <span class=
+            "application">libglvnd</span> OpenGL to <span class=
+            "application">Mesa</span> OpenGL requires a lot of rebuilding.
+          </p>
+        </div>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          <a id="aboutgles" name="aboutgles"></a>About GLES (OpenGL ES)
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            What is GLES?
+          </h3>
+          <p>
+            GLES, or OpenGL ES, or OpenGL for Embedded Systems, is what the
+            full name suggests: it is a stripped down version of OpenGL, a
+            subset, with a slightly different API here and there. It is used
+            mostly for devices with ARM chips such as smart phones and
+            tablets, but is also used in gaming consoles. On the Linux
+            desktop, you typically have desktop, or full, OpenGL, EGL, GLX,
+            and GLESv{1,2,3}.
+          </p>
+          <p>
+            GLES, specifically v2 and v3, are used sometimes, but mostly in
+            one area. Such an area is in <span class=
+            "application">Wayland</span> compositors and compositor
+            libraries, such as <span class="application">Hyprland</span>,
+            <span class="application">Mutter</span>, <span class=
+            "application">Wayfire</span>, and <span class=
+            "application">Wlroots</span>. While compositors can utilize
+            Vulkan, most compositors require GLES rendering and don't offer a
+            Vulkan solution, or any other rendering API solution. GLESv1 on
+            the otherhand is an outdated specification of the GLES API that
+            has been phased out for many years. This book disables building
+            for GLESv1 as it is deprecated. You may build the API spec if you
+            wish.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            History of Wayland and GLES
+          </h3>
+          <p>
+            When the <span class="application">Wayland</span> set of
+            protocols were made, a reference implementation had to be made
+            for it to show what was possible, and how to create a compositor
+            for the new protocol. The result was <span class=
+            "application">Weston</span>. For its rendering API, it used, and
+            uses, GLES and EGL. This was done so that the dependency on the
+            libraries from the <span class="application">X</span> Window
+            System wasn't needed, that a Wayland-only setup was possible. A
+            small benefit of using GLES was that it could run on embedded
+            systems like Raspberry Pis.
+          </p>
+          <p>
+            Thus, compositors and compositor libraries followed suite and did
+            the same thing. However, any rendering API can be used as long as
+            it can be put through EGL. Desktop OpenGL and Vulkan can be used
+            with no issues. Today, the situation is the same and most
+            compositors don't accept any other rendering API besides GLES.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            Do I need GLES?
+          </h3>
+          <p>
+            If you are wanting to use Wayland compositors, and are going to
+            use one that does not support Vulkan rendering, you are very
+            likely going to have to build GLES v2 and v3, or else OpenGL and
+            EGL rendering will not be an option. There are very few Wayland
+            compositors that support Vulkan and do not require GLES. If you
+            do find one, like <a class="ulink" href=
+            "https://codeberg.org/dwl/dwl">dwl</a>, you won't really need
+            GLES beyond compositing. Wayland clients, which are applications,
+            will typically just use OpenGL and/or Vulkan with EGL. This means
+            that you would be able to skip GLES support but would kill off
+            the ability to use other Wayland compositors that require GLES
+            rendering.
+          </p>
+          <p>
+            On the otherhand, if you are using the <span class=
+            "application">X</span> Window System, GLES will almost never be
+            used and that support for the API can be disabled without much
+            worry. However, you kill off the ability to use Wayland
+            compositors that require GLES rendering if you want to switch
+            over to Wayland in the future.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            Disabling GLES
+          </h3>
+          <p>
+            If you decided to disable GLES support, it is pretty easy to not
+            build in support for the API. In <span class=
+            "quote">“<span class="quote">Command Explanations</span>”</span>,
+            for both <a class="xref" href="libglvnd.html" title=
+            "libglvnd-1.7.0">libglvnd-1.7.0</a> and <a class="xref" href=
+            "mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>, they will
+            explain the options required to disable the support. Furthermore,
+            <a class="xref" href="nvidia.html" title=
+            "NVIDIA-575.57.08">NVIDIA-575.57.08</a> installs drivers for
+            GLES. The installation instructions for that driver will cover
+            how to delete them if you do not need GLES.
+          </p>
+          <p>
+            If you already have installed GLES from any of the OpenGL
+            providers, removing all the related files is pretty easy. You can
+            follow the instructions below as the <code class=
+            "systemitem">root</code> user to remove the API:
+          </p>
+          <pre class="root"><kbd class="command">for libdir in /usr/lib*; do
+  rm -vf  $libdir/pkgconfig/gles*
+  rm -vrf /usr/include/GLES*
+  rm -vf  $libdir/libGLES*
+done
+ldconfig</kbd></pre>
+          <p>
+            Recompile any packages as necessary to remove the dependency on
+            GLES.
+          </p>
+          <p>
+            If you have decided to revert your decision and wish to build
+            support for GLES, just recompile OpenGL from the original OpenGL
+            provider you went with without the option needed to disable
+            GLESv2. You can however keep the option to disable GLESv1 as v1
+            is an outdated spec and not needed today.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="hwdata.html" title="hwdata-0.396">Prev</a>
+          <p>
+            hwdata-0.396
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libglvnd.html" title=
+          "libglvnd-1.7.0">Next</a>
+          <p>
+            libglvnd-1.7.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

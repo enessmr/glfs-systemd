@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Glslang-15.3.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="spirv-tools.html" title=
+          "SPIRV-Tools-1.4.313.0">Prev</a>
+          <p>
+            SPIRV-Tools-1.4.313.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="llvm.html" title="LLVM-20.1.6">Next</a>
+          <p>
+            LLVM-20.1.6
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="glslang" name="glslang"></a>Glslang-15.3.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Glslang
+        </h2>
+        <p>
+          The <span class="application">Glslang</span> package contains an
+          frontend and validator for OpenGL, OpenGL ES, and Vulkan shaders.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://github.com/KhronosGroup/glslang/archive/15.3.0/glslang-15.3.0.tar.gz">
+                https://github.com/KhronosGroup/glslang/archive/15.3.0/glslang-15.3.0.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Glslang Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="cmake.html" title=
+          "CMake-4.0.3">CMake-4.0.3</a> and <a class="xref" href=
+          "spirv-tools.html" title=
+          "SPIRV-Tools-1.4.313.0">SPIRV-Tools-1.4.313.0</a>
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Glslang
+        </h2>
+        <p>
+          Install <span class="application">Glslang</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr     \
+      -D CMAKE_BUILD_TYPE=Release      \
+      -D ALLOW_EXTERNAL_SPIRV_TOOLS=ON \
+      -D BUILD_SHARED_LIBS=ON          \
+      -D GLSLANG_TESTS=ON              \
+      -G Ninja .. &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          To test the results, issue: <span class="command"><strong>ninja
+          test</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">ninja install</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of Glslang
+        </h2>
+        <p>
+          Install lib32-<span class="application">Glslang</span> by running
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">rm -rf * &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"           \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig   \
+cmake -D CMAKE_INSTALL_PREFIX=/usr     \
+      -D CMAKE_INSTALL_LIBDIR=lib32    \
+      -D CMAKE_BUILD_TYPE=Release      \
+      -D ALLOW_EXTERNAL_SPIRV_TOOLS=ON \
+      -D BUILD_SHARED_LIBS=ON          \
+      -D GLSLANG_TESTS=ON              \
+      -G Ninja .. &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">DESTDIR=$PWD/DESTDIR ninja install    &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            For a full list of options and values, make sure you are in a
+            build directory, then run <span class="command"><strong>cmake
+            -LAH ..</strong></span>.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>-D
+          ALLOW_EXTERNAL_SPIRV_TOOLS=ON</code></em>: This switch allows the
+          build system to use the system-installed copy of <a class="xref"
+          href="spirv-tools.html" title=
+          "SPIRV-Tools-1.4.313.0">SPIRV-Tools-1.4.313.0</a>, instead of
+          downloading and installing its own copy.
+        </p>
+        <p>
+          <em class="parameter"><code>-D BUILD_SHARED_LIBS=ON</code></em>:
+          This switch builds shared versions of the libraries, and does not
+          install static versions of them.
+        </p>
+        <p>
+          <em class="parameter"><code>-D GLSLANG_TESTS=ON</code></em>: This
+          switch builds the tests for the package.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">glslang, glslang-validator (symlink to
+              glslang), and spirv-remap</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libglslang,
+              libglslang-default-resource-limits, libSPIRV, and
+              libSPVRemapper</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/glslang and
+              /usr/lib/cmake/glslang</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="glslang-prog" name="glslang-prog"></a><span class=
+                    "term"><span class=
+                    "command"><strong>glslang</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides a front end and validator for OpenGL, OpenGL ES,
+                    and Vulkan shaders
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libglslang" name="libglslang"></a><span class=
+                    "term"><code class="filename">libglslang</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains functions that provide a front-end and validator
+                    for OpenGL, OpenGL ES, and Vulkan shaders to other
+                    programs
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libSPIRV" name="libSPIRV"></a><span class=
+                    "term"><code class="filename">libSPIRV</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides a front-end and generator for SPIR-V binaries
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libSPVRemapper" name=
+                    "libSPVRemapper"></a><span class="term"><code class=
+                    "filename">libSPVRemapper</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides a remapper for SPIR-V binaries
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="spirv-tools.html" title=
+          "SPIRV-Tools-1.4.313.0">Prev</a>
+          <p>
+            SPIRV-Tools-1.4.313.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="llvm.html" title="LLVM-20.1.6">Next</a>
+          <p>
+            LLVM-20.1.6
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

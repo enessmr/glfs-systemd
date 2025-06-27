@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      NSS-3.112
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;3.&nbsp;Networking
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="python3.html" title="Python-3.13.5">Prev</a>
+          <p>
+            Python-3.13.5
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="p11-kit.html" title=
+          "p11-kit-0.25.5">Next</a>
+          <p>
+            p11-kit-0.25.5
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="net.html" title=
+          "Chapter&nbsp;3.&nbsp;Networking">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="nss" name="nss"></a>NSS-3.112
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to NSS
+        </h2>
+        <p>
+          The Network Security Services (<span class=
+          "application">NSS</span>) package is a set of libraries designed to
+          support cross-platform development of security-enabled client and
+          server applications. Applications built with NSS can support SSL v2
+          and v3, TLS, PKCS #5, PKCS #7, PKCS #11, PKCS #12, S/MIME, X.509 v3
+          certificates, and other security standards. This is useful for
+          implementing SSL and S/MIME or other Internet security standards
+          into an application.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_112_RTM/src/nss-3.112.tar.gz">
+                https://archive.mozilla.org/pub/security/nss/releases/NSS_3_112_RTM/src/nss-3.112.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Additional Downloads
+        </h3>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Required patch: <a class="ulink" href=
+                "https://glfs-book.github.io/glfs/download/nss/nss-standalone-1.patch">
+                https://glfs-book.github.io/glfs/download/nss/nss-standalone-1.patch</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          NSS Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="nspr.html" title="NSPR-4.36">NSPR-4.36</a>
+        </p>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="sqlite.html" title=
+          "SQLite-3.50.1">SQLite-3.50.1</a> (required for <a class="ulink"
+          href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/xsoft/firefox.html">
+          Firefox</a>; make sure to reinstall <a class="xref" href=
+          "python3.html" title="Python-3.13.5">Python-3.13.5</a>)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of NSS
+        </h2>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            If you're rebuilding NSS and you have not installed <a class=
+            "xref" href="sqlite.html" title=
+            "SQLite-3.50.1">SQLite-3.50.1</a>, run the following command to
+            remove a problematic library as the <code class=
+            "systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">sqlite3 --version &gt; /dev/null 2&gt;&amp;1 || 
+if [ -f /usr/lib/libsqlite3.so ]; then
+  rm -vf /usr/lib/libsqlite3.so
+fi</kbd></pre>
+        </div>
+        <p>
+          Install <span class="application">NSS</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">patch -Np1 -i ../nss-standalone-1.patch &amp;&amp;
+
+cd nss &amp;&amp;
+
+make BUILD_OPT=1                     \
+  NSPR_INCLUDE_DIR=/usr/include/nspr \
+  USE_SYSTEM_ZLIB=1                  \
+  ZLIB_LIBS=-lz                      \
+  NSS_ENABLE_WERROR=0                \
+  USE_64=1                           \
+  $([ -f /usr/lib/libsqlite3.so ] &amp;&amp; echo NSS_USE_SYSTEM_SQLITE=1)</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">cd ../dist                                                          &amp;&amp;
+
+install -v -m755 Linux*/lib/*.so              /usr/lib              &amp;&amp;
+install -v -m644 Linux*/lib/{*.chk,libcrmf.a} /usr/lib              &amp;&amp;
+
+install -v -m755 -d                           /usr/include/nss      &amp;&amp;
+cp -v -RL {public,private}/nss/*              /usr/include/nss      &amp;&amp;
+
+install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} /usr/bin &amp;&amp;
+
+install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib/pkgconfig</kbd></pre>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            If you install <a class="xref" href="sqlite.html" title=
+            "SQLite-3.50.1">SQLite-3.50.1</a> after building this package and
+            wish to build <a class="ulink" href=
+            "https://www.linuxfromscratch.org/blfs/view/systemd/xsoft/firefox.html">
+            Firefox</a>, then recompile this package or else an error during
+            compilation will appear.
+          </p>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of NSS
+        </h2>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            If you're rebuilding NSS, run the following command to remove a
+            problematic library as the <code class="systemitem">root</code>
+            user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">sqlite3 --version &gt; /dev/null 2&gt;&amp;1 || 
+if [ -f /usr/lib32/libsqlite3.so ]; then
+  rm -vf /usr/lib32/libsqlite3.so
+fi</kbd></pre>
+        </div>
+        <p>
+          Install <span class="application">lib32-NSS</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cd ../nss                                         &amp;&amp;
+find -name "Linux*.OBJ" -type d -exec rm -rf {} + &amp;&amp;
+rm -rf ../dist                                    &amp;&amp;
+
+CC="gcc -m32" CXX="g++ -m32"   \
+make BUILD_OPT=1                      \
+NSPR_INCLUDE_DIR=/usr/include/nspr  \
+  USE_SYSTEM_ZLIB=1                   \
+  ZLIB_LIBS=-lz                       \
+  NSS_ENABLE_WERROR=0                 \
+$([ -f /usr/lib32/libsqlite3.so ] &amp;&amp; echo NSS_USE_SYSTEM_SQLITE=1)</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">cd ../dist &amp;&amp;
+
+install -v -m755 Linux*/lib/*.so              /usr/lib32           &amp;&amp;
+install -v -m644 Linux*/lib/{*.chk,libcrmf.a} /usr/lib32           &amp;&amp;
+sed -i 's/lib/lib32/g' Linux*/lib/pkgconfig/nss.pc                 &amp;&amp;
+install -v -m644 Linux*/lib/pkgconfig/nss.pc  /usr/lib32/pkgconfig &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            For a full list of options, inspect the <code class=
+            "filename">Makefile</code> and the various files in <code class=
+            "filename">nss-3.112/nss/coreconf/</code>.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>BUILD_OPT=1</code></em>: This option is
+          passed to <span class="command"><strong>make</strong></span> so
+          that the build is performed with no debugging symbols built into
+          the binaries and the default compiler optimizations are used.
+        </p>
+        <p>
+          <em class=
+          "parameter"><code>NSPR_INCLUDE_DIR=/usr/include/nspr</code></em>:
+          This option sets the location of the nspr headers.
+        </p>
+        <p>
+          <em class="parameter"><code>USE_SYSTEM_ZLIB=1</code></em>: This
+          option is passed to <span class=
+          "command"><strong>make</strong></span> to ensure that the
+          <code class="filename">libssl3.so</code> library is linked to the
+          system installed <span class="application">zlib</span> instead of
+          the in-tree version.
+        </p>
+        <p>
+          <em class="parameter"><code>ZLIB_LIBS=-lz</code></em>: This option
+          provides the linker flags needed to link to the system <span class=
+          "application">zlib</span>.
+        </p>
+        <p>
+          <span class="command"><strong>USE_64=1</strong></span>: This is
+          <span class="emphasis"><em>required on x86_64</em></span>,
+          otherwise <span class="command"><strong>make</strong></span> will
+          try (and fail) to create 32-bit objects for the normal
+          installation.
+        </p>
+        <p>
+          <em class="parameter"><code>NSS_ENABLE_WERROR=0</code></em>: This
+          option disables -Werror (warnings being counted as errors).
+        </p>
+        <p>
+          <span class="command"><strong>$([ -f /usr/lib{,32}/libsqlite3.so ]
+          &amp;&amp; echo NSS_USE_SYSTEM_SQLITE=1)</strong></span>: This
+          tests if <span class="application">sqlite</span> is installed and
+          if so it <span class="command"><strong>echo</strong></span>s the
+          option NSS_USE_SYSTEM_SQLITE=1 to <span class=
+          "command"><strong>make</strong></span> so that <code class=
+          "filename">libsoftokn3.so</code> will link against the system
+          version of sqlite.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">certutil, nss-config, and pk12util</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libcrmf (static), libfreebl3,
+              libfreeblpriv3, libnss3, libnssckbi, libnssckbi-testlib,
+              libnssdbm3, libnsssysinit, libnssutil3, libpkcs11testmodule,
+              libsmime3, libsoftokn3, and libssl3</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/nss</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="certutil" name="certutil"></a><span class=
+                    "term"><span class=
+                    "command"><strong>certutil</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the Mozilla Certificate Database Tool. It is a
+                    command-line utility that can create and modify the
+                    Netscape Communicator cert8.db and key3.db database
+                    files. It can also list, generate, modify, or delete
+                    certificates within the cert8.db file and create or
+                    change the password, generate new public and private key
+                    pairs, display the contents of the key database, or
+                    delete key pairs within the key3.db file
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="nss-config" name="nss-config"></a><span class=
+                    "term"><span class=
+                    "command"><strong>nss-config</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to determine the NSS library settings of the
+                    installed NSS libraries
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pk12util" name="pk12util"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pk12util</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a tool for importing certificates and keys from pkcs
+                    #12 files into NSS or exporting them. It can also list
+                    certificates and keys in such files
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="python3.html" title="Python-3.13.5">Prev</a>
+          <p>
+            Python-3.13.5
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="p11-kit.html" title=
+          "p11-kit-0.25.5">Next</a>
+          <p>
+            p11-kit-0.25.5
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="net.html" title=
+          "Chapter&nbsp;3.&nbsp;Networking">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

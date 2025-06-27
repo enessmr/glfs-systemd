@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      DXVK-2.6.2
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;18.&nbsp;Wine
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="wine.html" title="Wine-10.9">Prev</a>
+          <p>
+            Wine-10.9
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="vkd3d-proton.html" title=
+          "VKD3D-Proton-2.14.1">Next</a>
+          <p>
+            VKD3D-Proton-2.14.1
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winechpt.html" title=
+          "Chapter&nbsp;18.&nbsp;Wine">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="dxvk" name="dxvk"></a>DXVK-2.6.2
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to DXVK
+        </h2>
+        <p>
+          The <span class="application">DXVK</span> package contains DLL
+          files which converts Direct3D 8-11 calls to Vulkan. By default in
+          <span class="application">Wine</span>, Direct3D 8-11 calls are
+          converted to OpenGL calls in a poor manner, leading to bad
+          performance. As such, many people install this package.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <h3>
+          DXVK Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="../shareddeps/glslang.html" title=
+          "Glslang-15.3.0">Glslang-15.3.0</a>, <a class="xref" href=
+          "mingw-w64-gcc.html" title=
+          "MinGW-w64-GCC-15.1.0">MinGW-w64-GCC-15.1.0</a> (compiled with
+          POSIX thread support), and <a class="xref" href="wine.html" title=
+          "Wine-10.9">Wine-10.9</a>
+        </p>
+        <h4>
+          Required (Runtime)
+        </h4>
+        <p class="runtime">
+          <a class="xref" href="../shareddeps/libvk.html" title=
+          "Vulkan-Loader-1.4.313">Vulkan-Loader-1.4.313</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Downloading DXVK
+        </h2>
+        <p>
+          This package depends on submodules and multiple of them will need
+          to be downloaded. Create a list of the needed tarballs that will be
+          downloaded:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; dxvk-2.6.2-list &lt;&lt; "EOF"
+<code class="literal">doitsujin/dxvk/archive/v2.6.2/dxvk-2.6.2.tar.gz
+doitsujin/libdisplay-info/archive/275e6459c7ab1ddd4b125f28d0440716e4888078.tar.gz
+KhronosGroup/SPIRV-Headers/archive/8b246ff75c6615ba4532fe4fde20f1be090c3764.tar.gz
+KhronosGroup/Vulkan-Headers/archive/234c4b7370a8ea3239a214c9e871e4b17c89f4ab.tar.gz</code>
+EOF</kbd></pre>
+        <p>
+          Download the tarballs using <a class="xref" href=
+          "../shareddeps/wget.html" title="Wget-1.25.0">Wget-1.25.0</a>:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir dxvk &amp;&amp;
+cd    dxvk &amp;&amp;
+grep -v '^#' ../dxvk-2.6.2-list | wget -i- -c \
+    -B https://github.com</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of DXVK
+        </h2>
+        <p>
+          Extract all the tarballs:
+        </p>
+        <pre class="userinput"><kbd class="command">for i in *.tar.?z*; do
+  echo "Extracting $i..."
+  tar -xf $i
+done</kbd></pre>
+        <p>
+          Now that the tarballs have been extracted, the submodules need to
+          be moved in place. Do so now:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mv -T libdisplay-info-*                       \
+      dxvk-2.6.2/subprojects/libdisplay-info &amp;&amp;
+mv -T SPIRV-Headers-*                         \
+      dxvk-2.6.2/include/spirv               &amp;&amp;
+mv -T Vulkan-Headers-*                        \
+      dxvk-2.6.2/include/vulkan</kbd></pre>
+        <p>
+          Go into the <code class="filename">dxvk-2.6.2</code> directory:
+        </p>
+        <pre class="userinput"><kbd class="command">cd dxvk-2.6.2</kbd></pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            If you are doing multilib, it is recommended to install 32-bit
+            along with 64-bit <span class="application">DXVK</span> as there
+            are plenty of 32-bit Direct3D applications.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            64-bit Installation
+          </h3>
+          <p>
+            Install 64-bit <span class="application">DXVK</span> by running
+            the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-win64 &amp;&amp;
+cd    build-win64 &amp;&amp;
+
+meson setup .. --cross-file=../build-win64.txt \
+               --buildtype=release             \
+               --prefix=$PWD/DESTDIR &amp;&amp;
+
+ninja</kbd></pre>
+          <p>
+            Now as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">ninja install &amp;&amp;
+cd ..         &amp;&amp;
+
+mkdir   -pv     /usr/lib/dxvk/win64 &amp;&amp;
+install -vDm644 build-win64/DESTDIR/bin/*.dll \
+                /usr/lib/dxvk/win64</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            32-bit Installation
+          </h3>
+          <p>
+            Install 32-bit <span class="application">DXVK</span> by running
+            the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-win32 &amp;&amp;
+cd    build-win32 &amp;&amp;
+
+meson setup .. --cross-file ../build-win32.txt \
+               --buildtype=release             \
+               --prefix=$PWD/DESTDIR &amp;&amp;
+
+ninja</kbd></pre>
+          <p>
+            Now as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">ninja install &amp;&amp;
+cd ..         &amp;&amp;
+
+mkdir   -pv     /usr/lib/dxvk/win32 &amp;&amp;
+install -vDm644 build-win32/DESTDIR/bin/*.dll \
+                /usr/lib/dxvk/win32</kbd></pre>
+        </div>
+      </div>
+      <div class="configuration" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Setting Up DXVK
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This section requires a running graphical environment. If you are
+            not ready yet, you may skip this section and return back once you
+            are in a graphical environment.
+          </p>
+        </div>
+        <p>
+          First, create the <span class="application">Wine</span> prefix if
+          it is not already made:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">WINEPREFIX=~/.wine wineboot -u</kbd></pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            <span class="command"><strong>wineboot</strong></span> may report
+            an error in the output, but this is normal and frequent. Usually,
+            these errors are non-fatal and you won't need to typically worry
+            about them. <span class="application">Wine</span> is very
+            verbose.
+          </p>
+        </div>
+        <p>
+          While the DXVK DLL files have been installed, they are not yet in
+          the <span class="application">Wine</span> prefix. Create symlinks
+          so that they can be found by <span class="application">Wine</span>,
+          whilst allowing updating of this package without having to copy
+          everything over again. Along with this, the registry must be
+          updated to use the new DLLs. Do this for each archetecture you have
+          installed.
+        </p>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            64-bit Setup
+          </h3>
+          <p>
+            For 64-bit:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">for DLL_FILE in /usr/lib/dxvk/win64/*.dll; do
+    ln -sfv $DLL_FILE ~/.wine/drive_c/windows/system32/$(basename $DLL_FILE) &amp;&amp;
+    DLL_FILE=$(basename $DLL_FILE | sed s/.dll//g) &amp;&amp;
+    wine reg add \
+        'HKEY_CURRENT_USER\Software\Wine\DllOverrides' \
+        /v "$DLL_FILE" /d native /f
+done</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            32-bit Setup
+          </h3>
+          <p>
+            For 32-bit:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">for DLL_FILE in /usr/lib/dxvk/win32/*.dll; do
+    if [ ! -d ~/.wine/drive_c/windows/syswow64 ]; then
+        ln -sfv $DLL_FILE ~/.wine/drive_c/windows/system32/$(basename $DLL_FILE)
+    else
+        ln -sfv $DLL_FILE ~/.wine/drive_c/windows/syswow64/$(basename $DLL_FILE)
+    fi
+    DLL_FILE=$(basename $DLL_FILE | sed s/.dll//g) &amp;&amp;
+    wine reg add \
+        'HKEY_CURRENT_USER\Software\Wine\DllOverrides' \
+        /v "$DLL_FILE" /d native /f
+done</kbd></pre>
+        </div>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <span class="command"><strong>git checkout v2.6.2</strong></span>:
+          This command switches to a stable release in the commit history.
+        </p>
+        <p>
+          <em class=
+          "parameter"><code>--cross-file=../build-win{32,64}.txt</code></em>:
+          This parameter changes what Win archetecture to build for.
+        </p>
+        <p>
+          <em class="parameter"><code>--buildtype=release</code></em>:
+          Specify a buildtype suitable for stable releases of the package, as
+          the default may produce unoptimized binaries.
+        </p>
+        <p>
+          <span class="command"><strong>WINEPREFIX=~/.wine wineboot
+          -u</strong></span>: This command creates a <span class=
+          "application">Wine</span> prefix and copies over any missing files
+          to it. It will not reset an existing prefix.
+        </p>
+        <p>
+          <span class="command"><strong>wine reg add ...</strong></span>:
+          This command overrides the registry so that <span class=
+          "application">Wine</span> will use the new DLL files instead of the
+          old ones.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">d3d10core, d3d11, d3d8, d3d9, and dxgi
+              (all DLLs)</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/lib/dxvk/{win32,win64}</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="d3d10core" name="d3d10core"></a><span class=
+                    "term"><code class="filename">d3d10core</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    converts Direct3D 10 calls to Vulkan
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="d3d11" name="d3d11"></a><span class=
+                    "term"><code class="filename">d3d11</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    converts Direct3D 11 calls to Vulkan
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="d3d8" name="d3d8"></a><span class=
+                    "term"><code class="filename">d3d8</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    converts Direct3D 8 calls to Vulkan
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="d3d9" name="d3d9"></a><span class=
+                    "term"><code class="filename">d3d9</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    converts Direct3D 9 calls to Vulkan
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="dxgi" name="dxgi"></a><span class=
+                    "term"><code class="filename">dxgi</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    handles the Direct3D Graphics Infrastructure
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="wine.html" title="Wine-10.9">Prev</a>
+          <p>
+            Wine-10.9
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="vkd3d-proton.html" title=
+          "VKD3D-Proton-2.14.1">Next</a>
+          <p>
+            VKD3D-Proton-2.14.1
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winechpt.html" title=
+          "Chapter&nbsp;18.&nbsp;Wine">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

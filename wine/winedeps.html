@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Wine Dependencies
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;14.&nbsp;Wine Preliminaries
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="whatiswine.html" title=
+          "What is Wine?">Prev</a>
+          <p>
+            What is Wine?
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw.html" title=
+          "The MinGW-w64 Toolchain">Next</a>
+          <p>
+            The MinGW-w64 Toolchain
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winepre.html" title=
+          "Chapter&nbsp;14.&nbsp;Wine Preliminaries">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="winedeps" name="winedeps"></a>Wine Dependencies
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        Wine has three build formats and depending on what build you want,
+        you will have to pay attention to what you install and its format.
+      </p>
+      <p>
+        The three build types are: 32-bit, 64-bit, and WoW64. 32-bit and
+        64-bit are self-explanatory, but WoW64 needs explanation. WoW64 is a
+        compatibility layer created by Microsoft when applications and
+        computers were becoming 64-bit. This layer allows users to emulate
+        32-bit Windows applications on a 64-bit CPU. Knowing this, a Wine
+        WoW64 build can be explained as a build type that allows the user to
+        execute Windows 32-bit and 64-bit applications.
+      </p>
+      <p>
+        If you don't want a WoW64 build, follow the instructions normally and
+        skip the lib32 instructions. When you reach the <span class=
+        "application">MinGW-w64</span> section, follow only the x86_64
+        instructions.
+      </p>
+      <p>
+        If you want a 32-bit only build, follow only the lib32 instructions.
+        When you reach <span class="application">MinGW-w64</span>, follow the
+        i686 instructions. However, for the sake of continuing onto BLFS, it
+        is recommended to do the normal installations as well, save for
+        <span class="application">MinGW-w64</span>.
+      </p>
+      <p>
+        And finally, if you want a WoW64 build, follow all the instructions
+        on the dependency pages unless instructed otherwise or are presented
+        with options.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Required
+        </h2>
+        <p>
+          Audio (<a class="xref" href="../shareddeps/alsa-plugins.html"
+          title="alsa-plugins-1.2.12">alsa-plugins-1.2.12</a> and/or
+          <a class="xref" href="../shareddeps/pulseaudio.html" title=
+          "PulseAudio-17.0">PulseAudio-17.0</a>), <a class="xref" href=
+          "../shareddeps/dbus.html" title="dbus-1.16.2">dbus-1.16.2</a>,
+          Display server (<a class="xref" href=
+          "../shareddeps/xorg-server.html" title=
+          "Xorg-Server-21.1.16">Xorg-Server-21.1.16</a> or <a class="xref"
+          href="../shareddeps/wayland.html" title=
+          "Wayland-1.23.1">Wayland-1.23.1</a> w/ <a class="xref" href=
+          "../shareddeps/xwayland.html" title=
+          "Xwayland-24.1.6">Xwayland-24.1.6</a>), <a class="xref" href=
+          "../shareddeps/fontconfig.html" title=
+          "Fontconfig-2.16.2">Fontconfig-2.16.2</a>, <a class="xref" href=
+          "../shareddeps/freetype2-pass2.html" title=
+          "FreeType-2.13.3 - Pass 2">FreeType-2.13.3 - Pass 2</a>, <a class=
+          "xref" href="../shareddeps/gnutls.html" title=
+          "GnuTLS-3.8.9">GnuTLS-3.8.9</a>, <a class="xref" href=
+          "../shareddeps/libunwind.html" title=
+          "libunwind-1.8.1">libunwind-1.8.1</a> (if 64-bit/WoW64; not used by
+          Wine 32-bit), OpenGL (<a class="xref" href=
+          "../shareddeps/libglvnd.html" title=
+          "libglvnd-1.7.0">libglvnd-1.7.0</a> or <a class="xref" href=
+          "../shareddeps/mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>), and
+          <a class="xref" href="mingw-w64-gcc.html" title=
+          "MinGW-w64-GCC-15.1.0">MinGW-w64-GCC-15.1.0</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Recommended
+        </h2>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                <a class="xref" href="gstreamer-suite.html" title=
+                "GStreamer Suite 1.26.2">GStreamer-Suite-1.26.2</a>: allows
+                consuming and working with multimedia such as music and
+                videos. Most games and some software work without it,
+                although some will need it for WMA decoding.
+              </p>
+            </li>
+            <li class="listitem">
+              <p>
+                <a class="xref" href="sdl2.html" title=
+                "SDL2-2.32.8">SDL2-2.32.8</a>: for input and other neat
+                stuff.
+              </p>
+            </li>
+            <li class="listitem">
+              <p>
+                <a class="xref" href="../shareddeps/libvk.html" title=
+                "Vulkan-Loader-1.4.313">Vulkan-Loader-1.4.313</a>: for Vulkan
+                support.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Optional
+        </h2>
+        <p>
+          <a class="ulink" href=
+          "https://aur.archlinux.org/packages/libcapi/">libcapi</a>,
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/pst/cups.html">Cups</a>,
+          <a class="ulink" href=
+          "https://archlinux.org/packages/extra/x86_64/gphoto2/">gphoto2</a>,
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/samba.html">
+          Samba</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/pst/sane.html">SANE</a>,
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/postlfs/mitkrb.html">
+          Kerberos</a>, <a class="ulink" href=
+          "https://archlinux.org/packages/extra/x86_64/smbclient/">smbclient</a>,
+          <a class="ulink" href=
+          "https://archlinux.org/packages/?sort=&amp;q=opencl&amp;maintainer=&amp;flagged=">
+          OpenCL</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/basicnet/libpcap.html">
+          libpcap</a>, <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/libusb.html">
+          libusb</a>, and <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/multimedia/v4l-utils.html">
+          v4l-utils</a>
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="whatiswine.html" title=
+          "What is Wine?">Prev</a>
+          <p>
+            What is Wine?
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw.html" title=
+          "The MinGW-w64 Toolchain">Next</a>
+          <p>
+            The MinGW-w64 Toolchain
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winepre.html" title=
+          "Chapter&nbsp;14.&nbsp;Wine Preliminaries">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

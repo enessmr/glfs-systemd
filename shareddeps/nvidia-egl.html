@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      NVIDIA EGL Libraries
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="gbm.html" title=
+          "GBM from Mesa-25.1.2">Prev</a>
+          <p>
+            GBM from Mesa-25.1.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="nvidia.html" title=
+          "NVIDIA-575.57.08">Next</a>
+          <p>
+            NVIDIA-575.57.08
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="nvidia-egl" name="nvidia-egl"></a>NVIDIA EGL Libraries
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to NVIDIA EGL Libraries
+        </h2>
+        <p>
+          The <span class="application">NVIDIA EGL Libraries</span> allow the
+          EGL drivers for the <span class="application">NVIDIA</span> driver
+          to function properly. If you are not installing <a class="xref"
+          href="nvidia.html" title="NVIDIA-575.57.08">NVIDIA-575.57.08</a>,
+          skip this package.
+        </p>
+        <h3>
+          NVIDIA EGL Libraries Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          GBM (<a class="xref" href="gbm.html" title=
+          "GBM from Mesa-25.1.2">GBM from Mesa-25.1.2</a> or <a class="xref"
+          href="mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>), <a class=
+          "xref" href="libdrm.html" title=
+          "Libdrm-2.4.125">libdrm-2.4.125</a>, <a class="xref" href=
+          "libglvnd.html" title="libglvnd-1.7.0">libglvnd-1.7.0</a>,
+          <a class="xref" href="wayland.html" title=
+          "Wayland-1.23.1">Wayland-1.23.1</a>, <a class="xref" href=
+          "wayland-protocols.html" title=
+          "Wayland-Protocols-1.45">Wayland-Protocols-1.45</a>, and <a class=
+          "xref" href="x7lib.html" title="Xorg Libraries">Xorg Libraries</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Downloading NVIDIA EGL Libraries
+        </h2>
+        <p>
+          First, create a list of files to be downloaded:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; nvidia-egl-list &lt;&lt; "EOF"
+<code class=
+"literal">eglexternalplatform/archive/1.2.1/eglexternalplatform-1.2.1.tar.gz
+egl-gbm/archive/1.1.2.1/egl-gbm-1.1.2.1.tar.gz
+egl-wayland/archive/1.1.19/egl-wayland-1.1.19.tar.gz
+egl-x11/archive/v1.0.2/egl-x11-1.0.2.tar.gz</code>
+EOF</kbd></pre>
+        <p>
+          To download the needed files using <a class="xref" href="wget.html"
+          title="Wget-1.25.0">Wget-1.25.0</a>, use the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mkdir nvidia-egl &amp;&amp;
+cd nvidia-egl &amp;&amp;
+grep -v '^#' ../nvidia-egl-list | wget -i- -c \
+    -B https://github.com/NVIDIA/</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of NVIDIA EGL Libraries
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            When installing multiple packages in a script, the installation
+            needs to be done as the root user. There are three general
+            options that can be used to do this:
+          </p>
+          <div class="orderedlist">
+            <ol>
+              <li class="listitem">
+                <p>
+                  Run the entire script as the root user (not recommended).
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  Use the <span class="command"><strong>sudo</strong></span>
+                  command from the sudo package.
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  Use <span class="command"><strong>su -c "command
+                  arguments"</strong></span> (quotes required) which will ask
+                  for the root password for every iteration of the loop.
+                </p>
+              </li>
+            </ol>
+          </div>
+          <p>
+            One way to handle this situation is to create a short
+            <span class="command"><strong>bash</strong></span> function that
+            automatically selects the appropriate method. Once the command is
+            set in the environment, it does not need to be set again.
+          </p>
+          <pre class="userinput"><kbd class="command">as_root()
+{
+  if   [ $EUID = 0 ];        then $*
+  elif [ -x /usr/bin/sudo ]; then sudo $*
+  else                            su -c \\"$*\\"
+  fi
+}
+
+export -f as_root</kbd></pre>
+        </div>
+        <p>
+          First, start a subshell that will exit on error:
+        </p>
+        <pre class="userinput"><kbd class="command">bash -e</kbd></pre>
+        <p>
+          Install all of the libraries by running the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">for package in $(grep -v '^#' ../nvidia-egl-list)
+do
+  package=$(basename "$package")
+  packagedir=${package%.tar.?z*}
+  tar -xf $package
+  pushd $packagedir
+     mkdir build
+     cd    build
+       meson setup --prefix=/usr       \
+                   --buildtype=release \
+                   ..
+       ninja
+     as_root ninja install
+  popd
+  rm -rf $packagedir
+  as_root /sbin/ldconfig
+done</kbd></pre>
+        <p>
+          Finally, exit the shell that was started earlier:
+        </p>
+        <pre class="userinput"><kbd class="command">exit</kbd></pre>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libnvidia-egl-gbm, libnvidia-egl-wayland,
+              libnvidia-egl-xcb, and libnvidia-egl-xlib</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class=
+              "segbody">/usr/share/egl/egl_external_platform.d</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libnvidia-egl-gbm" name=
+                    "libnvidia-egl-gbm"></a><span class="term"><code class=
+                    "filename">libnvidia-egl-gbm</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides GBM EGL application support
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libnvidia-egl-wayland" name=
+                    "libnvidia-egl-wayland"></a><span class=
+                    "term"><code class=
+                    "filename">libnvidia-egl-wayland</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides client-side <span class=
+                    "application">Wayland</span> EGL application support
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libnvidia-egl-xcb" name=
+                    "libnvidia-egl-xcb"></a><span class="term"><code class=
+                    "filename">libnvidia-egl-xcb</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides EGL XCB support
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libnvidia-egl-xlib" name=
+                    "libnvidia-egl-xlib"></a><span class="term"><code class=
+                    "filename">libnvidia-egl-xlib</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides EGL XLib support
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="gbm.html" title=
+          "GBM from Mesa-25.1.2">Prev</a>
+          <p>
+            GBM from Mesa-25.1.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="nvidia.html" title=
+          "NVIDIA-575.57.08">Next</a>
+          <p>
+            NVIDIA-575.57.08
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

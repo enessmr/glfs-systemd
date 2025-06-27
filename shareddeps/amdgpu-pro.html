@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      AMDGPU PRO
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;8.&nbsp;Graphics Drivers
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="libvdpau-va-gl.html" title=
+          "libvdpau-va-gl-0.4.2">Prev</a>
+          <p>
+            libvdpau-va-gl-0.4.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="x.html" title="X11">Next</a>
+          <p>
+            X11
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="amdgpu-pro" name="amdgpu-pro"></a>AMDGPU PRO
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to AMDGPU PRO
+        </h2>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            This page is now considered deprecated and will be removed right
+            before release of GLFS-12.4. Please use the drivers from
+            <a class="xref" href="mesa.html" title=
+            "Mesa-25.1.2">Mesa-25.1.2</a> and replace AMF with <a class=
+            "xref" href="libva.html" title="libva-2.22.0">libva-2.22.0</a>.
+          </p>
+        </div>
+        <p>
+          The <span class="application">AMDGPU PRO</span> proprietary driver
+          contains userland drivers and libraries, providing hardware
+          acceleration encoding, EGL, OpenGL, GLES, and Vulkan support
+          <span class="emphasis"><em>FOR</em></span> AMDGPU cards. If you do
+          not have an AMDGPU card, you can skip this page.
+        </p>
+        <h3>
+          AMDGPU PRO Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="x7lib.html" title="Xorg Libraries">Xorg
+          Libraries</a>, <a class="xref" href="gpuconfig.html" title=
+          "GPU Kernel Options and Firmware">GPU Kernel Options and
+          Firmware</a>, <a class="xref" href="mesa.html" title=
+          "Mesa-25.1.2">Mesa-25.1.2</a>, and <a class="xref" href="wget.html"
+          title="Wget-1.25.0">Wget-1.25.0</a> (for getting the .deb files in
+          the installation instructions)
+        </p>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="libvk.html" title=
+          "Vulkan-Loader-1.4.313">Vulkan-Loader-1.4.313</a> and <a class=
+          "xref" href="wayland.html" title=
+          "Wayland-1.23.1">Wayland-1.23.1</a>
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            If you are doing multilib, follow both the x86_64 and i686
+            instructions.
+          </p>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          x86_64 Installation of AMDGPU PRO
+        </h2>
+        <p>
+          First create a list of all the files to download that will be
+          downloaded using <a class="xref" href="wget.html" title=
+          "Wget-1.25.0">Wget-1.25.0</a>:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; x86_64-amdgpu-pro-wget-list &lt;&lt; "EOF"
+<code class=
+"literal">a/amf-amdgpu-pro/amf-amdgpu-pro_1.4.35-2044449.22.04_amd64.deb
+liba/libamdenc-amdgpu-pro/libamdenc-amdgpu-pro_1.0-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libegl1-amdgpu-pro-oglp_24.20-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-dri_24.20-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-ext_24.20-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-gbm_24.20-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-glx_24.20-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libgles1-amdgpu-pro-oglp_24.20-2044449.22.04_amd64.deb
+o/oglp-amdgpu-pro/libgles2-amdgpu-pro-oglp_24.20-2044449.22.04_amd64.deb
+v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_24.20-2044449.22.04_amd64.deb</code>
+EOF</kbd></pre>
+        <p>
+          Download and unpack the drivers by following the instructions
+          below:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mkdir x86_64-amdgpu-pro                                                            &amp;&amp;
+cd    x86_64-amdgpu-pro                                                            &amp;&amp;
+
+grep -v '^#' ../x86_64-amdgpu-pro-wget-list | wget -i- -c \
+    -B https://repo.radeon.com/amdgpu/6.2.3/ubuntu/pool/proprietary/ &amp;&amp;
+for deb in *.deb; do
+  ar x $deb                                                                        &amp;&amp;
+  tar -xf data.tar.xz                                                              &amp;&amp;
+  rm -rf *.tar.xz debian-binary dists
+done                                                                               &amp;&amp;
+
+install -d usr/lib/amdgpu-pro                                                      &amp;&amp;
+install -d usr/share/drirc.d                                                       &amp;&amp;
+cp -r opt/amdgpu-pro/lib/x86_64-linux-gnu/* usr/lib                                &amp;&amp;
+cp -r usr/lib/x86_64-linux-gnu/* usr/lib                                           &amp;&amp;
+cp -r opt/amdgpu-pro/lib/x86_64-linux-gnu/* usr/lib/amdgpu-pro                     &amp;&amp;
+mv opt/amdgpu-pro/lib/xorg usr/lib/amdgpu-pro                                      &amp;&amp;
+cp -r opt/amdgpu/share/drirc.d/* usr/share/drirc.d                                 &amp;&amp;
+cp -r usr/lib/amdgpu-pro/* usr/lib                                                 &amp;&amp;
+cp -r opt/amdgpu-pro/etc/vulkan usr/share                                          &amp;&amp;
+mv usr/share/vulkan/icd.d/amd_icd64.json usr/share/vulkan/icd.d/amd_pro_icd64.json &amp;&amp;
+mv usr/lib/amdvlk64.so usr/lib/amdvlkpro64.so                                      &amp;&amp;
+sed -i "s#/opt/amdgpu-pro/lib/x86_64-linux-gnu/amdvlk64.so#/usr/lib/amdvlkpro64.so#" \
+  usr/share/vulkan/icd.d/amd_pro_icd64.json                                        &amp;&amp;
+rm -rf usr/lib/dri/*                                                               &amp;&amp;
+cp -a opt/amdgpu/lib/x86_64-linux-gnu/dri/* usr/lib/dri/                           &amp;&amp;
+rm -rf opt/amdgpu-pro/lib/x86_64-linux-gnu                                         &amp;&amp;
+rm -rf usr/lib/x86_64-linux-gnu                                                    &amp;&amp;
+rm -rf opt/amdgpu-pro/lib/x86_64-linux-gnu                                         &amp;&amp;
+rm -rf opt/amdgpu-pro/share/drirc.d                                                &amp;&amp;
+rm -rf usr/lib/amdgpu-pro                                                          &amp;&amp;
+rm -rf opt/amdgpu-pro/etc/vulkan                                                   &amp;&amp;
+rm -rf etc opt</kbd></pre>
+        <p>
+          Now install the driver by running the following commands as the
+          <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">cp -Rv usr/* /usr &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          i686 Installation of AMDGPU PRO
+        </h2>
+        <p>
+          First create a list of all the files to download that will be
+          downloaded using <a class="xref" href="wget.html" title=
+          "Wget-1.25.0">Wget-1.25.0</a>:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; i386-amdgpu-pro-wget-list &lt;&lt; "EOF"
+<code class=
+"literal">o/oglp-amdgpu-pro/libegl1-amdgpu-pro-oglp_24.20-2044449.22.04_i386.deb
+o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-dri_24.20-2044449.22.04_i386.deb
+o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-glx_24.20-2044449.22.04_i386.deb
+o/oglp-amdgpu-pro/libgles1-amdgpu-pro-oglp_24.20-2044449.22.04_i386.deb
+o/oglp-amdgpu-pro/libgles2-amdgpu-pro-oglp_24.20-2044449.22.04_i386.deb
+v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_24.20-2044449.22.04_i386.deb</code>
+EOF</kbd></pre>
+        <p>
+          Download and unpack the drivers by following the instructions
+          below:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mkdir i386-amdgpu-pro                                                              &amp;&amp;
+cd    i386-amdgpu-pro                                                              &amp;&amp;
+
+grep -v '^#' ../i386-amdgpu-pro-wget-list | wget -i- -c \
+    -B https://repo.radeon.com/amdgpu/6.2.3/ubuntu/pool/proprietary/ &amp;&amp;
+for deb in *.deb; do
+  ar x $deb                                                                        &amp;&amp;
+  tar -xf data.tar.xz                                                              &amp;&amp;
+  rm -rf *.tar.xz debian-binary dists
+done                                                                               &amp;&amp;
+
+install -d usr/lib32/amdgpu-pro                                                    &amp;&amp;
+install -d usr/share/drirc.d                                                       &amp;&amp;
+cp -r opt/amdgpu-pro/lib/i386-linux-gnu/* usr/lib32                                &amp;&amp;
+cp -r usr/lib/i386-linux-gnu/* usr/lib32                                           &amp;&amp;
+cp -r opt/amdgpu-pro/lib/i386-linux-gnu/* usr/lib32/amdgpu-pro                     &amp;&amp;
+cp -r opt/amdgpu/share/drirc.d/* usr/share/drirc.d                                 &amp;&amp;
+cp -r usr/lib32/amdgpu-pro/* usr/lib32                                             &amp;&amp;
+cp -r opt/amdgpu-pro/etc/vulkan usr/share                                          &amp;&amp;
+mv usr/share/vulkan/icd.d/amd_icd32.json usr/share/vulkan/icd.d/amd_pro_icd32.json &amp;&amp;
+mv usr/lib32/amdvlk32.so usr/lib32/amdvlkpro32.so                                  &amp;&amp;
+sed -i "s#/opt/amdgpu-pro/lib/i386-linux-gnu/amdvlk32.so#/usr/lib32/amdvlkpro32.so#" \
+  usr/share/vulkan/icd.d/amd_pro_icd32.json                                        &amp;&amp;
+rm -rf usr/lib32/dri/*                                                             &amp;&amp;
+cp -a opt/amdgpu/lib/i386-linux-gnu/dri/* usr/lib32/dri/                           &amp;&amp;
+rm -rf usr/lib                                                                     &amp;&amp;
+rm -rf usr/lib32/amdgpu-pro                                                        &amp;&amp;
+rm -rf etc opt</kbd></pre>
+        <p>
+          Now install the driver by running the following commands as the
+          <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">cp -Rv usr/* /usr &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            There are many libraries provided by this package that have the
+            same name and serve the same purpose. The info below covers the
+            unique libraries. Check the <span class="quote">“<span class=
+            "quote">Contents</span>”</span> section of <a class="xref" href=
+            "mesa.html" title="Mesa-25.1.2">Mesa-25.1.2</a>.
+          </p>
+        </div>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">amdgpu_dri, amdvlkpro{64,32},
+              libamdenc64, libamfrt64, and libGLX_amd</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class=
+              "segbody">/usr/share/doc/{libegl1-amdgpu-pro-oglp,libgl1-amdgpu-pro-oglp-glx,libgles2-amdgpu-pro-oglp,libgl1-amdgpu-pro-oglp-dri,libgles1-amdgpu-pro-oglp,vulkan-amdgpu-pro},
+              /usr/share/drirc.d, and /usr/share/vulkan/icd.d</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="amdgpu_dri" name="amdgpu_dri"></a><span class=
+                    "term"><code class="filename">amdgpu_dri</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the AMDGPU DRI driver
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="amdvlkpro" name="amdvlkpro"></a><span class=
+                    "term"><code class=
+                    "filename">amdvlkpro{64,32}</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the AMDGPU Vulkan driver
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libamdenc64" name="libamdenc64"></a><span class=
+                    "term"><code class="filename">libamdenc64</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    handles encoding for AMDGPU cards
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libamfrt64" name="libamfrt64"></a><span class=
+                    "term"><code class="filename">libamfrt64</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides the Advanced Media Framework, allowing better
+                    multimedia processing on AMD GPUs
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libGLX_amd" name="libGLX_amd"></a><span class=
+                    "term"><code class="filename">libGLX_amd</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the AMD version of GLX
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="libvdpau-va-gl.html" title=
+          "libvdpau-va-gl-0.4.2">Prev</a>
+          <p>
+            libvdpau-va-gl-0.4.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="x.html" title="X11">Next</a>
+          <p>
+            X11
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="drivers.html" title=
+          "Chapter&nbsp;8.&nbsp;Graphics Drivers">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

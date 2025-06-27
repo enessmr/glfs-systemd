@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      MinGW-w64-GCC-15.1.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64.html" title=
+          "MinGW-w64-12.0.0">Prev</a>
+          <p>
+            MinGW-w64-12.0.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="misc.html" title="Miscellaneous">Next</a>
+          <p>
+            Miscellaneous
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="mingw-w64-gcc" name="mingw-w64-gcc"></a>MinGW-w64-GCC-15.1.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to MinGW-w64-GCC
+        </h2>
+        <p>
+          <span class="application">MinGW-w64-GCC</span> has been built
+          statically beforehand, and it should be rebuilt to ensure
+          robustness. This section will be dedicated to finishing the
+          MinGW-w64 toolchain.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://ftp.gnu.org/gnu/gcc/gcc-15.1.0/gcc-15.1.0.tar.xz">https://ftp.gnu.org/gnu/gcc/gcc-15.1.0/gcc-15.1.0.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          MinGW-w64-GCC Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="mingw-w64.html" title=
+          "MinGW-w64-12.0.0">MinGW-w64-12.0.0</a>
+        </p>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/gdb.html">
+          GDB</a> and <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/valgrind.html">
+          Valgrind</a> (for tests)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of MinGW-w64-GCC
+        </h2>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            Although you are compiling for another host and running
+            <span class="command"><strong>make install</strong></span> is
+            generally safe, it is recommended to not run <span class=
+            "command"><strong>make install</strong></span> until you are
+            confident the build was successful.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            x86_64 Installation of MinGW-w64-GCC
+          </h3>
+          <p>
+            Install x86_64 <span class="application">MinGW-w64-GCC</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-x86_64-mingw-w64 &amp;&amp;
+cd    build-x86_64-mingw-w64 &amp;&amp;
+
+../configure --prefix=/usr               \
+             --target=x86_64-w64-mingw32 \
+             --enable-threads=posix      \
+             --enable-shared             \
+             --disable-multilib          \
+             --enable-languages=c,c++ &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            If you have installed additional packages such as <span class=
+            "application">valgrind</span> and <span class=
+            "application">gdb</span> , the <span class=
+            "application">gcc</span> part of the test suite will run more
+            tests than in LFS. Some of those will report FAIL and others
+            XPASS (pass when expected to FAIL). As of gcc-15.1.0, about 65
+            FAIL occur in the “guality” suite, as well as miscellaneous
+            failures throughout the rest of the test suite. If all the
+            compilers above are built, there will be a little over 80
+            unexpected failures out of over 546,000 tests. To run the tests,
+            issue:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">make -k check</kbd></pre>
+          <p>
+            The tests are very long, and the results may be hard to find in
+            the logs, specially if you use parallel jobs with make. You can
+            get a summary of the tests with:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">../contrib/test_summary</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install &amp;&amp;
+cd ..        &amp;&amp;
+
+ln -sfv x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-cc &amp;&amp;
+strip /usr/libexec/gcc/x86_64-w64-mingw32/15.1.0/{cc1*,collect2,lto*}</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            i686 Installation of MinGW-w64-GCC
+          </h3>
+          <p>
+            Install i686 <span class="application">MinGW-w64-GCC</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-i686-mingw-w64 &amp;&amp;
+cd    build-i686-mingw-w64 &amp;&amp;
+
+../configure --prefix=/usr             \
+             --target=i686-w64-mingw32 \
+             --enable-shared           \
+             --enable-threads=posix    \
+             --disable-multilib        \
+             --enable-languages=c,c++ &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            If you have installed additional packages such as <span class=
+            "application">valgrind</span> and <span class=
+            "application">gdb</span> , the <span class=
+            "application">gcc</span> part of the test suite will run more
+            tests than in LFS. Some of those will report FAIL and others
+            XPASS (pass when expected to FAIL). As of gcc-15.1.0, about 65
+            FAIL occur in the “guality” suite, as well as miscellaneous
+            failures throughout the rest of the test suite. If all the
+            compilers above are built, there will be a little over 80
+            unexpected failures out of over 546,000 tests. To run the tests,
+            issue:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">make -k check</kbd></pre>
+          <p>
+            The tests are very long, and the results may be hard to find in
+            the logs, specially if you use parallel jobs with make. You can
+            get a summary of the tests with:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">../contrib/test_summary</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install &amp;&amp;
+
+ln -sfv i686-w64-mingw32-gcc /usr/bin/i686-w64-mingw32-cc &amp;&amp;
+strip /usr/libexec/gcc/i686-w64-mingw32/15.1.0/{cc1*,collect2,lto*}</kbd></pre>
+        </div>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Testing the Toolchain
+        </h2>
+        <p>
+          Now that the <span class="application">MinGW-w64</span> cross
+          toolchain has been fully installed, it is time to test the
+          installation to make sure everything is working as expected.
+        </p>
+        <p>
+          Confirm that the regular C and C++ compilers are working correctly:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">echo "int main(){}" &gt;&gt; main.c &amp;&amp;
+cp -v main.c main.cpp &amp;&amp;
+gcc main.c            &amp;&amp;
+./a.out               &amp;&amp;
+
+rm -v a.out           &amp;&amp;
+g++ main.cpp          &amp;&amp;
+./a.out               &amp;&amp;
+
+rm -v a.out main.{c,cpp}</kbd></pre>
+        <p>
+          If you're doing multilib:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">echo "int main(){}" &gt;&gt; main.c &amp;&amp;
+cp -v main.c main.cpp &amp;&amp;
+gcc -m32 main.c       &amp;&amp;
+./a.out               &amp;&amp;
+
+rm -v a.out           &amp;&amp;
+g++ -m32 main.cpp     &amp;&amp;
+./a.out               &amp;&amp;
+
+rm -v a.out main.{c,cpp}</kbd></pre>
+        <p>
+          Now test the <span class="application">MinGW-w64</span> cross
+          compiler.
+        </p>
+        <p>
+          For x86_64:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt;&gt; main.c &lt;&lt; "EOF" &amp;&amp;
+<code class="literal">#include &lt;stdio.h&gt;
+int main(){}
+</code>EOF
+
+cp main.{c,cpp}                        &amp;&amp;
+sed -i 's/stdio.h/iostream/g' main.cpp &amp;&amp;
+
+x86_64-w64-mingw32-gcc main.c   &amp;&amp;
+rm -v a.exe                     &amp;&amp;
+x86_64-w64-mingw32-g++ main.cpp &amp;&amp;
+rm -v a.exe main.{c,cpp}</kbd></pre>
+        <p>
+          For i686:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt;&gt; main.c &lt;&lt; "EOF" &amp;&amp;
+<code class="literal">#include &lt;stdio.h&gt;
+int main(){}
+</code>EOF
+
+cp main.{c,cpp}                        &amp;&amp;
+sed -i 's/stdio.h/iostream/g' main.cpp &amp;&amp;
+
+i686-w64-mingw32-gcc main.c   &amp;&amp;
+rm -v a.exe                   &amp;&amp;
+i686-w64-mingw32-g++ main.cpp &amp;&amp;
+rm -v a.exe main.{c,cpp}</kbd></pre>
+        <p>
+          The commands above should have no errors, otherwise something went
+          wrong with the installation.
+        </p>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>../configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <span class="command"><strong>mkdir build; cd
+          build</strong></span>: The <span class="application">GCC</span>
+          documentation recommends building the package in a dedicated build
+          directory.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-shared</code></em>: This
+          option enables building shared libraries.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-threads=posix</code></em>:
+          This option enables support for POSIX threads via the winpthreads
+          library.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-multilib</code></em>: This
+          option ensures that files are created for the specific architecture
+          of your computer.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-languages=c,c++</code></em>:
+          This command builds support for C and C++. Refer to <a class=
+          "ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/gcc.html">
+          https://www.linuxfromscratch.org/blfs/view/systemd/general/gcc.html</a>
+          to find what other languages are supported.
+        </p>
+        <p>
+          <span class="command"><strong>make -k check</strong></span>: This
+          command runs the test suite without stopping if any errors are
+          encountered.
+        </p>
+        <p>
+          <span class=
+          "command"><strong>../contrib/test_summary</strong></span>: This
+          command will produce a summary of the test suite results. You can
+          append <span class="command"><strong>| grep -A7
+          Summ</strong></span> to the command to produce an even more
+          condensed version of the summary. You may also wish to redirect the
+          output to a file for review and comparison later on.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <p>
+          There are no binaries specific to this package besides the format
+          the compilers are targetting. For in-depth descriptions, read
+          <a class="ulink" href=
+          "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/gcc.html#contents-gcc">
+          https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/gcc.html#contents-gcc</a>
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64.html" title=
+          "MinGW-w64-12.0.0">Prev</a>
+          <p>
+            MinGW-w64-12.0.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="misc.html" title="Miscellaneous">Next</a>
+          <p>
+            Miscellaneous
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

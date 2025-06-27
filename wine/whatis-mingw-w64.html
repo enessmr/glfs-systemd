@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      What is the MinGW-w64 Toolchain?
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw.html" title=
+          "The MinGW-w64 Toolchain">Prev</a>
+          <p>
+            The MinGW-w64 Toolchain
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64-headers.html" title=
+          "MinGW-w64-headers-12.0.0">Next</a>
+          <p>
+            MinGW-w64-headers-12.0.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="whatis-mingw-w64" name="whatis-mingw-w64"></a>What is the
+      MinGW-w64 Toolchain?
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        <span class="application">MinGW-w64</span> itself is a package
+        providing headers, C runtime libraries, and much more. When support
+        for it is built into compilers such as <span class=
+        "application">GCC</span>, it enables the building of software
+        targetting Windows, such as programs and libraries. This software is
+        aimed to be used on Windows, but can also be used on Linux.
+      </p>
+      <div class="admon note">
+        <img alt="[Note]" src="../images/note.png" />
+        <h3>
+          Note
+        </h3>
+        <p>
+          <span class="application">LLVM</span> can also be used for the
+          toolchain. This book will use <span class="application">GCC</span>
+          instead as it has easier instructions, quicker build times, and
+          saves disk space.
+        </p>
+      </div>
+      <p>
+        <a class="xref" href="wine.html" title="Wine-10.9">Wine-10.9</a>
+        depends on this functionality to build DLLs (Dynamic Link Libraries),
+        or the equivalent of Linux dynamic libraries, appended with the
+        suffix <code class="filename">.so</code>, or Shared Objects.
+      </p>
+      <p>
+        A lot of Windows software is dynamically linked. While most of them
+        when shipped include DLLs packaged in the installed directory, or
+        extracted from a ZIP file, not all DLLs will be packaged as a number
+        will be installed on a given Windows machine already, such as
+        libraries for DirectX/Direct3D support. Since we are on a Unix-like
+        operating system, we do not have such DLLs installed on the system,
+        and they were never compiled in LFS or earlier in this book.
+        <a class="xref" href="../shareddeps/nvidia.html" title=
+        "NVIDIA-575.57.08">NVIDIA-575.57.08</a> does install two DLL files
+        but are strictly meant for <span class="application">Wine</span> and
+        Proton. <span class="application">MinGW-w64</span> does not install
+        these libraries, so <span class="application">Wine</span> needs to
+        compile them for most Windows software to function.
+      </p>
+      <p>
+        If you are a developer and wish to target Windows, this toolchain
+        should be pretty useful. You won't need to follow any of the chapters
+        after this one if you just want the MinGW-w64 toolchain. It is
+        recommended to still install <span class="application">Wine</span>
+        for sanity checks revolving around your built software you are
+        developing, although it isn't a perfect replacement for an accurate
+        Windows environment. While the built software may work fine with
+        <span class="application">Wine</span>, it could be totally broken on
+        Windows. An example is linking against libraries installed by
+        <span class="application">Wine</span> or <span class=
+        "application">MinGW-w64</span> and Windows complaining that Unixlib
+        can not be found.
+      </p>
+      <p>
+        The following process works up to building the pieces for a static
+        compilation of GCC, which means it cannot do much of anything with
+        dynamic libraries besides build them. This is especially a problem
+        with C++ software as you need <code class=
+        "filename">libstdc++</code>, which should be dynamic, for linking and
+        execution. This is also a problem for software that uses atomic. Most
+        of all, Windows software built with the toolchain needs <code class=
+        "filename">libgcc_s_seh</code> which is not provided in the static
+        build.
+      </p>
+      <p>
+        However, this barebones basic toolchain is enough to build up the
+        remaining pieces of the toolchain. After doing so, you can rebuild
+        GCC and have a complete toolchain ready for targetting Windows.
+        Realistically, you could grab a binary distribution of the toolchain
+        and compile everything with less steps. In the past, that is exactly
+        what this book has done. GLFS editors/contributors since then have
+        decided to scrap that idea <a href="#ftn.id15554" class="footnote"
+        id="id15554" name="id15554"><sup class="footnote">[13]</sup></a> and
+        have chosen to bootstrap the toolchain instead.
+      </p>
+      <div class="footnotes">
+        <br />
+        <hr width="100" align="left" />
+        <div id="ftn.id15554" class="footnote">
+          <p>
+            <a href="#id15554" class="para"><sup class="para">[13]</sup></a>
+            See this <a class="ulink" href=
+            "https://github.com/Zeckmathederg/glfs/issues/9">issue</a> for
+            rationale behind bootstrapping the MinGW-w64 toolchain. The issue
+            originates from the old Github repository the GLFS project was
+            once hosted.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw.html" title=
+          "The MinGW-w64 Toolchain">Prev</a>
+          <p>
+            The MinGW-w64 Toolchain
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64-headers.html" title=
+          "MinGW-w64-headers-12.0.0">Next</a>
+          <p>
+            MinGW-w64-headers-12.0.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

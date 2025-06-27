@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Xdg-user-dirs-0.18
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;12.&nbsp;Installing Steam Dependencies
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="steamdepsinst.html" title=
+          "Installing Steam Dependencies">Prev</a>
+          <p>
+            Installing Steam Dependencies
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libgpg-error.html" title=
+          "libgpg-error-1.55">Next</a>
+          <p>
+            libgpg-error-1.55
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="steamdepsinst.html" title=
+          "Chapter&nbsp;12.&nbsp;Installing Steam Dependencies">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="xdg-user-dirs" name="xdg-user-dirs"></a>Xdg-user-dirs-0.18
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Xdg-user-dirs
+        </h2>
+        <p>
+          <span class="application">Xdg-user-dirs</span> is a tool to help
+          manage <span class="quote">“<span class="quote">well
+          known</span>”</span> user directories like the desktop folder and
+          the music folder. It also handles localization (i.e. translation)
+          of the filenames.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://user-dirs.freedesktop.org/releases/xdg-user-dirs-0.18.tar.gz">
+                https://user-dirs.freedesktop.org/releases/xdg-user-dirs-0.18.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Xdg-user-dirs
+        </h2>
+        <p>
+          Install <span class="application">xdg-user-dirs</span> by running
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">./configure --prefix=/usr           \
+            --sysconfdir=/etc       \
+            --disable-documentation &amp;&amp;
+make</kbd></pre>
+        <p>
+          This package does not come with a test suite.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">make install</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>./configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--disable-documentation</code></em>:
+          Disable the installation of the man pages.
+        </p>
+      </div>
+      <div class="configuration" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Configuring Xdg-user-dirs
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            <a id="xdg-user-dirs-config" name=
+            "xdg-user-dirs-config"></a>Config Files
+          </h3>
+          <p>
+            <code class="filename">~/.config/user-dirs.dirs</code>,
+            <code class="filename">/etc/xdg/user-dirs.conf</code>, and
+            <code class="filename">/etc/xdg/user-dirs.defaults</code>. Those
+            default locations can be overridden by <code class=
+            "envar">XDG_CONFIG_HOME</code> and <code class=
+            "envar">XDG_CONFIG_DIRS</code>
+          </p>
+        </div>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">xdg-user-dir and
+              xdg-user-dirs-update</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Library:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directory:</strong>
+              <span class="segbody">None</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="xdg-user-dir" name="xdg-user-dir"></a><span class=
+                    "term"><span class=
+                    "command"><strong>xdg-user-dir</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    looks up the current path for one of the XDG user
+                    directories
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="xdg-user-dirs-update" name=
+                    "xdg-user-dirs-update"></a><span class=
+                    "term"><span class="command"><strong>xdg-user-dirs-update</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    creates localized versions of the user directories
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="steamdepsinst.html" title=
+          "Installing Steam Dependencies">Prev</a>
+          <p>
+            Installing Steam Dependencies
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libgpg-error.html" title=
+          "libgpg-error-1.55">Next</a>
+          <p>
+            libgpg-error-1.55
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="steamdepsinst.html" title=
+          "Chapter&nbsp;12.&nbsp;Installing Steam Dependencies">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

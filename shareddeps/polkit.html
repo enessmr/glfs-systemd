@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Polkit-126
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;4.&nbsp;Security
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="desktop-file-utils.html" title=
+          "desktop-file-utils-0.28">Prev</a>
+          <p>
+            desktop-file-utils-0.28
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="audio.html" title="Audio">Next</a>
+          <p>
+            Audio
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="security.html" title=
+          "Chapter&nbsp;4.&nbsp;Security">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="polkit" name="polkit"></a>Polkit-126
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Polkit
+        </h2>
+        <p>
+          <span class="application">Polkit</span> is a toolkit for defining
+          and handling authorizations. It is used for allowing unprivileged
+          processes to communicate with privileged processes.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://github.com/polkit-org/polkit/archive/126/polkit-126.tar.gz">
+                https://github.com/polkit-org/polkit/archive/126/polkit-126.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Polkit Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="duktape.html" title=
+          "duktape-2.7.0">duktape-2.7.0</a> and <a class="xref" href=
+          "glib2.html" title="GLib-2.84.3">GLib-2.84.3</a>
+        </p>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="linux-pam.html" title=
+          "Linux-PAM-1.7.0">Linux-PAM-1.7.0</a>
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Since <span class="phrase"><span class=
+            "command"><strong>systemd-logind</strong></span></span> uses PAM
+            to register user sessions, it is a good idea to build
+            <span class="application">Polkit</span> with PAM support so
+            <span class="phrase"><span class=
+            "command"><strong>systemd-logind</strong></span></span> can track
+            <span class="application">Polkit</span> sessions.
+          </p>
+        </div>
+        <h4>
+          Required Runtime Dependencies
+        </h4>
+        <p class="required">
+          <a class="xref" href="systemd.html" title=
+          "Systemd-257.6">Systemd-257.6</a>
+        </p>
+        <h4>
+          <a id="polkit-agent" name="polkit-agent"></a> Optional Runtime
+          Dependencies
+        </h4>
+        <p class="optional">
+          One polkit authentication agent for using polkit in the graphical
+          environment; this will greatly depend on what desktop you are
+          running.
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Polkit
+        </h2>
+        <p>
+          There should be a dedicated user and group to take control of the
+          <span class="command"><strong>polkitd</strong></span> daemon after
+          it is started. <span class="emphasis"><em>IF</em></span> you have
+          not already created a dedicated user and group for <span class=
+          "command"><strong>polkitd</strong></span>, issue the following
+          commands as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">groupadd -fg 27 polkitd &amp;&amp;
+useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
+        -g polkitd -s /bin/false polkitd</kbd></pre>
+        <p>
+          Install <span class="application">Polkit</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..                   \
+      --prefix=/usr              \
+      --buildtype=release        \
+      -D os_type=lfs             \
+      -D man=false               \
+      -D session_tracking=logind \
+      -D tests=false &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">ninja install</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--buildtype=release</code></em>:
+          Specify a buildtype suitable for stable releases of the package, as
+          the default may produce unoptimized binaries.
+        </p>
+        <p>
+          <em class="parameter"><code>-D os_type=lfs</code></em>: This switch
+          ensures that even if distribution auto detection fails, the
+          distribution/OS type will be hardcoded in <span class=
+          "application">Polkit</span>.
+        </p>
+        <p>
+          <em class="parameter"><code>-D man=false</code></em>: This option
+          disables generating and installing manual pages.
+        </p>
+        <p>
+          <code class="option">-D authfw=shadow</code>: This switch enables
+          the package to use the <span class="application">Shadow</span>
+          rather than the <span class="application">Linux PAM</span>
+          Authentication framework. Use it if you have not installed
+          <span class="application">Linux PAM</span>.
+        </p>
+        <p>
+          <code class="option">-D introspection=false</code>: This option
+          disables GObject Introspection support if you are sure you don't
+          need it.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">pkaction, pkcheck, pkexec, pkttyagent,
+              and polkitd</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libpolkit-agent-1 and
+              libpolkit-gobject-1</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/etc/polkit-1, /usr/include/polkit-1,
+              /usr/lib/polkit-1, /usr/share/gtk-doc/html/polkit-1, and
+              /usr/share/polkit-1</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pkaction" name="pkaction"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pkaction</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to obtain information about registered PolicyKit
+                    actions
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pkcheck" name="pkcheck"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pkcheck</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to check whether a process is authorized for
+                    action
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pkexec" name="pkexec"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pkexec</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    allows an authorized user to execute a command as another
+                    user
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pkttyagent" name="pkttyagent"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pkttyagent</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to start a textual authentication agent for the
+                    subject
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="polkitd" name="polkitd"></a><span class=
+                    "term"><span class=
+                    "command"><strong>polkitd</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides the org.freedesktop.PolicyKit1 <span class=
+                    "application">D-Bus</span> service on the system message
+                    bus
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libpolkit-agent-1" name=
+                    "libpolkit-agent-1"></a><span class="term"><code class=
+                    "filename">libpolkit-agent-1</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains the <span class="application">Polkit</span>
+                    authentication agent API functions
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libpolkit-gobject-1" name=
+                    "libpolkit-gobject-1"></a><span class="term"><code class=
+                    "filename">libpolkit-gobject-1</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains the <span class="application">Polkit</span>
+                    authorization API functions
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="desktop-file-utils.html" title=
+          "desktop-file-utils-0.28">Prev</a>
+          <p>
+            desktop-file-utils-0.28
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="audio.html" title="Audio">Next</a>
+          <p>
+            Audio
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="security.html" title=
+          "Chapter&nbsp;4.&nbsp;Security">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

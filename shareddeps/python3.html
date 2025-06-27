@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Python-3.13.5
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;3.&nbsp;Networking
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="sqlite.html" title="SQLite-3.50.1">Prev</a>
+          <p>
+            SQLite-3.50.1
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="nss.html" title="NSS-3.112">Next</a>
+          <p>
+            NSS-3.112
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="net.html" title=
+          "Chapter&nbsp;3.&nbsp;Networking">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="python3" name="python3"></a>Python-3.13.5
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to Python 3
+        </h2>
+        <p>
+          The <span class="application">Python 3</span> package contains the
+          <span class="application">Python</span> development environment.
+          This is useful for object-oriented programming, writing scripts,
+          prototyping large programs or developing entire applications.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            <span class="application">Python 3</span> was installed in LFS.
+            The only reason to rebuild it here is if <a class="xref" href=
+            "sqlite.html" title="SQLite-3.50.1">SQLite-3.50.1</a> is
+            installed or if upgrading.
+          </p>
+        </div>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            If upgrading to a new Python-3 minor version (for example, from
+            Python-3.11.x to Python-3.12.0), you will need to reinstall any
+            Python3 modules you have installed. You should also reinstall
+            packages that generate Python3 modules.
+          </p>
+          <p>
+            Before you upgrade, you can get a list of modules installed with
+            <span class="command"><strong>pip3 list</strong></span>. The list
+            may be incomplete as some Python modules are not installed with
+            <span class="command"><strong>pip3</strong></span>, for example
+            the <code class="literal">xcbgen</code> module installed by
+            <a class="xref" href="xcb-proto.html" title=
+            "xcb-proto-1.17.0">xcb-proto-1.17.0</a>. Use <span class=
+            "command"><strong>ls /usr/lib/python3.<em class=
+            "replaceable"><code>minor</code></em>/site-packages</strong></span>
+            for a comprehensive list.
+          </p>
+          <p>
+            The Python modules from LFS will also have to be reinstalled:
+            <a class="ulink" href=
+            "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/flit-core.html">
+            flit-core</a>, <a class="ulink" href=
+            "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/wheel.html">
+            wheel</a>, <a class="ulink" href=
+            "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/setuptools.html">
+            setuptools</a>, <a class="ulink" href=
+            "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/meson.html">
+            meson</a>, <a class="ulink" href=
+            "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/markupsafe.html">
+            MarkupSafe</a>, and <a class="ulink" href=
+            "https://www.linuxfromscratch.org/lfs/view/systemd/chapter08/jinja2.html">
+            Jinja2</a>.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://www.python.org/ftp/python/3.13.5/Python-3.13.5.tar.xz">
+                https://www.python.org/ftp/python/3.13.5/Python-3.13.5.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          Python 3 Dependencies
+        </h3>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="sqlite.html" title=
+          "SQLite-3.50.1">SQLite-3.50.1</a> (required if building <a class=
+          "ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/xsoft/firefox.html">
+          Firefox</a> or <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/xsoft/thunderbird.html">
+          Thunderbird</a>)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of Python 3
+        </h2>
+        <p>
+          Install <span class="application">Python 3</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">CXX="/usr/bin/g++"               \
+./configure --prefix=/usr        \
+            --enable-shared      \
+            --with-system-expat  \
+            --enable-optimizations &amp;&amp;
+make</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">make install</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <p>
+          <span class="command"><strong>CXX="/usr/bin/g++" ./configure
+          ...</strong></span>: Avoid an annoying message during
+          configuration.
+        </p>
+        <p>
+          <em class="parameter"><code>--with-system-expat</code></em>: This
+          switch enables linking against the system version of <span class=
+          "application">Expat</span>.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-optimizations</code></em>:
+          This switch enables stable, but expensive, optimizations.
+        </p>
+        <p>
+          <code class="option">--with-lto</code>: This optional switch
+          enables thick Link Time Optimization. Unusually, it creates a much
+          larger <code class=
+          "filename">/usr/lib/python3.13/config-3.13-&lt;arch&gt;-linux-gnu/libpython3.13.a</code>
+          with a small increase in the time to compile <span class=
+          "application">Python</span>. Run-time results do not appear to show
+          any benefit from doing this.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">2to3 (symlink) and 2to3-3.13, idle3
+              (symlink) and idle3.13, pip3 and pip3.13, pydoc3 (symlink) and
+              pydoc3.13, python3 (symlink) and python3.13, and python3-config
+              (symlink) and python3.13-config</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libpython3.13 and libpython3</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/python3.13 and
+              /usr/lib/python3.13</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="idle3" name="idle3"></a><span class=
+                    "term"><span class=
+                    "command"><strong>idle3</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a wrapper script that opens a <span class=
+                    "application">Python</span> aware GUI editor. For this
+                    script to run, you must have installed <span class=
+                    "application">Tk</span> before Python so that the Tkinter
+                    Python module is built
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="pydoc3" name="pydoc3"></a><span class=
+                    "term"><span class=
+                    "command"><strong>pydoc3</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is the <span class="application">Python</span>
+                    documentation tool
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="python3-prog" name="python3-prog"></a><span class=
+                    "term"><span class=
+                    "command"><strong>python3</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is an interpreted, interactive, object-oriented
+                    programming language
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="python-ver" name="python-ver"></a><span class=
+                    "term"><span class=
+                    "command"><strong>python3.13</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is a version-specific name for the <span class=
+                    "command"><strong>python</strong></span> program
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="sqlite.html" title="SQLite-3.50.1">Prev</a>
+          <p>
+            SQLite-3.50.1
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="nss.html" title="NSS-3.112">Next</a>
+          <p>
+            NSS-3.112
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="net.html" title=
+          "Chapter&nbsp;3.&nbsp;Networking">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

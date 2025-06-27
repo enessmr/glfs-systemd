@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      What Now?
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;10.&nbsp;Checkpoint
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="checkpoint.html" title="Checkpoint">Prev</a>
+          <p>
+            Checkpoint
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="../steam/steamsec.html" title=
+          "Steam">Next</a>
+          <p>
+            Steam
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="checkpoint.html" title=
+          "Chapter&nbsp;10.&nbsp;Checkpoint">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="whatnow" name="whatnow"></a>What Now?
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        By now, you should have most of the packages needed to compile any
+        packages on this page and beyond. The good news is you are now done
+        with the hardest part of this book. Congrats!
+      </p>
+      <p>
+        Well, where do you go from here? You could continue straight to the
+        following chapters if you wish. But to run graphical programs like
+        <a class="xref" href="../steam/steam.html" title=
+        "Steam-1.0.0.83">Steam-1.0.0.83</a> and <a class="xref" href=
+        "../wine/wine.html" title="Wine-10.9">Wine-10.9</a> (including
+        <span class="command"><strong>wineboot</strong></span> as shown in
+        the setup for <a class="xref" href="../wine/dxvk.html" title=
+        "DXVK-2.6.2">DXVK-2.6.2</a>), you will need a graphical environment.
+        There are a few components you will need in order to get a graphical
+        environment working and not accidentally lock yourself inside of it
+        without a hard reboot. The installation of those components is not
+        covered in this book, as the specific components will depend on if
+        you plan to use <span class="application">X11</span>, <span class=
+        "application">Wayland</span>, or both. This page acts as a simple
+        nudge to help point you in the right direction. When you are done
+        setting up your graphical environment, you can come back and continue
+        with the next chapters.
+      </p>
+      <p>
+        Furthermore, make sure to install a video userland driver. While no
+        sections later in this book depend on the drivers, a graphical
+        environment needs a driver. Be sure to read <a class="xref" href=
+        "whatdriver.html" title="What Drivers to Install">What Drivers to
+        Install</a> and install the driver(s) of your choosing.
+      </p>
+      <p>
+        While you are at it, make sure you have followed <a class="xref"
+        href="../introduction/bash-profile.html" title=
+        "The Bash Shell Startup Files">The Bash Shell Startup Files</a> if
+        you have not already as the files in that section set necessary
+        variables.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          X11
+        </h2>
+        <p>
+          It is recommended to read up on the BLFS page <a class="ulink"
+          href="https://www.linuxfromscratch.org/blfs/view/systemd/x/xorg-config.html">
+          Xorg-7 Testing and Configuration</a>. It is pretty comprehensive.
+          However, using <a class="xref" href="nvidia.html" title=
+          "NVIDIA-575.57.08">NVIDIA-575.57.08</a> with <span class=
+          "application">X11</span> requires a slightly different setup, and
+          there may be extra information you wish to know.
+        </p>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            X11 With NVIDIA
+          </h3>
+          <p>
+            Using a conventional <code class=
+            "filename">/etc/X11/xorg.conf</code> can lead to issues, if
+            <span class="application">X11</span> manages to even start. In
+            order to use the <span class="application">NVIDIA</span> driver
+            when starting <span class="application">X11</span>, run the
+            following command as the <code class="systemitem">root</code>
+            user:
+          </p>
+          <pre class="root"><kbd class="command">nvidia-xconfig</kbd></pre>
+          <div class="admon important">
+            <img alt="[Important]" src="../images/important.png" />
+            <h3>
+              Important
+            </h3>
+            <p>
+              The above command will overwrite the current <code class=
+              "filename">/etc/X11/xorg.conf</code> configuration file. If you
+              wish to preserve it, move it out of the way or rename it.
+            </p>
+          </div>
+          <p>
+            If you desire to use a high refresh rate, using <span class=
+            "command"><strong>cvt</strong></span> as the method will result
+            in failure. When you start the server, launch <span class=
+            "command"><strong>nvidia-settings</strong></span> as the
+            <code class="systemitem">root</code> user and navigate to the
+            <span class="quote">“<span class="quote">X Server Display
+            Configuration</span>”</span> section on the left sidebar and
+            change the Hz located to the right of the screen size. Click
+            <span class="quote">“<span class="quote">Apply</span>”</span>
+            when you are done, accept the changes, then click <span class=
+            "quote">“<span class="quote">Save to X Configuration
+            File</span>”</span>. If given the option, choose to merge the
+            file. Note that this method requires <a class="ulink" href=
+            "https://www.linuxfromscratch.org/blfs/view/systemd/x/gtk3.html">GTK3</a>.
+          </p>
+          <p>
+            If you have an integrated graphics card (being either AMD or
+            Intel) and a discrete graphics card (being NVIDIA), run the
+            following as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">nvidia-xconfig --prime</kbd></pre>
+          <p>
+            It will tell you to run a few commands. While in a TTY, put those
+            commands into your <code class="filename">~/.xinitrc</code> file,
+            or else when you start Xorg you will be greeted with a black
+            screen. You can also put the commands in a different script and
+            use a keybind to open a terminal and blindly execute the script —
+            at which point the graphics should appear like normal. Running
+            the commands in a TTY will result in complaints that no screens
+            were found. Additionally, make sure you have installed drivers
+            for both your iGPU and dGPU.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            Using Zink
+          </h3>
+          <p>
+            If you compiled Zink in <a class="xref" href="mesa.html" title=
+            "Mesa-25.1.2">Mesa-25.1.2</a>, chances are <span class=
+            "application">X11</span> or any <span class=
+            "application">Wayland</span> compositors will use the Gallium3D
+            driver meant for your GPU specifically. You can override this by
+            setting the following variable:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">export MESA_LOADER_DRIVER_OVERRIDE=zink</kbd></pre>
+          <p>
+            This could be considered unstable, so if you experience crashes,
+            the Zink driver could be the issue and you should use the
+            Gallium3D driver meant for your GPU instead.
+          </p>
+          <p>
+            If you are on a NVIDIA Turing or newer GPU, Zink will be used by
+            default instead of Gallium3D Nouveau.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            X11 Components
+          </h3>
+          <p>
+            There are typically three important components of an X11
+            environment:
+          </p>
+          <div class="itemizedlist">
+            <ul>
+              <li class="listitem">
+                <p>
+                  a window manager or desktop environment
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  a terminal and/or launcher
+                </p>
+              </li>
+              <li class="listitem">
+                <p>
+                  and optionally a compositor
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="sect4">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h5 class="title">
+                    <a id="id15054" name="id15054"></a>Window Manager
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <p>
+              A window manager is an application that manages windows, their
+              placement, how they move, and more. It is a minimal option for
+              a graphical environment. Some popular window managers include
+              <a class="ulink" href="https://awesomewm.org/">AwesomeWM</a>,
+              <a class="ulink" href=
+              "https://github.com/baskerville/bspwm">BSPWM</a>, <a class=
+              "ulink" href="https://dwm.suckless.org/">DWM</a>, and <a class=
+              "ulink" href=
+              "https://glfs-book.github.io/slfs/wm/i3.html">i3</a>. In order
+              to start your chosen window manager, add the following line to
+              <code class="filename">~/.xinitrc</code>:
+            </p>
+            <pre class="userinput"><kbd class="command">echo "exec <em class=
+            "replaceable"><code>&lt;WINDOW-MANAGER&gt;</code></em>" &gt;&gt; ~/.xinitrc</kbd></pre>
+            <p>
+              Then launch it:
+            </p>
+            <pre class="userinput"><kbd class="command">startx</kbd></pre>
+            <p>
+              A desktop environment is a more user-friendly graphical
+              environment which provides much more than a standard window
+              manager <a href="#ftn.id15069" class="footnote" id="id15069"
+              name="id15069"><sup class="footnote">[9]</sup></a>. However,
+              desktop environments also require more packages, RAM usage, and
+              disk space. Some popular desktop environments include <a class=
+              "ulink" href=
+              "https://projects.linuxmint.com/cinnamon/">Cinnamon</a>,
+              <a class="ulink" href=
+              "https://www.linuxfromscratch.org/blfs/view/systemd/gnome/gnome.html">
+              GNOME</a>, and <a class="ulink" href=
+              "https://www.linuxfromscratch.org/blfs/view/systemd/kde/kde.html">
+              KDE Plasma</a>. These should be loaded by a display manager,
+              like <a class="ulink" href=
+              "https://www.linuxfromscratch.org/blfs/view/systemd/x/sddm.html">
+              SDDM</a>. A display manager is often loaded by a service or
+              daemon.
+            </p>
+          </div>
+          <div class="sect4">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h5 class="title">
+                    <a id="id15075" name="id15075"></a>Terminal and/or
+                    Launcher
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <p>
+              By this point, you should know what a terminal is, whether it
+              be a TTY or a graphical terminal. Terminals are almost a
+              necessity and help when you are in a pinch. You can launch most
+              applications with a terminal. This is useful when you have no
+              other way to launch an application. There are a wide variety of
+              terminals and some integrate better with the system depending
+              on if you went with a window manager or desktop environment.
+              Check the Arch Wiki page <a class="ulink" href=
+              "https://wiki.archlinux.org/title/Category:Terminal_emulators">Category:Terminal
+              emulators</a> for a comprehensive list of terminals. Some of
+              the listed terminals are in BLFS. If you decided to go with a
+              window manager, make sure to add a keybind for your chosen
+              terminal.
+            </p>
+            <p>
+              A launcher is what it sounds like: an application that launches
+              a specified application. Some launch applications by the binary
+              name in the <code class="envar">PATH</code> variable, while
+              others launch applications according to desktop file
+              entries<a href="#ftn.id15081" class="footnote" id="id15081"
+              name="id15081"><sup class="footnote">[10]</sup></a>. Don't be
+              afraid to create your own! It's okay to be creative sometimes.
+              Check the Arch Wiki page <a class="ulink" href=
+              "https://wiki.archlinux.org/title/Category:Application_launchers">
+              Category:Application launchers</a> for a comprehensive list of
+              launchers. Desktop environments include their own launcher and
+              are often accessed via the <span class="quote">“<span class=
+              "quote">start menu</span>”</span>. If you decide to use a
+              window manager, make sure to add a keybind for your chosen
+              launcher.
+            </p>
+          </div>
+          <div class="sect4">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h5 class="title">
+                    <a id="id15087" name="id15087"></a>Compositor
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <p>
+              A compositor talks with <a class="xref" href="xorg-server.html"
+              title="Xorg-Server-21.1.16">Xorg-Server-21.1.16</a> and can
+              change what is seen on screen. Compositors can add animations,
+              borders, shadows, opacity, etc. to windows. They can also
+              enable vsync. Though compositors aren't needed on <span class=
+              "application">X11</span>, they make the graphical environment
+              look nicer. These visual enhancements can be GPU-intensive if
+              the GPU is weak or the graphics driver isn't that
+              performant<a href="#ftn.id15092" class="footnote" id="id15092"
+              name="id15092"><sup class="footnote">[11]</sup></a>. Check the
+              Arch Wiki page <a class="ulink" href=
+              "https://wiki.archlinux.org/title/Xorg#Composite">Xorg
+              Composite</a> for a list of compositors. In order to enable a
+              compositor when starting a window manager<a href="#ftn.id15095"
+              class="footnote" id="id15095" name="id15095"><sup class=
+              "footnote">[12]</sup></a>, add the following line <span class=
+              "emphasis"><em>BEFORE</em></span> the <strong class=
+              "userinput"><code><code class="literal">exec
+              ...</code></code></strong> line:
+            </p>
+            <pre class="userinput"><kbd class="command"><code class=
+            "literal"><em class=
+            "replaceable"><code>&lt;compositor&gt;</code></em> &amp;</code></kbd></pre>
+            <p>
+              Desktop environments include their own compositors which are
+              started when the desktop environment loads up.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Wayland
+        </h2>
+        <p>
+          Wayland is much simpler to set up than <span class=
+          "application">X11</span>. You should still read the X11 section
+          above, as much of the information is also relevant to <span class=
+          "application">Wayland</span>. There are a few changes, however.
+        </p>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            NVIDIA
+          </h3>
+          <p>
+            You will only need to worry about the refresh rate if it's
+            applicable to you. You won't need to worry about making sure the
+            <span class="application">NVIDIA</span> driver is used when
+            starting <span class="application">Wayland</span>. However, read
+            through the installation instructions for your chosen graphical
+            environment, as they may have information regarding <span class=
+            "application">NVIDIA</span>. Results can be shotty, and sometimes
+            the environment won't be able to start. Do your research first.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            Window Managers, Desktop Environments, and Compositors
+          </h3>
+          <p>
+            Unlike on <span class="application">X11</span>, the window
+            manager and compositor will always be combined on <span class=
+            "application">Wayland</span>. Minimal graphical environments are
+            called compositors instead of window managers, but desktop
+            environments are still called desktop environments. For
+            compositors, the only additional components that need to be
+            installed are a terminal and optionally a launcher.
+          </p>
+          <div class="sect4">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h5 class="title">
+                    <a id="id15122" name="id15122"></a>Compositors
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <p>
+              Many <span class="application">X11</span> window managers do
+              not support <span class="application">Wayland</span>. There are
+              some unofficial ports that use certain reusable frameworks
+              which would be called an <span class="application">X11</span>
+              compositor, like <a class="ulink" href=
+              "https://gitlab.freedesktop.org/wlroots/wlroots/">wlroots</a>
+              (these are called compositor libraries). You can try some ports
+              if you wish but some of them do their own thing which you may
+              not agree with.
+            </p>
+            <p>
+              Native <span class="application">Wayland</span> compositors
+              include <a class="ulink" href=
+              "https://glfs-book.github.io/slfs/wm/hypr.html">Hyprland</a>,
+              <a class="ulink" href=
+              "https://github.com/swaywm/sway">Sway</a>, and <a class="ulink"
+              href="https://glfs-book.github.io/slfs/wm/wf.html">Wayfire</a>.
+              In order to start these compositors, you can start them by
+              using a display manager or simply running their binary.
+            </p>
+          </div>
+          <div class="sect4">
+            <div class="titlepage">
+              <div>
+                <div>
+                  <h5 class="title">
+                    <a id="id15134" name="id15134"></a>Desktop Environments
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <p>
+              Go with <a class="ulink" href=
+              "https://www.linuxfromscratch.org/blfs/view/systemd/gnome/gnome.html">
+              GNOME</a> or <a class="ulink" href=
+              "https://www.linuxfromscratch.org/blfs/view/systemd/kde/kde.html">
+              KDE Plasma</a>. They have good <span class=
+              "application">Wayland</span> support. Like with <span class=
+              "application">X11</span>, you can launch these using a display
+              manager.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footnotes">
+        <br />
+        <hr width="100" align="left" />
+        <div id="ftn.id15069" class="footnote">
+          <p>
+            <a href="#id15069" class="para"><sup class="para">[9]</sup></a>
+            It is worth noting that a desktop environment includes a window
+            manager.
+          </p>
+        </div>
+        <div id="ftn.id15081" class="footnote">
+          <p>
+            <a href="#id15081" class="para"><sup class="para">[10]</sup></a>
+            Desktop files are often located in <code class=
+            "filename">/usr/share/applications</code> and/or <code class=
+            "filename">~/.local/share/applications</code>.
+          </p>
+        </div>
+        <div id="ftn.id15092" class="footnote">
+          <p>
+            <a href="#id15092" class="para"><sup class="para">[11]</sup></a>
+            If you decide to use a compositor, it might be a good idea to
+            temporarily kill it when gaming.
+          </p>
+        </div>
+        <div id="ftn.id15095" class="footnote">
+          <p>
+            <a href="#id15095" class="para"><sup class="para">[12]</sup></a>
+            Note that some window managers handle compositing on their own.
+            For more information, reference the Arch Wiki page <a class=
+            "ulink" href=
+            "https://wiki.archlinux.org/title/Xorg#Composite">Xorg
+            Composite</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="checkpoint.html" title="Checkpoint">Prev</a>
+          <p>
+            Checkpoint
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="../steam/steamsec.html" title=
+          "Steam">Next</a>
+          <p>
+            Steam
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="checkpoint.html" title=
+          "Chapter&nbsp;10.&nbsp;Checkpoint">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

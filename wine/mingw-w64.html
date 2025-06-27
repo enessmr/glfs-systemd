@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      MinGW-w64-12.0.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64-gcc-static.html" title=
+          "Static MinGW-w64-GCC-15.1.0">Prev</a>
+          <p>
+            Static MinGW-w64-GCC-15.1.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64-gcc.html" title=
+          "MinGW-w64-GCC-15.1.0">Next</a>
+          <p>
+            MinGW-w64-GCC-15.1.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="mingw-w64" name="mingw-w64"></a>MinGW-w64-12.0.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to MinGW-w64
+        </h2>
+        <p>
+          MinGW-w64's headers have been installed already, but not the rest
+          of the project, including useful libraries. This building process
+          will cover the rest of the MinGW-w64 project.
+        </p>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            This may take a while to build. Feel free to do something else
+            while this is building.
+          </p>
+        </div>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/mingw-w64-v12.0.0.tar.bz2">
+                https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/mingw-w64-v12.0.0.tar.bz2</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          MinGW-w64 Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="mingw-w64-binutils.html" title=
+          "MinGW-w64-Binutils-2.44">MinGW-w64-Binutils-2.44</a>, <a class=
+          "xref" href="mingw-w64-headers.html" title=
+          "MinGW-w64-headers-12.0.0">MinGW-w64-headers-12.0.0</a>, and
+          <a class="xref" href="mingw-w64-gcc-static.html" title=
+          "Static MinGW-w64-GCC-15.1.0">Static MinGW-w64-GCC-15.1.0</a>
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of MinGW-w64
+        </h2>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            x86_64 MinGW-w64
+          </h3>
+          <p>
+            Install x86_64 <span class="application">MinGW-w64</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-x86_64 &amp;&amp;
+cd    build-x86_64 &amp;&amp;
+
+../configure --prefix=/usr/x86_64-w64-mingw32 \
+             --host=x86_64-w64-mingw32        \
+             --disable-lib32                  \
+             --enable-experimental            \
+             --with-default-msvcrt=msvcrt     &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install</kbd></pre>
+          <p>
+            Now build the winpthreads library after installing the bulk of
+            MinGW-w64 to prevent the build from linking against libraries
+            that weren't installed but now are (this library enables POSIX
+            thread support):
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">cd ..                          &amp;&amp;
+mkdir build-x86_64-winpthreads &amp;&amp;
+cd    build-x86_64-winpthreads &amp;&amp;
+
+../mingw-w64-libraries/winpthreads/configure \
+            --prefix=/usr/x86_64-w64-mingw32 \
+            --host=x86_64-w64-mingw32        \
+            --disable-lib32                  \
+            --with-default-msvcrt=msvcrt     &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now install the winpthreads library as the <code class=
+            "systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class=
+          "command">make install &amp;&amp; cd ..</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            i686 MinGW-w64
+          </h3>
+          <p>
+            Install i686 <span class="application">MinGW-w64</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-i686 &amp;&amp;
+cd    build-i686 &amp;&amp;
+
+../configure --prefix=/usr/i686-w64-mingw32 \
+             --host=i686-w64-mingw32        \
+             --disable-lib64                \
+             --enable-experimental          \
+             --with-default-msvcrt=msvcrt   &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now, as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install</kbd></pre>
+          <p>
+            Now build the winpthreads library after installing the bulk of
+            MinGW-w64 to prevent the build from linking against libraries
+            that weren't installed but now are (this library enables POSIX
+            thread support):
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">cd ..                        &amp;&amp;
+mkdir build-i686-winpthreads &amp;&amp;
+cd    build-i686-winpthreads &amp;&amp;
+
+../mingw-w64-libraries/winpthreads/configure \
+            --prefix=/usr/i686-w64-mingw32   \
+            --host=i686-w64-mingw32          \
+            --disable-lib64                  \
+            --with-default-msvcrt=msvcrt &amp;&amp;
+
+make</kbd></pre>
+          <p>
+            Now install the winpthreads library as the <code class=
+            "systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">make install</kbd></pre>
+        </div>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>../configure
+            --help</strong></span> and <span class=
+            "command"><strong>../mingw-w64-libraries/winpthreads/configure
+            --help</strong></span> respectively for a full list of options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--prefix=/usr/*</code></em>: This
+          option installs the files to their respective architecture for
+          better separation of architectures.
+        </p>
+        <p>
+          <em class="parameter"><code>--host=*</code></em>: This option
+          builds files for the architecture passed to it.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-experimental</code></em>: This
+          option enables experimental features.
+        </p>
+        <p>
+          <em class=
+          "parameter"><code>--with-default-msvcrt=msvcrt</code></em>: As of
+          <span class="application">MinGW-w64-12.0.0</span>, the Universal C
+          Runtime (UCRT), added in Windows 10, has become the default. This
+          option makes the Microsoft Visual C Runtime (MSVCRT) the default,
+          which is more tested and has less bugs. It also ensures
+          compatibility with software made for older Windows versions.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libwinpthread-1 (DLL; in
+              /usr/{i686,x86_64}-w64-mingw32/bin) and hundreds of static
+              libraries and headers needed by Windows. To see the whole list
+              of libraries, visit <a class="ulink" href=
+              "https://archlinux.org/packages/extra/any/mingw-w64-crt/">https://archlinux.org/packages/extra/any/mingw-w64-crt/</a>,
+              and see <span class="emphasis"><em>"Package
+              Contents"</em></span>.</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class=
+              "segbody">/usr/{i686,x86_64}-w64-mingw32/{bin,lib}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="mingw-w64-gcc-static.html" title=
+          "Static MinGW-w64-GCC-15.1.0">Prev</a>
+          <p>
+            Static MinGW-w64-GCC-15.1.0
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="mingw-w64-gcc.html" title=
+          "MinGW-w64-GCC-15.1.0">Next</a>
+          <p>
+            MinGW-w64-GCC-15.1.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="mingw.html" title=
+          "Chapter&nbsp;15.&nbsp;The MinGW-w64 Toolchain">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

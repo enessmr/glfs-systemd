@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      libxkbcommon-1.10.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;16.&nbsp;Miscellaneous
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="misc.html" title="Miscellaneous">Prev</a>
+          <p>
+            Miscellaneous
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="sdl2.html" title="SDL2-2.32.8">Next</a>
+          <p>
+            SDL2-2.32.8
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="misc.html" title=
+          "Chapter&nbsp;16.&nbsp;Miscellaneous">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="libxkbcommon" name="libxkbcommon"></a>libxkbcommon-1.10.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to libxkbcommon
+        </h2>
+        <p>
+          <span class="application">libxkbcommon</span> is a keymap compiler
+          and support library which processes a reduced subset of keymaps as
+          defined by the XKB specification.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-1.10.0.tar.gz">
+                https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-1.10.0.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          libxkbcommon Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="../shareddeps/xkeyboard-config.html" title=
+          "XKeyboard-Config-2.45">xkeyboard-config-2.45</a> (runtime)
+        </p>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="../shareddeps/libxcb.html" title=
+          "libxcb-1.17.0">libxcb-1.17.0</a>, <a class="xref" href=
+          "../shareddeps/wayland.html" title=
+          "Wayland-1.23.1">Wayland-1.23.1</a>, and <a class="xref" href=
+          "../shareddeps/wayland-protocols.html" title=
+          "Wayland-Protocols-1.45">Wayland-Protocols-1.45</a>
+        </p>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <span class="command"><strong>Xvfb</strong></span> from <a class=
+          "xref" href="../shareddeps/xorg-server.html" title=
+          "Xorg-Server-21.1.16">Xorg-Server-21.1.16</a> or <a class="xref"
+          href="../shareddeps/xwayland.html" title=
+          "Xwayland-24.1.6">Xwayland-24.1.6</a>
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of libxkbcommon
+        </h2>
+        <p>
+          First, fix an issue when libxml2-2.14 and later is installed by
+          running the following command:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">sed -i "s/sizeof(dtdstr)/ARRAY_SIZE(dtdstr) - 1/" src/registry.c</kbd></pre>
+        <p>
+          Install <span class="application">libxkbcommon</span> by running
+          the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir build &amp;&amp;
+cd    build &amp;&amp;
+
+meson setup ..            \
+      --prefix=/usr       \
+      --buildtype=release \
+      -D enable-docs=false &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          To test the results, ensure <span class=
+          "command"><strong>Xvfb</strong></span> and <a class="xref" href=
+          "../shareddeps/xkeyboard-config.html" title=
+          "XKeyboard-Config-2.45">xkeyboard-config-2.45</a> are available,
+          then issue: <span class="command"><strong>ninja
+          test</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">ninja install</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of libxkbcommon
+        </h2>
+        <p>
+          Install lib32-<span class="application">libxkbcommon</span> by
+          running the following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">rm -rf * &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"         \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+meson setup ..                       \
+      --prefix=/usr                  \
+      --libdir=/usr/lib32            \
+      --buildtype=release            \
+      -D enable-docs=false &amp;&amp;
+
+ninja</kbd></pre>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">DESTDIR=$PWD/DESTDIR ninja install    &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--buildtype=release</code></em>:
+          Specify a buildtype suitable for stable releases of the package, as
+          the default may produce unoptimized binaries.
+        </p>
+        <p>
+          <em class="parameter"><code>-D enable-docs=false</code></em>: This
+          parameter disables building documentation as <a class="ulink" href=
+          "https://www.linuxfromscratch.org/blfs/view/systemd/general/doxygen.html">
+          https://www.linuxfromscratch.org/blfs/view/systemd/general/doxygen.html</a>
+          is not built.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">xkbcli</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">libxkbcommon, libxkbcommon-x11, and
+              libxkbregistry</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/xkbcommon and
+              /usr/libexec/xkbcommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="xkbcli" name="xkbcli"></a><span class=
+                    "term"><span class=
+                    "command"><strong>xkbcli</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides a debugger and compiler for XKB keymaps
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libxkbcommon-lib" name=
+                    "libxkbcommon-lib"></a><span class="term"><code class=
+                    "filename">libxkbcommon</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains the <span class=
+                    "application">libxkbcommon</span> API functions
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libxkbcommon-x11" name=
+                    "libxkbcommon-x11"></a><span class="term"><code class=
+                    "filename">libxkbcommon-x11</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains the <span class=
+                    "application">libxkbcommon</span> X11 specific API
+                    functions
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libxkbregistry" name=
+                    "libxkbregistry"></a><span class="term"><code class=
+                    "filename">libxkbregistry</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains a list of available XKB models, layouts, and
+                    variants for a given ruleset
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="misc.html" title="Miscellaneous">Prev</a>
+          <p>
+            Miscellaneous
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="sdl2.html" title="SDL2-2.32.8">Next</a>
+          <p>
+            SDL2-2.32.8
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="misc.html" title=
+          "Chapter&nbsp;16.&nbsp;Miscellaneous">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

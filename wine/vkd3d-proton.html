@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      VKD3D-Proton-2.14.1
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;18.&nbsp;Wine
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="dxvk.html" title="DXVK-2.6.2">Prev</a>
+          <p>
+            DXVK-2.6.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="../qol/qol.html" title=
+          "Quality of Life">Next</a>
+          <p>
+            Quality of Life
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winechpt.html" title=
+          "Chapter&nbsp;18.&nbsp;Wine">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="vkd3d-proton" name="vkd3d-proton"></a>VKD3D-Proton-2.14.1
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to VKD3D-Proton
+        </h2>
+        <p>
+          The <span class="application">VKD3D-Proton</span> package contains
+          DLL files which converts Direct3D 12 calls to Vulkan. By default in
+          <span class="application">Wine</span>, Direct3D 12 calls are also
+          converted to Vulkan; however, this package makes more aggressive
+          optimizations geared towards gaming and replaces the default
+          implementation provided by <span class="application">Wine</span>,
+          <span class="application">VKD3D</span>.
+        </p>
+        <h3>
+          VKD3D-Proton Dependencies
+        </h3>
+        <h4>
+          Required
+        </h4>
+        <p class="required">
+          <a class="xref" href="dxvk.html" title="DXVK-2.6.2">DXVK-2.6.2</a>
+          (for <code class="filename">dxgi</code> and the configuration
+          section), <a class="xref" href="../shareddeps/glslang.html" title=
+          "Glslang-15.3.0">Glslang-15.3.0</a>, <a class="xref" href=
+          "mingw-w64-gcc.html" title=
+          "MinGW-w64-GCC-15.1.0">MinGW-w64-GCC-15.1.0</a> (compiled with
+          POSIX thread support), and <a class="xref" href="wine.html" title=
+          "Wine-10.9">Wine-10.9</a>
+        </p>
+        <h4>
+          Required (Runtime)
+        </h4>
+        <p class="runtime">
+          <a class="xref" href="../shareddeps/libvk.html" title=
+          "Vulkan-Loader-1.4.313">Vulkan-Loader-1.4.313</a>
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Downloading DXVK
+        </h2>
+        <p>
+          This package depends on submodules and multiple of them will need
+          to be downloaded. Create a list of the needed tarballs that will be
+          downloaded:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cat &gt; vkd3d-proton-2.14.1-list &lt;&lt; "EOF"
+<code class=
+"literal">HansKristian-Work/vkd3d-proton/archive/v2.14.1/vkd3d-proton-2.14.1.tar.gz
+KhronosGroup/SPIRV-Headers/archive/2b2e05e088841c63c0b6fd4c9fb380d8688738d3.tar.gz
+KhronosGroup/Vulkan-Headers/archive/75ad707a587e1469fb53a901b9b68fe9f6fbc11f.tar.gz
+HansKristian-Work/dxil-spirv/archive/47f8b0d6bba72431e89e896ac6c902309e0cf09b.tar.gz
+KhronosGroup/SPIRV-Cross/archive/68300dc07ac3dc592dbbdb87e02d5180f984ad12.tar.gz
+KhronosGroup/SPIRV-Headers/archive/3f17b2af6784bfa2c5aa5dbb8e0e74a607dd8b3b.tar.gz
+KhronosGroup/SPIRV-Tools/archive/4d2f0b40bfe290dea6c6904dafdf7fd8328ba346.tar.gz</code>
+EOF</kbd></pre>
+        <p>
+          Download the tarballs using <a class="xref" href=
+          "../shareddeps/wget.html" title="Wget-1.25.0">Wget-1.25.0</a>:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mkdir vkd3d-proton &amp;&amp;
+cd    vkd3d-proton &amp;&amp;
+grep -v '^#' ../vkd3d-proton-2.14.1-list | wget -i- -c \
+    -B https://github.com</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of VKD3D-Proton
+        </h2>
+        <p>
+          Extract all the tarballs:
+        </p>
+        <pre class="userinput"><kbd class="command">for i in *.tar.?z*; do
+  echo "Extracting $i..."
+  tar -xf $i
+done</kbd></pre>
+        <p>
+          Now that the tarballs have been extracted, the submodules need to
+          be moved in place. Do so now:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">mv -T SPIRV-Headers-2b2e05e088841c63c0b6fd4c9fb380d8688738d3                \
+      vkd3d-proton-2.14.1/khronos/SPIRV-Headers                            &amp;&amp;
+mv -T Vulkan-Headers-*                                                      \
+      vkd3d-proton-2.14.1/khronos/Vulkan-Headers                           &amp;&amp;
+mv -T dxil-spirv-*                                                          \
+      vkd3d-proton-2.14.1/subprojects/dxil-spirv                           &amp;&amp;
+mv -T SPIRV-Cross-*                                                         \
+      vkd3d-proton-2.14.1/subprojects/dxil-spirv/third_party/SPIRV-Cross   &amp;&amp;
+mv -T SPIRV-Headers-3f17b2af6784bfa2c5aa5dbb8e0e74a607dd8b3b                \
+      vkd3d-proton-2.14.1/subprojects/dxil-spirv/third_party/spirv-headers &amp;&amp;
+mv -T SPIRV-Tools-*                                                         \
+      vkd3d-proton-2.14.1/subprojects/dxil-spirv/third_party/SPIRV-Tools</kbd></pre>
+        <p>
+          Go into the <code class="filename">vkd3d-proton-2.14.1</code>
+          directory:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">cd vkd3d-proton-2.14.1</kbd></pre>
+        <p>
+          Fix broken version generation which creates a broken header file
+          during compilation:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">sed "165s/.*/  command : \['echo', '0'\],/" \
+  -i meson.build</kbd></pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            If you are doing multilib, it is up to you if you want to install
+            the 32-bit DLL files from this package. Direct3D 12 released in
+            mid-2015, so there are less 32-bit D3D12 applications than 64-bit
+            ones. If you wish to stay on the safe side, it would be prudent
+            to install the 32-bit DLL files as well.
+          </p>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            64-bit Installation
+          </h3>
+          <p>
+            Install 64-bit <span class="application">VKD3D-Proton</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-win64 &amp;&amp;
+cd    build-win64 &amp;&amp;
+
+meson setup .. --cross-file=../build-win64.txt \
+               --buildtype=release             \
+               --prefix=$PWD/DESTDIR &amp;&amp;
+
+ninja</kbd></pre>
+          <p>
+            Now as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">ninja install &amp;&amp;
+cd ..         &amp;&amp;
+
+mkdir   -pv     /usr/lib/vkd3d-proton/win64 &amp;&amp;
+install -vDm644 build-win64/DESTDIR/bin/*.dll \
+                /usr/lib/vkd3d-proton/win64</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            32-bit Installation
+          </h3>
+          <p>
+            Install 32-bit <span class="application">VKD3D-Proton</span> by
+            running the following commands:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">mkdir build-win32 &amp;&amp;
+cd    build-win32 &amp;&amp;
+
+meson setup .. --cross-file ../build-win32.txt \
+               --buildtype=release             \
+               --prefix=$PWD/DESTDIR &amp;&amp;
+
+ninja</kbd></pre>
+          <p>
+            Now as the <code class="systemitem">root</code> user:
+          </p>
+          <pre class="root"><kbd class="command">ninja install &amp;&amp;
+cd ..         &amp;&amp;
+
+mkdir   -pv     /usr/lib/vkd3d-proton/win32 &amp;&amp;
+install -vDm644 build-win32/DESTDIR/bin/*.dll \
+                /usr/lib/vkd3d-proton/win32</kbd></pre>
+        </div>
+      </div>
+      <div class="configuration" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Setting Up VKD3D-Proton
+        </h2>
+        <p>
+          While the VKD3D-Proton DLL files have been installed, they are not
+          yet in the <span class="application">Wine</span> prefix. Create
+          symlinks so that they can be found by <span class=
+          "application">Wine</span>, whilst allowing updating of this package
+          without having to copy everything over again. Along with this, the
+          registry must be updated to use the new DLLs. Do this for each
+          archetecture you have installed.
+        </p>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            64-bit Setup
+          </h3>
+          <p>
+            For 64-bit:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">for DLL_FILE in /usr/lib/vkd3d-proton/win64/*.dll; do
+    ln -sfv $DLL_FILE ~/.wine/drive_c/windows/system32/$(basename $DLL_FILE) &amp;&amp;
+    DLL_FILE=$(basename $DLL_FILE | sed s/.dll//g) &amp;&amp;
+    wine reg add \
+        'HKEY_CURRENT_USER\Software\Wine\DllOverrides' \
+        /v "$DLL_FILE" /d native /f
+done</kbd></pre>
+        </div>
+        <div class="sect3" lang="en" xml:lang="en">
+          <h3 class="sect3">
+            32-bit Setup
+          </h3>
+          <p>
+            For 32-bit:
+          </p>
+          <pre class="userinput"><kbd class=
+          "command">for DLL_FILE in /usr/lib/vkd3d-proton/win32/*.dll; do
+    if [ ! -d ~/.wine/drive_c/windows/syswow64 ]; then
+        ln -sfv $DLL_FILE ~/.wine/drive_c/windows/system32/$(basename $DLL_FILE)
+    else
+        ln -sfv $DLL_FILE ~/.wine/drive_c/windows/syswow64/$(basename $DLL_FILE)
+    fi
+    DLL_FILE=$(basename $DLL_FILE | sed s/.dll//g) &amp;&amp;
+    wine reg add \
+        'HKEY_CURRENT_USER\Software\Wine\DllOverrides' \
+        /v "$DLL_FILE" /d native /f
+done</kbd></pre>
+        </div>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Inspect <code class="filename">meson_options.txt</code> or
+            <code class="filename">meson.options</code> for a full list of
+            options.
+          </p>
+        </div>
+        <p>
+          <span class="command"><strong>git checkout v2.14.1</strong></span>:
+          This command switches to a stable release in the commit history.
+        </p>
+        <p>
+          <em class=
+          "parameter"><code>--cross-file=../build-win{32,64}.txt</code></em>:
+          This parameter changes what Win archetecture to build for.
+        </p>
+        <p>
+          <em class="parameter"><code>--buildtype=release</code></em>:
+          Specify a buildtype suitable for stable releases of the package, as
+          the default may produce unoptimized binaries.
+        </p>
+        <p>
+          <span class="command"><strong>wine reg add ...</strong></span>:
+          This command overrides the registry so that <span class=
+          "application">Wine</span> will use the new DLL files instead of the
+          old ones.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">d3d12core and d3d12 (all DLLs)</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class=
+              "segbody">/usr/lib/vkd3d-proton/{win32,win64}</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="d3d12core" name="d3d12core"></a><span class=
+                    "term"><code class="filename">d3d12core</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    contains the core Direct3D 12 API functions
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="d3d12" name="d3d12"></a><span class=
+                    "term"><code class="filename">d3d12</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    converts Direct3D 12 calls to Vulkan
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="dxvk.html" title="DXVK-2.6.2">Prev</a>
+          <p>
+            DXVK-2.6.2
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="../qol/qol.html" title=
+          "Quality of Life">Next</a>
+          <p>
+            Quality of Life
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="winechpt.html" title=
+          "Chapter&nbsp;18.&nbsp;Wine">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

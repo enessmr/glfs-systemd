@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Important Information
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;1.&nbsp;Welcome to GLFS
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="contactinfo.html" title=
+          "Contact Information">Prev</a>
+          <p>
+            Contact Information
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="bash-profile.html" title=
+          "The Bash Shell Startup Files">Next</a>
+          <p>
+            The Bash Shell Startup Files
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="important" name="important"></a>Important Information
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        BLFS has more information regarding compilation, /usr vs /usr/local,
+        boot scripts, etc. at <a class="ulink" href=
+        "https://www.linuxfromscratch.org/blfs/view/systemd/introduction/important.html">
+        https://www.linuxfromscratch.org/blfs/view/systemd/introduction/important.html</a>.
+        Unlike this book, this would be a chapter in BLFS. A lot of that
+        information has been omitted as this book is more linear and doesn't
+        follow how BLFS follows. However, we will cover some bases here.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          <a id="which-instructions" name="which-instructions"></a>Which
+          Instructions to Follow
+        </h2>
+        <p>
+          This book is different from the main LFS and BLFS books as it also
+          has lib32 installation instructions. This is bound to cause
+          confusion.
+        </p>
+        <p>
+          When you see <span class="quote">“<span class="quote">Installation
+          of ...</span>”</span>, those instructions should be followed if you
+          need that package. As you progress, you may come across a different
+          format, and the book will instruct you on what to follow at that
+          point. You should read <a class="xref" href="multilib.html" title=
+          "Chapter&nbsp;2.&nbsp;Multilib">Chapter&nbsp;2, Multilib</a>
+          firstly, and second, you will probably have to do more than the
+          normal installation.
+        </p>
+        <p>
+          This is where the sections labeled <span class=
+          "quote">“<span class="quote">lib32 Installation of
+          ...</span>”</span> come in. These sections provide 32-bit libraries
+          for 32-bit software compatibility, ie. multilib support. If you
+          don't need the 32-bit libraries from a given package, you may skip
+          the lib32 installation instructions of that package.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Stability
+        </h2>
+        <p>
+          This book viewable online is in a constant flux of updates, and
+          updates about as often as the BLFS Git/SVN version. While there
+          isn't a viewable online version of the stable release, you can
+          either render it yourself by following <a class="ulink" href=
+          "https://github.com/glfs-book/glfs">https://github.com/glfs-book/glfs</a>,
+          or you can download a <a class="ulink" href=
+          "https://github.com/glfs-book/glfs/releases">release</a>.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Init System
+        </h2>
+        <p>
+          This version of this book is meant for Systemd LFS systems.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Building software
+        </h2>
+        <p>
+          Building software on GLFS is identical to how it's done in the BLFS
+          books, along with having lib32 compilation instructions. It goes
+          without saying firstmost that you should have <code class=
+          "envar">MAKEFLAGS</code> set to save yourself a lot of time. This
+          is useful for the <span class=
+          "command"><strong>make</strong></span> utility to use the amount of
+          threads that you both want and have.
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">export MAKEFLAGS='-jx'</kbd></pre>
+        <p>
+          Replace <code class="option">x</code> with the amount of threads
+          you have. You can check the amount of threads you have with:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">grep processor /proc/cpuinfo</kbd></pre>
+        <div class="admon important">
+          <img alt="[Important]" src="../images/important.png" />
+          <h3>
+            Important
+          </h3>
+          <p>
+            Make sure that you have enough RAM for your system! A general
+            method is having 2.5G per thread that is thrown at <span class=
+            "command"><strong>make</strong></span>. For instance, if you want
+            to use 6 threads, multiply 6 by 2.5 (which is 15), then make sure
+            you have 15G of RAM. If you don't have that RAM, try and limit
+            the threads you throw at <span class=
+            "command"><strong>make</strong></span> or allot swap to meet that
+            requirement.
+          </p>
+        </div>
+        <p>
+          Next is compiling for lib32. There are many packages which will
+          have a lib32 counterpart. If you just got done with a normal
+          compilation of a package and wish to do a lib32 compilation of that
+          same package, make sure to clean the directory first:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">make distclean</kbd></pre>
+        <p>
+          Or, if you made a build directory, do this in the build directory:
+        </p>
+        <pre class="userinput"><kbd class="command">rm -rf *</kbd></pre>
+        <p>
+          Then proceed with the lib32 compilation instructions.
+        </p>
+        <p>
+          Generally, the format of targetting lib32 goes like this:
+        </p>
+        <p>
+          For <span class="command"><strong>./configure</strong></span>:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">CC="gcc -m32" CXX="g++ -m32"                  \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig          \
+./configure --prefix=/usr --libdir=/usr/lib32 \
+            --host=i686-pc-linux-gnu &amp;&amp;
+
+make &amp;&amp;
+
+make DESTDIR=$PWD/DESTDIR install     &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+        <p>
+          For <span class="command"><strong>meson</strong></span>:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+CC="gcc -m32" CXX="g++ -m32"                     \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig             \
+meson setup .. --prefix=/usr --libdir=/usr/lib32 &amp;&amp;
+
+ninja &amp;&amp;
+
+DESTDIR=$PWD/DESTDIR ninja install    &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+        <p>
+          For <span class="command"><strong>cmake</strong></span>:
+        </p>
+        <pre class="userinput"><kbd class="command">mkdir -v build &amp;&amp;
+cd       build &amp;&amp;
+
+CC="gcc -m32" CXX="g++ -m32"           \
+PKG_CONFIG_PATH="/usr/lib32/pkgconfig" \
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr   \
+         -DCMAKE_INSTALL_LIBDIR=lib32 &amp;&amp;
+
+make &amp;&amp;
+
+make DESTDIR=$PWD/DESTDIR install     &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            After you do a DESTDIR installation, it is recommended to to use
+            <span class="command"><strong>file</strong></span> on one of the
+            libraries in <code class="filename">DESTDIR/usr/lib32</code>. An
+            output of such a command for a lib32 build of a library should be
+            comparable to the following:
+          </p>
+          <pre class="screen"><code class=
+          "computeroutput">ELF 32-bit LSB shared object, Intel 80386, version 1 (SYSV), dynamically linked</code></pre>
+          <p>
+            Note the <code class="computeroutput">32-bit LSB shared
+            object</code> part. A 64-bit library would show as a <code class=
+            "computeroutput">64-bit LSB shared object</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="contactinfo.html" title=
+          "Contact Information">Prev</a>
+          <p>
+            Contact Information
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="bash-profile.html" title=
+          "The Bash Shell Startup Files">Next</a>
+          <p>
+            The Bash Shell Startup Files
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      LAME-3.100
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;17.&nbsp;Gst
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="fdk-aac.html" title="fdk-aac-2.0.3">Prev</a>
+          <p>
+            fdk-aac-2.0.3
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libvpx.html" title="libvpx-1.15.2">Next</a>
+          <p>
+            libvpx-1.15.2
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="gst.html" title=
+          "Chapter&nbsp;17.&nbsp;Gst">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="lame" name="lame"></a>LAME-3.100
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to LAME
+        </h2>
+        <p>
+          The <span class="application">LAME</span> package contains an MP3
+          encoder and optionally, an MP3 frame analyzer. This is useful for
+          creating and analyzing compressed audio files.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://downloads.sourceforge.net/lame/lame-3.100.tar.gz">https://downloads.sourceforge.net/lame/lame-3.100.tar.gz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          LAME Dependencies
+        </h3>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <a class="ulink" href="https://dmalloc.com/">Dmalloc</a>, <a class=
+          "ulink" href=
+          "https://linux.softpedia.com/get/Programming/Debuggers/Electric-Fence-3305.shtml/">
+          Electric Fence</a>, <a class="xref" href=
+          "../shareddeps/libsndfile.html" title=
+          "libsndfile-1.2.2">libsndfile-1.2.2</a> and <a class="xref" href=
+          "nasm.html" title="NASM-2.16.03">NASM-2.16.03</a>
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of LAME
+        </h2>
+        <p>
+          Prevent the source code directory from being mistakenly hardcoded
+          as a shared library search path in the installed programs:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">sed -i -e 's/^\(\s*hardcode_libdir_flag_spec\s*=\).*/\1/' configure</kbd></pre>
+        <p>
+          Install <span class="application">LAME</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">./configure --prefix=/usr   \
+            --enable-mp3rtp \
+            --disable-static &amp;&amp;
+
+make</kbd></pre>
+        <p>
+          To test the results, issue: <span class=
+          "command"><strong>LD_LIBRARY_PATH=libmp3lame/.libs make
+          test</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">make pkghtmldir=/usr/share/doc/lame-3.100 install</kbd></pre>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          lib32 Installation of LAME
+        </h2>
+        <p>
+          Install lib32-<span class="application">LAME</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class="command">make distclean &amp;&amp;
+CC="gcc -m32" CXX="g++ -m32"         \
+PKG_CONFIG_PATH=/usr/lib32/pkgconfig \
+./configure --prefix=/usr            \
+            --libdir=/usr/lib32      \
+            --host=i686-pc-linux-gnu \
+            --enable-mp3rtp          \
+            --disable-static         \
+            --enable-nasm &amp;&amp;
+
+make</kbd></pre>
+        <p>
+          To test the results, issue: <span class=
+          "command"><strong>LD_LIBRARY_PATH=libmp3lame/.libs make
+          test</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class=
+        "command">make DESTDIR=$PWD/DESTDIR install     &amp;&amp;
+cp -vr DESTDIR/usr/lib32/* /usr/lib32 &amp;&amp;
+rm -rf DESTDIR                        &amp;&amp;
+ldconfig</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>./configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+        <p>
+          <em class="parameter"><code>--enable-mp3rtp</code></em>: This
+          switch enables building the encode-to-RTP program.
+        </p>
+        <p>
+          <em class="parameter"><code>--disable-static</code></em>: This
+          switch prevents installation of static versions of the libraries.
+        </p>
+        <p>
+          <em class="parameter"><code>--enable-nasm</code></em>: This option
+          enables the use of <a class="xref" href="nasm.html" title=
+          "NASM-2.16.03">NASM-2.16.03</a> to compile optimized assembly
+          routines for 32-bit. This is not enabled for x86_64 as it has no
+          effect.
+        </p>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">lame and mp3rtp</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Library:</strong>
+              <span class="segbody">libmp3lame</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directories:</strong>
+              <span class="segbody">/usr/include/lame and
+              /usr/share/doc/lame-3.100</span>
+            </div>
+          </div>
+        </div>
+        <div class="variablelist">
+          <h3>
+            Short Descriptions
+          </h3>
+          <table border="0" class="variablelist">
+            <colgroup>
+              <col align="left" valign="top" />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <a id="lame-prog" name="lame-prog"></a><span class=
+                    "term"><span class=
+                    "command"><strong>lame</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    creates MP3 audio files from raw PCM or <code class=
+                    "filename">.wav</code> data
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="mp3rtp" name="mp3rtp"></a><span class=
+                    "term"><span class=
+                    "command"><strong>mp3rtp</strong></span></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    is used to encode MP3 with RTP streaming of the output
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    <a id="libmp3lame" name="libmp3lame"></a><span class=
+                    "term"><code class="filename">libmp3lame</code></span>
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    provides the functions necessary to convert raw PCM and
+                    WAV files to MP3 files
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="fdk-aac.html" title="fdk-aac-2.0.3">Prev</a>
+          <p>
+            fdk-aac-2.0.3
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libvpx.html" title="libvpx-1.15.2">Next</a>
+          <p>
+            libvpx-1.15.2
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="gst.html" title=
+          "Chapter&nbsp;17.&nbsp;Gst">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

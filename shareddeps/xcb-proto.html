@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      xcb-proto-1.17.0
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;6.&nbsp;Basic X11 Software
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="libXdmcp.html" title=
+          "libXdmcp-1.1.5">Prev</a>
+          <p>
+            libXdmcp-1.1.5
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libxcb.html" title="libxcb-1.17.0">Next</a>
+          <p>
+            libxcb-1.17.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="xcb-proto" name="xcb-proto"></a>xcb-proto-1.17.0
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <div class="package" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Introduction to xcb-proto
+        </h2>
+        <p>
+          The <span class="application">xcb-proto</span> package provides the
+          XML-XCB protocol descriptions that <span class=
+          "application">libxcb</span> uses to generate the majority of its
+          code and API.
+        </p>
+        <div class="itemizedlist">
+          <ul class="compact">
+            <li class="listitem">
+              <p>
+                Download (HTTP): <a class="ulink" href=
+                "https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-1.17.0.tar.xz">
+                https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-1.17.0.tar.xz</a>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <h3>
+          xcb-proto Dependencies
+        </h3>
+        <h4>
+          Recommended
+        </h4>
+        <p class="recommended">
+          <a class="xref" href="basic-xorg-7.html#xorg-env" title=
+          "Setting up the Xorg Build Environment">Xorg build environment</a>
+          (needed for the instructions below)
+        </p>
+        <h4>
+          Optional
+        </h4>
+        <p class="optional">
+          <a class="xref" href="libxml2.html" title=
+          "libxml2-2.14.3">libxml2-2.14.3</a> (required to run the tests)
+        </p>
+      </div>
+      <div class="installation" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Installation of xcb-proto
+        </h2>
+        <p>
+          Install <span class="application">xcb-proto</span> by running the
+          following commands:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">PYTHON=python3 ./configure $XORG_CONFIG</kbd></pre>
+        <p>
+          To test the results, issue: <span class="command"><strong>make
+          check</strong></span>.
+        </p>
+        <p>
+          Now, as the <code class="systemitem">root</code> user:
+        </p>
+        <pre class="root"><kbd class="command">make install</kbd></pre>
+        <p>
+          If you are upgrading from version 1.15.1 or lower, the old
+          pkgconfig file needs to be removed. Issue, as the <code class=
+          "systemitem">root</code> user:
+        </p>
+        <pre class="userinput"><kbd class=
+        "command">rm -f /usr/lib/pkgconfig/xcb-proto.pc</kbd></pre>
+      </div>
+      <div class="commands" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Command Explanations
+        </h2>
+        <div class="admon note">
+          <img alt="[Note]" src="../images/note.png" />
+          <h3>
+            Note
+          </h3>
+          <p>
+            Run <span class="command"><strong>./configure
+            --help</strong></span> for a full list of options.
+          </p>
+        </div>
+      </div>
+      <div class="content" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Contents
+        </h2>
+        <div class="segmentedlist">
+          <div class="seglistitem">
+            <div class="seg">
+              <strong class="segtitle">Installed Programs:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Libraries:</strong>
+              <span class="segbody">None</span>
+            </div>
+            <div class="seg">
+              <strong class="segtitle">Installed Directory:</strong>
+              <span class="segbody">/usr/share/xcb and
+              /usr/lib/python3.13/site-packages/xcbgen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="libXdmcp.html" title=
+          "libXdmcp-1.1.5">Prev</a>
+          <p>
+            libXdmcp-1.1.5
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="libxcb.html" title="libxcb-1.17.0">Next</a>
+          <p>
+            libxcb-1.17.0
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="basicx.html" title=
+          "Chapter&nbsp;6.&nbsp;Basic X11 Software">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

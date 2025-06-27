@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Rationale for Packages
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;1.&nbsp;Welcome to GLFS
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="packages.html" title=
+          "Getting the Source Packages">Prev</a>
+          <p>
+            Getting the Source Packages
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="sa.html" title=
+          "Security Advisories">Next</a>
+          <p>
+            Security Advisories
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="rationale" name="rationale"></a>Rationale for Packages
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        Upon reading through some of the sections in this book, you may
+        notice that a lot of the packages linked in some of the sections
+        aren't in this book but rather in BLFS, some optional dependencies
+        aren't listed, some packages may be outdated, and some packages that
+        have test suites don't have test instructions. These choices are very
+        much deliberate.
+      </p>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Why Are Many Packages Not in the Book?
+        </h2>
+        <p>
+          Many packages linked on some of the packages' sections aren't in
+          the book but rather in the BLFS book. There are multiple reasons
+          for this, but the most notable one is the packages that aren't in
+          the book aren't important for the main packages in the book, those
+          being <span class="application">Steam</span> and <span class=
+          "application">Wine</span>. They are still listed anyway if users
+          want more support out of the specific packages not specific to the
+          main packages, like media playback for example. Another reason for
+          packages not being in the book is that the packages take a lot of
+          work to install and require jumping around. They can also require a
+          lot of choice or take up space or RAM for no real benefit for a lot
+          of users when there are more simple solutions.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Why Are Some Optional Dependencies Not Listed?
+        </h2>
+        <p>
+          There are some optional dependencies that aren't listed, and the
+          main reason for this is that they just would take up unnecessary
+          space. If on the offchance you desire even more out of your system,
+          there are plenty more packages in BLFS and BLFS is more geared for
+          everyone, although this book focuses more on gaming. Usually the
+          optional dependencies that are not listed are those that are needed
+          for testing builds and generating documentation.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Packages That Are Outdated and Why
+        </h2>
+        <p>
+          No packages are currently outdated at time of release.
+        </p>
+      </div>
+      <div class="sect2" lang="en" xml:lang="en">
+        <h2 class="sect2">
+          Some Package Test Instructions Aren't Included
+        </h2>
+        <p>
+          Many packages have test suites which can test a given build for any
+          potential bugs and may tell you if something has gone wrong.
+          However, in GLFS, a lot of these packages have test suites that
+          depend on packages that aren't necessary in the book and would make
+          this book larger than it needs to be. Furthermore, a lot of the
+          packages that do have test suites aren't involved with critical
+          components of the system and don't tend to have bugs that come up
+          as a result of a build, but rather the released source code itself.
+          If you want to do test suites of a given package, BLFS has good
+          instructions for that on each package and covers all the required
+          dependencies, as well as instructions on how to install those
+          dependencies.
+        </p>
+      </div>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="packages.html" title=
+          "Getting the Source Packages">Prev</a>
+          <p>
+            Getting the Source Packages
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="sa.html" title=
+          "Security Advisories">Next</a>
+          <p>
+            Security Advisories
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="welcome.html" title=
+          "Chapter&nbsp;1.&nbsp;Welcome to GLFS">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

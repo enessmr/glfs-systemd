@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <title>
+      Gamepad Support
+    </title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/lfs.css" />
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+    <link rel="stylesheet" href="../stylesheets/lfs-print.css" type=
+    "text/css" media="print" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blfs" id="blfs-#75161">
+    <div class="navheader">
+      <h4>
+        Gaming Linux<sup>®</sup> From Scratch <span class=
+        "phrase">(Systemd</span> Edition) - Version #75161
+      </h4>
+      <h3>
+        Chapter&nbsp;19.&nbsp;Quality of Life
+      </h3>
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="qolintro.html" title=
+          "Quality of Life">Prev</a>
+          <p>
+            Quality of Life
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="binary.html" title="Binary Support">Next</a>
+          <p>
+            Binary Support
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="qolintro.html" title=
+          "Chapter&nbsp;19.&nbsp;Quality of Life">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+    <h1 class="sect1">
+      <a id="gamepad" name="gamepad"></a>Gamepad Support
+    </h1>
+    <div class="sect1" lang="en" xml:lang="en">
+      <p>
+        Gamepads, or more widely known as game controllers, can be used with
+        many applications and games. However if you compiled the kernel
+        yourself, the kernel drivers for gamepads are likely not enabled. Go
+        ahead and enable the kernel options below and recompile the kernel if
+        necessary.
+      </p>
+      <pre class="screen"><span class="blue">D</span>evice Drivers ---&gt;
+  <span class="blue">I</span>nput device support ---&gt;
+    &lt;*&gt; <span class=
+"blue">G</span>eneric input layer (needed for keyboard, mouse, ...)            [INPUT]
+    [*]   <span class=
+"blue">J</span>oysticks/Gamepads ---&gt;                               [INPUT_JOYSTICK]
+      
+      # For older gamepads:
+      &lt;*&gt;     M<span class=
+"blue">u</span>ltisystem, NES, SNES, N64, PSX joysticks and gamepads
+                                                         ...  [JOYSTICK_GAMECON]
+      
+      # For Xbox gamepad support:
+      &lt;*&gt;     <span class=
+"blue">X</span>box gamepad support                               [JOYSTICK_XPAD]
+      [ /*]     <span class=
+"blue">X</span>box gamepad rumble support                   [JOYSTICK_XPAD_FF]
+      [ /*]     <span class=
+"blue">L</span>ED Support for the Xbox 360 controller Guide button
+                                                       ...  [JOYSTICK_XPAD_LEDS]
+  [*] H<span class=
+"blue">I</span>D bus support ---&gt;                                         [HID_SUPPORT]
+    &lt;*/M&gt; H<span class=
+"blue">I</span>D bus core support                                             [HID]
+      <span class="blue">S</span>pecial HID drivers ---&gt;
+      
+      # For Nintendo Switch gamepad support:
+      &lt;*&gt;       N<span class=
+"blue">i</span>ntendo Joy-Con, NSO, and Pro Controller support [HID_NINTENDO]
+      [ /*]       N<span class=
+"blue">i</span>ntendo Switch controller force feedback support
+                                                              ...  [NINTENDO_FF]
+      
+      # For Playstation gamepad support:
+      &lt;*/M&gt;     <span class=
+"blue">S</span>ony PS2/3/4 accessories                              [HID_SONY]
+      [ /*]       <span class=
+"blue">S</span>ony PS2/3/4 accessories force feedback support      [SONY_FF]
+      
+      # For Steam controllers:
+      &lt;*&gt;       <span class=
+"blue">S</span>team Controller/Deck support                        [HID_STEAM]
+      
+      # For Nintendo Wii and Wii U controller support:
+      &lt; /*/M&gt;   N<span class=
+"blue">i</span>ntendo Wii / Wii U peripherals                   [HID_WIIMOTE]
+  [*] <span class=
+"blue">U</span>SB support ---&gt;                                             [USB_SUPPORT]</pre>
+      <p>
+        Now you should be able to plug in your gamepad and play. If you want
+        to use the gamepad wirelessly, you will need to connect it via
+        Bluetooth. You can enable Bluetooth by following the BLFS page
+        <a class="ulink" href=
+        "https://www.linuxfromscratch.org/blfs/view/systemd/general/bluez.html">
+        BlueZ</a> if you haven't already compiled it. If you have chosen to
+        install a desktop environment, if not already done, you can likely
+        install a bluetooth application specific to the desktop environment.
+      </p>
+    </div>
+    <div class="navfooter">
+      <ul>
+        <li class="prev">
+          <a accesskey="p" href="qolintro.html" title=
+          "Quality of Life">Prev</a>
+          <p>
+            Quality of Life
+          </p>
+        </li>
+        <li class="next">
+          <a accesskey="n" href="binary.html" title="Binary Support">Next</a>
+          <p>
+            Binary Support
+          </p>
+        </li>
+        <li class="up">
+          <a accesskey="u" href="qolintro.html" title=
+          "Chapter&nbsp;19.&nbsp;Quality of Life">Up</a>
+        </li>
+        <li class="home">
+          <a accesskey="h" href="../index.html" title=
+          "  Gaming Linux® From Scratch  (Systemd  Edition)  - Version #75161">
+          Home</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
